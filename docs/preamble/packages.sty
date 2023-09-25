@@ -1,0 +1,147 @@
+\usepackage[utf8]{inputenc}
+\usepackage[english,hungarian]{babel}
+\usepackage{fancyhdr}
+
+
+%############################################################################
+%         FONT
+%############################################################################
+\usepackage{lmodern}
+\usepackage{tgpagella,eulervm}
+\usepackage{t1enc}
+\usepackage{microtype}    
+\usepackage{relsize}      
+
+%############################################################################
+%         MAT
+%############################################################################
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bm}
+
+%############################################################################
+%		Images, margin, etc...
+%############################################################################
+
+
+\usepackage[top=2.5cm, bottom=3.0cm, outer=2.5cm, inner=2.5cm]{geometry} 	%% for COMPUTER USE
+%\usepackage[top=2.5cm, bottom=3.0cm, outer=2.0cm, inner=3.0cm]{geometry}  %% for PRINTING
+
+\usepackage{graphicx}
+\graphicspath{{./images/}}		
+\usepackage{setspace}
+\onehalfspacing{}
+
+\usepackage{emptypage}
+\usepackage{booktabs}			
+\usepackage{lipsum}
+
+\usepackage[
+    nottoc,
+    notlof,
+    notlot
+]{tocbibind}
+
+\usepackage{changepage}
+\usepackage{titlesec}
+\usepackage{calc}
+
+\AfterEndPreamble{
+\titleformat{\part}
+{
+    \fontsize{40}{60}
+    \lsstyle
+    \bfseries
+}
+{}
+{}
+{\centering\thispagestyle{empty}}
+[]
+
+\titleformat*{\subsection}
+{ 
+    \sffamily
+    \bfseries
+}
+
+\titleformat*{\section}
+{ 
+    \sffamily
+    \bfseries
+    \Large
+}
+
+\titleformat{name=\chapter,numberless}
+%% FORMAT
+{
+    \sffamily
+    \bfseries
+}
+% LABEL
+{} 
+% SEP
+{ 0pt } 
+%% BEFORE CODE
+{
+    \hspace{-1.45eM}\Huge
+}
+[ %% AFTER CODE
+    \normalsize
+    \begin{adjustwidth}{-1eM}{-1eM}
+        \vspace{-1eM}\rule{\textwidth+2eM}{0.4pt}
+    \end{adjustwidth}
+]
+
+\titleformat{\chapter}
+{
+    \sffamily
+    \bfseries
+}
+{
+}
+{0pt}
+{
+    \hspace{-1.7eM}
+    \Huge
+    \thechapter.~
+}
+[
+    \normalsize
+    \begin{adjustwidth}{-1eM}{-1eM}
+        \vspace{-1eM}\rule{\textwidth+2eM}{0.4pt}
+    \end{adjustwidth}
+]
+}
+
+
+\usepackage[colorlinks= true,
+			linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            pdfborder={0 0 0},
+            unicode = true,
+            linktoc=all]{hyperref}
+
+
+%############################################################################
+%		Fancy header and footer
+%############################################################################
+\setlength{\headheight}{15.5pt}
+%\setlength{\footskip}{35.5pt}
+
+\pagestyle{fancy}
+\fancyheadoffset{1.0eM}				
+\renewcommand{\footrulewidth}{0.4pt}
+\lhead{}
+\rhead{}
+\chead{} % \leftmark for chapter, \rightmark for section
+\fancyhead[LE,RO]{\leftmark} % jobb megoldás páros páratlan oldalra
+\fancyhead[RE,LO]{\rightmark}
+\fancyfootoffset{1.0eM}				
+\renewcommand{\footrulewidth}{0.4pt}
+\cfoot{\thepage}
+\lfoot{}
+\rfoot{}
+
+\thispagestyle{fancy}	
+

@@ -1,0 +1,45 @@
+\documentclass[12pt,a4paper,twoside,openright]{book}
+
+\usepackage{preamble/packages}
+
+\begin{document}
+	
+\frontmatter
+\include{chapters/coverpage_new}
+\cleardoublepage{}
+\phantomsection\pdfbookmark[0]{Szakdolgozat feladatkiírás}{feladatlap}
+
+\include{chapters/declaration}
+\include{chapters/acknowledgements}
+\include{chapters/abstract_hu}
+
+\cleardoublepage{}
+\phantomsection{}
+\pdfbookmark[0]{TARTALOMJEGYZÉK}{toc}
+\tableofcontents
+
+\cleardoublepage{}
+\phantomsection{}
+\pdfbookmark[0]{ÁBRÁK JEGYZÉK}{lof}
+\listoffigures
+
+\cleardoublepage{}
+\phantomsection{}
+\pdfbookmark[0]{TÁBLÁZATOK JEGYZÉKE}{lot}
+\listoftables
+
+\mainmatter{}
+
+\include{chapters/chapter_introduction}
+\include{chapters/chapter_equation_of_motion}
+\include{chapters/chapter_conclusion}
+
+\appendix
+\include{chapters/appendix}
+\include{chapters/abstract_en}
+\backmatter{}
+
+\bibliographystyle{unsrt}
+\bibliography{bibliography}
+
+\end{document}

@@ -100,11 +100,11 @@ A paramétereket kifejtve~\eqref{eq:armature_circuit} és~\eqref{eq:rotor_dynami
 alakba írható át. A frekvenciatartománybeli vizsgálatokhoz felírható a rendszer 
 szög-nyomaték és szög-feszültség átviteli függvénye. Az állapottér modellt felhasználva
 \begin{align}\label{eq:transfer_generic}
-    \frac{Y(s)}{U(s)} = C{\left(sI-A\right)}^{-1}B+D
+    \frac{Y(s)}{U(s)} = \bm C{\left(s \bm I - \bm A\right)}^{-1} \bm B + D
 \end{align}
-általános formában, ahol $I$ az identitás mátrix. Behelyettesítve~\eqref{eq:state_space} és~\eqref{eq:state_space_out}
+általános formában, ahol $\bm I$ az identitás mátrix. Behelyettesítve~\eqref{eq:state_space} és~\eqref{eq:state_space_out}
 paramétereit~\eqref{eq:transfer_generic} felírható
-\begin{align}
+\begin{align}\label{eq:transfer_function}
     \begin{bmatrix}
         \frac{\theta(s)}{\tau(s)} \\ 
         \frac{\theta(s)}{V(s)} \\ 
@@ -119,13 +119,35 @@ paramétereit~\eqref{eq:transfer_generic} felírható
 alakban.
 
 \section{Egyenáramú motor stabilitása}
-
-\section{Feszültség-, és nyomatékválasz összehasonlítása}
+A szabályozókör visszacsatoló ágának megbomlása instabilitáshoz vezet, ha a 
+szabályozó vagy a szabályozott rendszer önmagában instabil. Ez a valós rendszernél 
+szaturációt eredményez, mely modell hiányában elkerülendő. A motor stabilitása ezért 
+egy rendszerkövetelmény, ami a karakterisztikus egyenletből meghatározható.
+Az~\eqref{eq:transfer_function}-es átviteli függvény alapján a karakterisztikus egyenlet
+\begin{align}
+    JLs^2 + \left(B_m L + JR\right)s + K_m^2 + B_m R = 0,
+\end{align}
+ahol a nullában elhelyezkedő pólussal átszorozva a szögsebesség a vizsgált kimenet.
+Ez a polinom valós együtthatókkal rendelkezik, így a Liénard–Chipart kritérium - a Routh-Hurwitz kritérium módosított
+alakja - segítségével a stabilitás szükséges és elégséges feltételei
+\begin{align}
+    JL>0,\quad B_m L + JR > 0,\quad K_m^2 + B_m R > 0.
+\end{align}
+A feltételekben megjelenő paraméterek mind pozitívak a valós rendszerben, így a rendszer
+önmagában aszimptotikusan stabil. Ezen felül linearitásából következik, hogy exponenciálisan stabil.
 
 \chapter{Szabályozó modellezése}\label{chap:controller}
 
 \section{Impedancia modell}
-
+Az eredményes ember-robot interakció érdekében a szabályozó előírása nem csupán 
+az elérni kívánt pozíció vagy kifejtett nyomaték, hanem a mozgásállapot és a kifejtett
+nyomaték közötti összefüggés. Ezt az összefüggést linearitása végett egy 
+tömeg-rugó-csillapitás modell adja meg a továbbiakban. A modell három paraméterrel
+\begin{align}
+    M_e \ddot \theta + B_e \dot \theta + K_e \theta = \tau,
+\end{align}
+ahol $M_e$ a rendszer előírt tehetetlensége, $B_e$ a viszkózus csillapítása, $K_e$ a rugóállandója 
+és $\tau$ a rendszerre ható külső nyomaték. 
 \section{Állapotmegfigyelő}
 Az állapotvisszacsatoláshoz szükséges belső állapotok közül csak a szögelfordulás
 áll rendelkezésre közvetlen mérésből. A többi állapotra egy megfigyelő ad becslést.
@@ -209,10 +231,19 @@ ahol
 mely tartalmazza a mért állapotot is.
 
 \section{Nyomaték kompenzáció}
+A modell két bemenete közül csak a feszültségre van hatással a 
+szabályozó. A külső nyomaték környezeti hatásokból ered. Az impedancia 
+modell mindkét bemenetre adott válasz alakját előírja, így a környezet 
+hatását a feszültség megváltoztatásával kell kompenzálni. Ez a kompenzáció
+csak akkor lehet eredményes, ha a rendszer feszültségre és külső nyomatékra 
+egyaránt közel azonos sebességgel reagál.~\eqref{eq:transfer_function} alapján
+a 
 
 \section{Szabályozó stabilitása}
 
 \chapter{Stabilitásvizsgálat időkéséssel}\label{chap:time_delay_stability}
+
+\section{Vizsgálati módszerek összehasonlítása}
 
 \section{Stabilitás folytonos időben}
 

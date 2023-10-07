@@ -61,8 +61,8 @@ BB = [Bt; Bt(2:end)];
 CC = eye(5);
 DD = zeros(5, 1);
 c2 = ss(AA, BB, CC, DD, 'InputName', {'a0'}, 'OutputName', {'a', 'w', 'i', 'ew', 'ei'}, 'StateName', {'a', 'w', 'i', 'ew', 'ei'});
-% O = s*eye(6) - AA;
-% vpa(subs(collect(CC/O*BB), s, 0))
+O = s*eye(5) - AA;
+vpa(subs(collect(CC/O*BB), s, 0))
 % tzero(c2(1))
 
 xl = [0, 5];

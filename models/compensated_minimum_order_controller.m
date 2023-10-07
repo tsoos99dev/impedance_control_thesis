@@ -3,7 +3,7 @@ syms s
 % Desired impedance model
 Me = 1;
 Be = 4;
-Ke = 10;
+Ke = 16;
 
 impedance_model = tf(Ke, [Me Be Ke]);
 Pe = pole(impedance_model)';
@@ -11,7 +11,7 @@ Pe = pole(impedance_model)';
 % Motor parameters
 % This has the biggest effect on how distorted 
 % the torque response is.
-J = 0.75;
+J = 0.5;
 
 Km = 0.01;
 Bm = 0.1;
@@ -75,9 +75,8 @@ BB = [Bt - Bv*kc; zeros(2, 1)];
 CC = eye(5);
 DD = zeros(5, 1);
 c2 = ss(AA, BB, CC, DD, 'InputName', {'a0'}, 'OutputName', {'a', 'w', 'i', 'ew', 'ei'}, 'StateName', {'a', 'w', 'i', 'ew', 'ei'});
-% O = s*eye(6) - AA;
-% vpa(subs(collect(CC/O*BB), s, 0))
-% tzero(c2(1))
+O = s*eye(5) - AA;
+vpa(subs(collect(CC/O*BB), s, 0))
 
 xl = [0, 5];
 subplot(3, 2, 1)
@@ -100,5 +99,3 @@ xlim(xl);
 subplot(3, 2, 6)
 pzmap(c2(1))
 xlim(xl);
-
-pc1

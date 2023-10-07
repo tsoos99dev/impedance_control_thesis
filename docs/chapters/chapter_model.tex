@@ -1,4 +1,4 @@
-\chapter{Modell}\label{chap:model}
+\chapter{Fizikai modell}\label{chap:physical_system}
 
 \section{Egyenáramú motor dinamikája}
 
@@ -7,39 +7,39 @@
 \phantomsection{}
 \includegraphics[width=\textwidth]{images/dc_motor_model.pdf}
 \caption{Egyenáramú motor áramkör és szabadtest ábra}
+\label{fig:dc_motor}
 \end{center}
 \end{figure}
 
-A felhasznált motor feltételezetten állandó gerjesztésű. A kifejtett nyomaték 
-a Biot-Savart-törvény szerint arányos a forgorészen átfolyó árammal. A forgórészben
-indukált feszültség pedig arányos a szögsebességével a Lenz-törvény alapján 
+A robot motorjának modelljét az~\ref{fig:dc_motor}-es ábra mutatja. A felhasznált motor feltételezetten állandó gerjesztésű. A kifejtett nyomaték 
+a Biot-Savart-törvény szerint arányos a forgórészen átfolyó árammal. A forgórészben
+indukált feszültség pedig arányos annak szögsebességével. A Lenz-törvény alapján 
 \begin{align}
-    \tau_m = K_\tau i \\
-    V_b = K_e \dot\theta
+    \tau_m = K_\tau i, \\
+    V_b = K_e \dot\theta,
 \end{align}
 ahol $K_\tau$ a nyomatékállandó, $K_e$ a sebesség-feszültség állandó, $\tau_m$ a kifejtett 
 nyomaték, $i$ a rotor árama, $V_b$ az rotorban indukált feszültség és $\dot\theta$ a rotor szögsebessége.
-Az energiamegmaradás törvénye alapján a két konstans értéke megegyezik
+Az energia-megmaradás törvénye alapján a két konstans értéke megegyezik
 \begin{align}
-    K_m = K_\tau = K_e
+    K_m = K_\tau = K_e,
 \end{align}
-így a következőkben $K_m$-ként jelennek meg. A forgorész áramkörére Kirchhoff I. törvénye alapján felírható
+így a következőkben $K_m$ paraméterként jelennek meg. A forgórész áramkörére Kirchhoff I. törvénye alapján felírható
 \begin{align}\label{eq:armature_circuit}
-    V - Ri - L\frac{di}{dt} - K_m\dot\theta = 0
+    V - Ri - L\frac{di}{dt} - K_m\dot\theta = 0,
 \end{align}
 ahol $R$ a forgórész tekercsének ellenállása, $L$ a tekercs induktivitása, 
 $K_m$ a motorállandó, $V$ a motor feszültsége, $i$ a motoráram és $\theta$ a szögelfordulás.
 A forgórészt mechanikailag egy merev testként tekintve Newton II. törvénye alapján
 \begin{align}\label{eq:rotor_dynamics}
-    J\ddot\theta = -B_m\dot\theta + K_m i + \tau
+    J\ddot\theta = -B_m\dot\theta + K_m i + \tau,
 \end{align}
 ahol $J$ a forgórész tehetetlensége, $B_m$ a viszkózus csillapítási együttható, 
 $K_m$ a motorállandó, $\theta$ a szögelfordulás, $i$ a motoráram és $\tau$ a forgórészre
 ható külső nyomaték. Ez a két lineáris differenciálegyenlet egyértelműen leírja a 
 rendszer időtartománybeli viselkedését.
-
-A további vizsgálathoz kedvezőbb a differenciálegyenleteket állapottérmodellként felírni.
-Egy állatopttérmodell általánosan
+A további vizsgálathoz kedvezőbb a differenciálegyenleteket állapottér modellként felírni.
+Egy állapottér modell általánosan
 \begin{align}\label{eq:state_space_generic}
     \dot{\bm x} = \bm A \bm x + \bm B \bm u
 \end{align}
@@ -48,7 +48,7 @@ Egy állatopttérmodell általánosan
 \end{align} 
 alakban írható fel. 
 A két bemenet a külső nyomaték és a motorra adott feszültség. A kimenet a forgórész szöge.
-A paramétereket kifejtve~\ref{eq:armature_circuit} és~\ref{eq:rotor_dynamics} alapján a modell
+A paramétereket kifejtve~\eqref{eq:armature_circuit} és~\eqref{eq:rotor_dynamics} alapján a modell
 \begin{align}\label{eq:state_space}
     \frac{d}{dt}
     \begin{bmatrix}
@@ -100,10 +100,10 @@ A paramétereket kifejtve~\ref{eq:armature_circuit} és~\ref{eq:rotor_dynamics} 
 alakba írható át. A frekvenciatartománybeli vizsgálatokhoz felírható a rendszer 
 szög-nyomaték és szög-feszültség átviteli függvénye. Az állapottér modellt felhasználva
 \begin{align}\label{eq:transfer_generic}
-    \frac{Y(s)}{U(s)} = C\left(sI-A\right)^{-1}B+D
+    \frac{Y(s)}{U(s)} = C{\left(sI-A\right)}^{-1}B+D
 \end{align}
-általánosan, ahol $I$ az identitás mátrix. Behelyettesítve~\ref{eq:state_space} és~\ref{eq:state_space_out}
-paramétereit~\label{eq:transfer_generic} felírható
+általános formában, ahol $I$ az identitás mátrix. Behelyettesítve~\eqref{eq:state_space} és~\eqref{eq:state_space_out}
+paramétereit~\eqref{eq:transfer_generic} felírható
 \begin{align}
     \begin{bmatrix}
         \frac{\theta(s)}{\tau(s)} \\ 
@@ -118,10 +118,18 @@ paramétereit~\label{eq:transfer_generic} felírható
 \end{align}
 alakban.
 
+\section{Egyenáramú motor stabilitása}
+
+\section{Feszültség-, és nyomatékválasz összehasonlítása}
+
+\chapter{Szabályozó modellezése}\label{chap:controller}
+
+\section{Impedancia modell}
+
 \section{Állapotmegfigyelő}
 Az állapotvisszacsatoláshoz szükséges belső állapotok közül csak a szögelfordulás
 áll rendelkezésre közvetlen mérésből. A többi állapotra egy megfigyelő ad becslést.
-Elkülönítve a mért és becsült állapotokat~\ref{eq:state_space_generic} és ~\ref{eq:state_space_generic_out} felírható
+Elkülönítve a mért és becsült állapotokat~\eqref{eq:state_space_generic} és~\eqref{eq:state_space_generic_out} felírható
 \begin{align}
     \begin{bmatrix}
         \dot\theta \\
@@ -162,7 +170,7 @@ a becsült paramétereket. Ezután legyen
     \begin{split}
     \hat{\bm A} &= \bm A_{bb} - \bm K_e \bm A_{\theta b} \\
     \hat{\bm B} &= \hat{\bm A} \bm K_e + \bm A_{b \theta} - \bm K_e A_{\theta \theta} \\
-    \hat{\bm F} &= \bm B_b - \bm K_e B_\theta
+    \hat{\bm F} &= \bm B_b - \bm K_e B_\theta,
     \end{split}
 \end{align}
 ahol $\hat{\bm A}$ a megfigyelő belső állapotának (továbbiakban $\tilde{\bm \eta}$) 
@@ -177,12 +185,12 @@ bemeneti mátrixai. A becsült állapotok és az állapotváltozók közötti ö
 alakban adható meg. A belső állapot dinamikája
 \begin{align}
     \begin{split}
-    \dot{\tilde{\bm \eta}} = \hat{\bm A} \tilde{\bm \eta} + \hat{\bm B} \theta + \hat{\bm F} u
+    \dot{\tilde{\bm \eta}} = \hat{\bm A} \tilde{\bm \eta} + \hat{\bm B} \theta + \hat{\bm F} u.
     \end{split}
 \end{align}
-Végül~\ref{eq:observer_out} átalakításával a rendszer becsült állapotvektora
+Végül~\eqref{eq:observer_out} átalakításával a rendszer becsült állapotvektora
 \begin{align}
-    \tilde{\bm x} = \hat{\bm C} \tilde{\bm \eta} + \hat{\bm D} \theta
+    \tilde{\bm x} = \hat{\bm C} \tilde{\bm \eta} + \hat{\bm D} \theta,
 \end{align}
 ahol
 \begin{align}
@@ -196,12 +204,21 @@ ahol
     \begin{bmatrix}
         1 \\
         \bm K_e
-    \end{bmatrix}
+    \end{bmatrix},
 \end{align}
 mely tartalmazza a mért állapotot is.
 
-\section{Impedancia szabályozó}
+\section{Nyomaték kompenzáció}
 
+\section{Szabályozó stabilitása}
+
+\chapter{Stabilitásvizsgálat időkéséssel}\label{chap:time_delay_stability}
+
+\section{Stabilitás folytonos időben}
+
+\section{Stabilitás diszkrét időben}
+
+\chapter{Kísérleti eredmények}\label{chap:experimental_results}
 
 \begin{figure}[ht]
 \begin{center}
@@ -217,4 +234,35 @@ mely tartalmazza a mért állapotot is.
 \end{center}
 \end{figure}
 
+\pagebreak
+A rúd differenciálegyenlete
+\begin{align}
+    \ddot\phi\left(t\right) - \frac{6g}{l}\phi\left(t\right) + 
+    \frac{6D}{ml}\dot\phi\left(t-\tau\right) + \frac{6P}{ml}\phi\left(t-\tau\right) = 0
+\end{align}
+A differenciálegyenlet Laplace transzformáltja
+\begin{align}
+    s^2\phi\left(s\right) - s\phi_0 - \dot\phi_0 - 
+    \frac{6g}{l}\phi\left(s\right) + 
+    \frac{6D}{ml}\left(se^{-s\tau}\phi\left(s\right)-\phi_{-\tau}\right) + 
+    \frac{6P}{ml}e^{-s\tau}\phi\left(s\right) = 0 
+\end{align}
+Kifejezve $\phi\left(s\right)$-t
+\begin{align}
+    \phi\left(s\right) = \frac{s\phi_0+\dot\phi_0+\frac{6D}{ml}\phi_{-\tau}}{s^2+\frac{6D}{ml}se^{-s\tau}+\frac{6P}{ml}e^{-s\tau}-\frac{6g}{l}}
+\end{align}
+A végérték frekvenciatartománybeli reprezentációban
+\begin{align}
+    \lim_{t \to \infty}\phi\left(t\right) = 
+    \lim_{s \to 0} \phi\left(s\right) = 
+    \frac{\dot\phi_0+\frac{6D}{ml}\phi_{-\tau}}{\frac{6P}{ml}-\frac{6g}{l}}
+\end{align}
+Az időkésést Taylor-sorral közelítve
+\begin{align}
+    \phi\left(t-\tau\right) = \phi\left(t-\right) - 
+    \frac{1}{1!}\dot\phi\left(t\right)\tau + 
+    \frac{1}{2!}\ddot\phi\left(t\right)\tau^2 - 
+    \frac{1}{3!}\dddot\phi\left(t\right)\tau^3 + \ldots
+\end{align}
+különböző rendű közelítéssekkel
 

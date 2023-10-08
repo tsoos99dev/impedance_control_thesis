@@ -121,7 +121,7 @@ alakban.
 \section{Egyenáramú motor stabilitása}
 A szabályozókör visszacsatoló ágának megbomlása instabilitáshoz vezet, ha a 
 szabályozó vagy a szabályozott rendszer önmagában instabil. Ez a valós rendszernél 
-szaturációt eredményez, mely modell hiányában elkerülendő. A motor stabilitása ezért 
+szaturációt eredményez, mely a jelen alkalmazás kontextusában nem elfogadható. A motor stabilitása ezért 
 egy rendszerkövetelmény, ami a karakterisztikus egyenletből meghatározható.
 Az~\eqref{eq:transfer_function}-es átviteli függvény alapján a karakterisztikus egyenlet
 \begin{align}
@@ -136,6 +136,57 @@ alakja - segítségével a stabilitás szükséges és elégséges feltételei
 A feltételekben megjelenő paraméterek mind pozitívak a valós rendszerben, így a rendszer
 önmagában aszimptotikusan stabil. Ezen felül linearitásából következik, hogy exponenciálisan stabil.
 
+\section{Irányíthatóság és megfigyelhetőség}
+A felhasznált aktuátorok és szenzorok minimalizálása érdekében egy bemenet és egy kimenet használata a cél. 
+Az impedancia modell teljes realizálásához további követelmény, hogy a rendszer szögelfordulása és szögsebessége
+irányítható legyen a bemeneti feszültség megváltoztatásával, és a szögelfordulás mérésével minden állapot 
+megfigyelhető legyen. Az~\eqref{eq:state_space_generic}-os állapottér modell alapján az irányíthatóság feltétele, hogy
+\begin{align}
+    \left[\begin{array}{c|c|c|c}
+        \bm{CB} & \bm{CAB} & \bm C \bm A^2 \bm B & \bm D
+    \end{array}\right]
+\end{align}
+legyen maximális rangú. Behelyettesítve~\eqref{eq:state_space} és~\eqref{eq:state_space_out} paramétereit a kimeneti mátrixot kiegészítve a szögsebességgel
+\begin{align}
+    \begin{bmatrix}
+        0 & 0 & \frac{K_m}{JL} & 0 \\
+        0 & \frac{K_m}{JL} & -\frac{K_m\left(B_m L + JR\right)}{J^2L^2} & 0
+    \end{bmatrix},
+\end{align}
+redukált lépcsős alakban
+\begin{align}
+    \begin{bmatrix}
+        0 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 0
+    \end{bmatrix},
+\end{align}
+mely mátrix rangja megegyezik sorainak számával, így az irányíthatósági feltétel teljesül. Az előzőekhez hasonlóan a 
+megfigyelhetőség feltétele, hogy
+\begin{align}
+    \left[\begin{array}{c}
+        \bm{C} \\ \hline
+        \bm{CA} \\ \hline
+        \bm C \bm A^2
+    \end{array}\right]
+\end{align}
+legyen maximális rangú, ahol $\bm C$ csupán a szöglfordulást tartalmazza. Ismét behelyettesítve
+~\eqref{eq:state_space} és~\eqref{eq:state_space_out} paramétereit
+\begin{align}
+    \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & -\frac{B_m}{J} & \frac{K_m}{J}
+    \end{bmatrix},
+\end{align}
+redukált lépcsős alakban
+\begin{align}
+    \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1
+    \end{bmatrix},
+\end{align}
+tehát a rendszer minden állapota megfigyelhető a szögelfordulás méréséből.
 \chapter{Szabályozó modellezése}\label{chap:controller}
 
 \section{Impedancia modell}

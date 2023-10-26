@@ -33,7 +33,10 @@
 \onehalfspacing{}
 
 \usepackage{emptypage}
-\usepackage{booktabs}			
+\usepackage{booktabs}	
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{arydshln}		
 \usepackage{lipsum}
 
 \usepackage[
@@ -131,14 +134,16 @@
 \setlength{\headheight}{15.5pt}
 %\setlength{\footskip}{35.5pt}
 
+\renewcommand{\chaptermark}[1]{\markboth{\arabic{chapter}.\ \uppercase{#1}}{}}
 \pagestyle{fancy}
 \fancyheadoffset{1.0eM}				
 \renewcommand{\footrulewidth}{0.4pt}
 \lhead{}
 \rhead{}
 \chead{} % \leftmark for chapter, \rightmark for section
-\fancyhead[LE,RO]{\leftmark} % jobb megoldás páros páratlan oldalra
-\fancyhead[RE,LO]{\rightmark}
+\fancyhead[LE]{\leftmark} % jobb megoldás páros páratlan oldalra
+\fancyhead[RO]{\rightmark}
+\fancyhead[LO,RE]{}
 \fancyfootoffset{1.0eM}				
 \renewcommand{\footrulewidth}{0.4pt}
 \cfoot{\thepage}

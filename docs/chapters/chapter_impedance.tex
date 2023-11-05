@@ -1,0 +1,12 @@
+\chapter{Impedancia modell}\label{impedance_model}
+Az eredményes ember-robot interakció érdekében a szabályozó előírása nem csupán 
+az elérni kívánt pozíció vagy kifejtett nyomaték, hanem a mozgásállapot és a kifejtett
+nyomaték közötti összefüggés. Ezt az összefüggést (linearitása végett) egy 
+tömeg-rugó-csillapitás modell adja meg a továbbiakban, mely a következő alakban
+írható fel: 
+\begin{align}
+    M_\RM e \ddot \theta + B_\RM e \dot \theta + K_\RM e \theta = \tau_\RM e\,.
+\end{align}
+A modell három paraméterrel rendelkezik, ahol $M_\RM e$ a rendszer előírt tehetetlensége, 
+$B_\RM e$ a viszkózus csillapítása, $K_\RM e$ a rugóállandója és $\tau_\RM e$ a rendszerre ható 
+külső nyomaték. 

@@ -3,6 +3,10 @@
 \usepackage{styles}
 
 \begin{document}
+
+\newcommand{\RM}[1]{\mathrm{#1}}
+\newcommand{\BF}[1]{\mathbf{#1}}
+\newcommand{\DIFF}[2]{\frac{\RM d #1}{\RM d #2}}
 	
 \frontmatter
 \include{chapters/coverpage_new}
@@ -31,7 +35,11 @@
 \mainmatter{}
 
 \include{chapters/chapter_introduction}
+\include{chapters/chapter_impedance}
 \include{chapters/chapter_model}
+\include{chapters/chapter_observability}
+\include{chapters/chapter_observer}
+\include{chapters/chapter_controllability}
 \include{chapters/chapter_controller}
 \include{chapters/chapter_stability}
 \include{chapters/chapter_experiment}

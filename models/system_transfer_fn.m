@@ -8,6 +8,7 @@ Bv = B(:, 2);
 C = [1 0 0];
 D = [0 0];
 
+det(s*eye(3) - A)
 tf = collect(C/(s*eye(3) - A)*B, s)
 
 

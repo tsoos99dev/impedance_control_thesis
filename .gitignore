@@ -4,3 +4,11 @@ docs/.$impedance_control.drawio.bkp
 docs/out
 docs/.$impedance_control.drawio.dtmp
 docs/impedance_control.pdf
+docs/tmp
+docs/impedance_control.synctex
+docs/_corrections
+.directory
+**/.directory
+**/latexmkrc
+**/.ipynb_checkpoints
+

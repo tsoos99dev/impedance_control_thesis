@@ -117,6 +117,71 @@
 }
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIBLIO
+\usepackage{csquotes}
+\usepackage[citestyle=numeric-comp,
+bibstyle=numeric-comp,
+maxbibnames=99,
+sorting=nyt,
+url=true,
+natbib=true,
+backend=biber,
+defernumbers=true,
+giveninits=true,         % given names initials only!
+uniquename=init,
+mincitenames=1, maxcitenames=1, 
+uniquelist=true,
+]{biblatex} % Load the package with some options.
+\DeclareNameAlias{author}{family-given} % family names first
+\DeclareFieldFormat{doi}{% putting doi in one new line instead of breaking it...
+    \hfil\penalty90\hfilneg
+    \mbox{\mkbibacro{DOI}\addcolon\space
+        \ifhyperref
+        {\href{https://dx.doi.org/#1}{\nolinkurl{#1}}}
+        {\nolinkurl{#1}}}}
+\DeclareFieldFormat{url}{% putting doi in one new line instead of breaking it...
+    \hfil\penalty90\hfilneg
+    \mbox{\mkbibacro{URL}\addcolon\space
+        \ifhyperref
+        {\href{https://#1}{\nolinkurl{#1}}}
+        {\nolinkurl{#1}}}}
+\DeclareFieldFormat{isbn}{% putting doi in one new line instead of breaking it...
+    \hfil\penalty90\hfilneg%
+    \mbox{\mkbibacro{ISBN}\addcolon\space%
+        #1}}
+\DeclareFieldFormat{issn}{% putting doi in one new line instead of breaking it...
+    \hfil\penalty90\hfilneg%
+    \mbox{\mkbibacro{ISSN}\addcolon\space%
+        #1}}
+\DeclareFieldFormat{eventtitle}{\textit{#1}}
+\setlength{\bibitemsep}{1em plus 2pt}
+%\DeclareSortingTemplate{ymnt}{
+    %    \sort{
+        %        \field[strside=left,strwidth=4]{sortyear}
+        %        \field[strside=left,strwidth=4]{year}
+        %        \literal{9999}
+        %    }
+    %    \sort{
+        %        \field{sortkey}
+        %        \literal{9999}
+        %    }
+    %    \sort{
+        %        \field{sortname}
+        %        \field{author}
+        %        \field{editor}
+        %        \field{translator}
+        %        \field{sorttitle}
+        %        \field{title}
+        %    }
+    %    \sort{
+        %        \field{sorttitle}
+        %        \field{title}
+        %    }
+    %}
+\addbibresource{bibliography.bib}
+
+% HYPERREF
 \usepackage[colorlinks= true,
 			linkcolor = blue,
             urlcolor  = blue,

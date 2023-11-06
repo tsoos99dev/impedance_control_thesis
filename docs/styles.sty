@@ -14,8 +14,8 @@
 %############################################################################
 %         FONT
 %############################################################################
-\usepackage{t1enc}
 \usepackage{newpxtext,newpxmath}
+\usepackage[T1]{fontenc}
 \usepackage{microtype}    
 \usepackage{relsize}      
 
@@ -182,10 +182,12 @@ uniquelist=true,
 \addbibresource{bibliography.bib}
 
 % HYPERREF
+\usepackage[usenames,dvipsnames,rgb]{xcolor}
+\definecolor{bme_red}{RGB}{139,37,50}
 \usepackage[colorlinks= true,
-			linkcolor = blue,
-            urlcolor  = blue,
-            citecolor = blue,
+			linkcolor = bme_red,
+            urlcolor  = bme_red,
+            citecolor = bme_red,
             pdfborder={0 0 0},
             unicode = true,
             linktoc=all]{hyperref}
@@ -199,7 +201,7 @@ uniquelist=true,
 \setlength{\headheight}{15.5pt}
 %\setlength{\footskip}{35.5pt}
 
-\renewcommand{\chaptermark}[1]{\markboth{\arabic{chapter}.\ \uppercase{#1}}{}}
+\renewcommand{\chaptermark}[1]{\markboth{\arabic{chapter}.\ \MakeUppercase{#1}}{}}
 \pagestyle{fancy}
 \fancyheadoffset{1.0eM}				
 \renewcommand{\footrulewidth}{0.4pt}

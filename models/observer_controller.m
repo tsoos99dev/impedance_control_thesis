@@ -59,6 +59,8 @@ O = s*eye(6) - AA;
 vpa(subs(collect(CC/O*BB), s, 0))
 tzero(c2(1))
 
+palette = ["#79addc" "#ffc09f" "#ffee93" "#fcf5c7" "#adf7b6"];
+
 xl = [0, 5];
 subplot(3, 2, 1)
 step(impedance_model)

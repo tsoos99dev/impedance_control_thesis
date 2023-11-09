@@ -1,5 +1,93 @@
 \chapter{Szabályozó modellezése}\label{chap:controller}
 
+Az~\ref{chap:observer}.\ fejezetben levezetett állapotmegfigyelő és a szögelfordulás közvetlen mérése
+együtt a rendszer teljes állapotvektorát elérhetővé teszi. Az impedancia modell által előírt dinamikai összefüggés
+első lépésben teljes állapotvisszacsatolással biztosítható. A rendszer pólusai a~\ref{chap:controllability}.\ fejezetben
+vizsgált irányíthatósági feltétel teljesülése miatt szabadon áthelyezhetők.
+
+\section{Pozíció szabályozás}
+Az előírt modell két független változót is tartalmaz, a pólusáthelyezés viszont egyetlen bemenetre 
+alkalmazható. Jelen esetben a szögelfordulásra és a külső nyomatékra adott válasz csak az amplitúdóban
+tér el. Ezt kihasználva először kizárólag a szögelfordulás referencia jelére előírt válasz alapján 
+kerülnek áthelyezésre a pólusok. Teljes állapotvisszacsatolás esetén a motorra kapcsolt feszültség
+\begin{align}\label{eq:position_control_voltage}
+    V = \BF K \tilde{\BF x} + k_1 \theta_\RM r
+\end{align}
+összefüggéssel adható meg, 
+ahol $\BF K$ az állapotvisszacsatolási mátrix, 
+$k_1$ a az állapotvisszacsatolási mátrix első eleme és 
+$\theta_\RM r$ az előírt szögelfordulás. Az~\eqref{eq:position_control_voltage} egyenletet felhasználásával
+az~\eqref{eq:state_space_generic} állapottér modell belső állapotának dinamikája
+\begin{align}\label{eq:position_control_law_state}
+    \dot{\BF x} = \BF A \BF x + \BF B_\RM V\left[-\BF K \tilde{\BF x} + k_1 \theta_r\right] + \BF B_\RM \tau \tau_\RM e,
+\end{align}
+alakban írható át. A $\BF B$ mátrix oszlopai elkülönítve $\BF B_\RM V$ és $\BF B_\RM \tau$ paraméterekként jelennek meg.
+Bevezetve a valós és becsült állapot közötti hibát, mint
+\begin{align}
+    \BF e = \BF x_\RM b - \tilde{\BF x}_\RM b,
+\end{align}
+az~\eqref{eq:position_control_law_state} egyenlet a becsült a állapotok vektorának kiküszöbölésével
+\begin{align}
+    \dot{\BF x} = \left(\BF A - \BF B_\RM V \BF K\right) \BF x + 
+    \BF B_\RM V \BF K_\RM b \BF e + 
+    \BF B_\RM \tau \tau + 
+    \BF B_\RM V k_1 \theta_\RM r,
+\end{align}
+alakra hozható. A valós és becsült állapot közötti hiba dinamikája~\eqref{eq:observer_state} felhasználásával
+\begin{equation}
+    \begin{split}
+    \dot{\BF x}_\RM b &= \BF A_\RM{ba} x_\RM a + \BF A_\RM{bb} \BF x_\RM b + 
+    \BF B_\RM{Vb} V + \BF B_\RM{\tau b} \tau_\RM e\,,\\
+    \dot{\tilde{\BF x}}_\RM b &= \left(\BF A_\RM{bb} - \BF K_\RM e \BF A_\RM{ab}\right) \tilde{\BF x}_\RM b +
+    \BF A_\RM{ba} x_\RM a +
+    \BF K_\RM e \BF A_\RM{ab} \BF x_\RM b +
+    \BF B_\RM{Vb} V + \BF B_\RM{\tau b} \tau\,,
+    \end{split}
+\end{equation}
+melyeket kivonva egymásból
+\begin{align}
+    \dot{\BF e} = \left(\BF A_\RM{bb} - \BF K_\RM e \BF A_\RM{ab}\right) \BF e\,.
+\end{align}
+A rendszer dinamikája blokk mátrix alakban
+\begin{align}
+    \begin{bmatrix}
+        \dot{\BF x} \\
+        \dot{\BF e}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \BF A - \BF B_\RM V \BF K & \BF B_\RM V \BF K_\RM b \\
+        \BF 0 & \BF A_\RM{bb} - \BF K_\RM e \BF A_\RM{ab}
+    \end{bmatrix}
+    \begin{bmatrix}
+        \BF x \\
+        \BF e
+    \end{bmatrix}
+    +
+    \begin{bmatrix}
+        \BF B_\RM \tau & \BF B_\RM V k_1\\
+        \BF 0 & \BF 0
+    \end{bmatrix}
+    \begin{bmatrix}
+        \tau \\
+        \theta_\RM r
+    \end{bmatrix}.
+\end{align}
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/observer_controller_pos_resp.png}
+    \caption{Az impedancia modell és a szabályozó összehasonlítása pozíció egységugrás bemenetre}\label{fig:observer_controller_pos_resp}
+    \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/observer_controller_torque_resp.png}
+    \caption{Az impedancia modell és a szabályozó összehasonlítása külső nyomaték egységugrás bemenetre}\label{fig:observer_controller_torque_resp}
+    \end{center}
+\end{figure}
+
 
 \section{Nyomaték kompenzáció}
 A modell két bemenete közül csak a feszültségre van hatással a 
@@ -20,61 +108,57 @@ blokkdiagramját az~\ref{fig:block_diagram_direct_compensation}-es ábra mutatja
 A teljes rendszer dinamikája az~\eqref{eq:state_space}-es állapottér modell és az ~\eqref{eq:observer}-es 
 állapotmegfigyelő összekapcsolásával írható le, a következő visszacsatolási összefüggéssel
 \begin{align}
-    V = -\bm K \tilde{\bm x} -K_c \tau + k_1 \theta_r,
+    V = -\BF K \tilde{\BF x} -K_c \tau + k_1 \theta_r,
 \end{align}
-ahol $\bm K$ az állapot visszacsatolási mátrix, $K_c$ a nyomaték kompenzációs együttható,
+ahol $\BF K$ az állapot visszacsatolási mátrix, $K_c$ a nyomaték kompenzációs együttható,
 $k_1$ a az állapot visszacsatolási mátrix első eleme és $\theta_r$ az előírt szögelfordulás.
 Behelyettesítve~\eqref{eq:state_space}-ba
 \begin{align}\label{eq:state_control_law_subs}
-    \dot{\bm x} = \bm A \bm x + \bm B_V\left[-\bm K \tilde{\bm x} -K_c \tau + k_1 \theta_r\right] + \bm B_\tau \tau,
+    \dot{\BF x} = \BF A \BF x + \BF B_V\left[-\BF K \tilde{\BF x} -K_c \tau + k_1 \theta_r\right] + \BF B_\tau \tau,
 \end{align}
-ahol a bemeneti mátrix $\bm B$ oszlopai elkülönítve $\bm B_V$ és $\bm B_\tau$ paraméterként jelennek meg.
-Bevezetve a valós és becsült állapot közötti hibát, mint
-\begin{align}
-    \bm e = \bm x - \tilde{\bm x},
-\end{align}
+ahol a bemeneti mátrix 
 ~\eqref{eq:state_control_law_subs} a következő alakra hozható
 \begin{align}
-    \dot{\bm x} = \left(\bm A - \bm B_V \bm K\right) \bm x + 
-    \bm B_V \bm K \bm e + 
-    \left(\bm B_\tau - \bm B_V K_c\right) \tau + 
-    \bm B_V k_1 \theta_r,
+    \dot{\BF x} = \left(\BF A - \BF B_V \BF K\right) \BF x + 
+    \BF B_V \BF K \BF e + 
+    \left(\BF B_\tau - \BF B_V K_c\right) \tau + 
+    \BF B_V k_1 \theta_r,
 \end{align}
 a becsült állapot kiküszöbölésével. A valós és becsült állapot közötti eltérés dinamikája 
 pedig~\eqref{eq:observer} felhasználásával
 \begin{align}
-    \dot{\bm x}_b = \bm A_{b\theta} x_\theta + \bm A_{bb} \bm x_b + 
-    \bm B_{bB} V + \bm B_{b\tau} \tau,
+    \dot{\BF x}_b = \BF A_{b\theta} x_\theta + \BF A_{bb} \BF x_b + 
+    \BF B_{bB} V + \BF B_{b\tau} \tau,
 \end{align}
 \begin{align}
-    \dot{\tilde{\bm x}}_b = \left(\bm A_{bb} - \bm K_e \bm A_{\theta b}\right) \tilde{\bm x}_b +
-    \bm A_{b\theta} x_\theta +
-    \bm K_e \bm A_{\theta b} \bm x_b +
-    \bm B_{bB} V + \bm B_{b\tau} \tau,
+    \dot{\tilde{\BF x}}_b = \left(\BF A_{bb} - \BF K_e \BF A_{\theta b}\right) \tilde{\BF x}_b +
+    \BF A_{b\theta} x_\theta +
+    \BF K_e \BF A_{\theta b} \BF x_b +
+    \BF B_{bB} V + \BF B_{b\tau} \tau,
 \end{align}
 melyeket kivonva egymásból
 \begin{align}
-    \dot{\bm e} = \left(\bm A_{bb} - \bm K_e \bm A_{\theta b}\right) \bm e.
+    \dot{\BF e} = \left(\BF A_{bb} - \BF K_e \BF A_{\theta b}\right) \BF e.
 \end{align}
 A rendszer dinamikája blokk mátrix alakban
 \begin{align}
     \begin{bmatrix}
-        \dot{\bm x} \\
-        \dot{\bm e}
+        \dot{\BF x} \\
+        \dot{\BF e}
     \end{bmatrix}
     =
     \begin{bmatrix}
-        \bm A - \bm B_V \bm K & \bm B_V \bm K \\
-        \bm 0 & \bm A_{bb} - \bm K_e \bm A_{\theta b}
+        \BF A - \BF B_V \BF K & \BF B_V \BF K \\
+        \BF 0 & \BF A_{bb} - \BF K_e \BF A_{\theta b}
     \end{bmatrix}
     \begin{bmatrix}
-        \bm x \\
-        \bm e
+        \BF x \\
+        \BF e
     \end{bmatrix}
     +
     \begin{bmatrix}
-        \bm B_\tau - \bm B_V K_c & \bm B_V k_1\\
-        \bm 0 & \bm 0
+        \BF B_\tau - \BF B_V K_c & \BF B_V k_1\\
+        \BF 0 & \BF 0
     \end{bmatrix}
     \begin{bmatrix}
         \tau \\
@@ -92,10 +176,10 @@ az~\ref{fig:block_diagram_indirect_compensation}-es ábra mutatja a teljes blokk
 \end{figure}
 Ekkor egy becsült nyomaték érték kerül visszacsatolásra, melyeket
 \begin{align}
-    \tilde \tau = J \ddot \theta_s - \bm C_{\ddot\theta} \bm A \tilde{\bm x}
+    \tilde \tau = J \ddot \theta_s - \BF C_{\ddot\theta} \BF A \tilde{\BF x}
 \end{align}
 \begin{align}
-    \bm C_{\ddot\theta} = 
+    \BF C_{\ddot\theta} = 
     \begin{bmatrix}
         0 & 1 & 0
     \end{bmatrix}
@@ -103,27 +187,27 @@ Ekkor egy becsült nyomaték érték kerül visszacsatolásra, melyeket
 alakban, a becsült állapot és a mért szöggyorsulás kombinációjával adható meg.
 A feszültségjel a becsült nyomatékértékkel
 \begin{align}
-    V = -\bm K \tilde{\bm x} -K_c \tilde \tau + k_1 \theta_r.
+    V = -\BF K \tilde{\BF x} -K_c \tilde \tau + k_1 \theta_r.
 \end{align}
 Az előző levezetéshez hasonlóan a teljes rendszer dinamikája blokk mátrix alakban
 % \begin{align}
 %     \begin{bmatrix}
-%         \dot{\bm x} \\
-%         \dot{\bm e}
+%         \dot{\BF x} \\
+%         \dot{\BF e}
 %     \end{bmatrix}
 %     =
 %     \begin{bmatrix}
-%         \bm A - \bm B_V \bm K & \bm B_V \bm K \\
-%         \bm 0 & \bm A_{bb} - \bm K_e \bm A_{\theta b}
+%         \BF A - \BF B_V \BF K & \BF B_V \BF K \\
+%         \BF 0 & \BF A_{bb} - \BF K_e \BF A_{\theta b}
 %     \end{bmatrix}
 %     \begin{bmatrix}
-%         \bm x \\
-%         \bm e
+%         \BF x \\
+%         \BF e
 %     \end{bmatrix}
 %     +
 %     \begin{bmatrix}
-%         \bm B_\tau - \bm B_V K_c & \bm B_V k_1\\
-%         \bm 0 & \bm 0
+%         \BF B_\tau - \BF B_V K_c & \BF B_V k_1\\
+%         \BF 0 & \BF 0
 %     \end{bmatrix}
 %     \begin{bmatrix}
 %         \tau \\
@@ -136,19 +220,18 @@ Az előző levezetéshez hasonlóan a teljes rendszer dinamikája blokk mátrix 
 Ez a kompenzáció
 csak akkor lehet eredményes, ha a rendszer feszültségre és külső nyomatékra 
 egyaránt közel azonos sebességgel reagál.
-\begin{figure}[ht]
-    \begin{center}
-    \includegraphics[width=\textwidth]{images/step_response.png}
-    \caption{Külső nyomatékra és feszültségre adott válasz összehasonlítása, 
-    $J = 0.01 \left[kg\cdot m^2\right]$,
-    $K_m = 0.01 \left[kg\cdot \frac{m^2}{s^2}\right]$,
-    $B_m = 0.1 \left[kg\cdot \frac{m^2}{s}\right]$,
-    $L = 0.5 \left[H\right]$,
-    $R = 1 \left[\Omega\right]$}\label{fig:step_response}
-    \end{center}
-\end{figure}
-Az eltérő válaszokat 
-szemlélteti~\ref{fig:step_response}-es ábra, mely az~\eqref{eq:transfer_function}-es
+% \begin{figure}[ht]
+%     \begin{center}
+%     \includegraphics[width=\textwidth]{images/step_response.png}
+%     \caption{Külső nyomatékra és feszültségre adott válasz összehasonlítása, 
+%     $J = 0.01 \left[kg\cdot m^2\right]$,
+%     $K_m = 0.01 \left[kg\cdot \frac{m^2}{s^2}\right]$,
+%     $B_m = 0.1 \left[kg\cdot \frac{m^2}{s}\right]$,
+%     $L = 0.5 \left[H\right]$,
+%     $R = 1 \left[\Omega\right]$}\label{fig:step_response}
+%     \end{center}
+% \end{figure}
+Az eltérő válaszokat szemlélteti~\ref{fig:step_response}-es ábra, mely az~\eqref{eq:transfer_function}-es
 egyenletben szereplő átviteli függvények alapján a szögsebesség egységugrásra adott válaszát mutatja. 
 A két válasz végértékét egységnyire normalizálva jeleníti meg az ábra a fefutási idő 
 összehasonlításának megkönnyítése érdekében. 

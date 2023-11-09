@@ -39,10 +39,10 @@ motor = ss(A, B, C, D, 'InputName', {'t', 'V'}, 'OutputName', 'a', 'StateName', 
 K = place(A, Bv, P);
 Ka = K(1);
 Kb = K(2:end);
-Kee = place(Abb', Aab', Po)';
+Ke = place(Abb', Aab', Po)';
 
 % Observer-controller dynamics
-AA = [A-Bv*K Bv*Kb; zeros(2, 3) Abb-Kee*Aab];
+AA = [A-Bv*K Bv*Kb; zeros(2, 3) Abb-Ke*Aab];
 BB = [Bv*K(1); zeros(2, 1)];
 CC = eye(5);
 DD = zeros(5, 1);
@@ -56,7 +56,7 @@ pc1 = pole(c1);
 % ss2tf(AA, BB, CC, DD)
 
 % Disturbance response
-AA = [A-Bv*K Bv*Kb; zeros(2, 3) Abb-Kee*Aab];
+AA = [A-Bv*K Bv*Kb; zeros(2, 3) Abb-Ke*Aab];
 BB = [Bt; Bt(2:end)];
 CC = eye(5);
 DD = zeros(5, 1);
@@ -115,9 +115,8 @@ set(gca, 'FontName', 'Helvetica');
 hold on;
 
 tmax = 5;
-yline(1/Ke, '--', Color='black', LineWidth=2, Alpha=0.2)
-yline(dcgain(c2(1)), '--', Color='black', LineWidth=2, Alpha=0.2)
-[y, t] = step(impedance_model/Ke, tmax);
+yline(1, '--', Color='black', LineWidth=2, Alpha=0.2)
+[y, t] = step(impedance_model, tmax);
 s1 = plot(t, y, 'Color', palette(1), 'LineWidth', 2);
 [y, t] = step(c2(1), tmax);
 s2 = plot(t, y, 'Color', palette(2), 'LineWidth', 2);

@@ -4,14 +4,14 @@ ha megfelelő bemeneti feszültség alkalmazásával eljutttatható az előírt 
 Az~\eqref{eq:state_space_generic}-os állapottér modell alapján a kimeneti irányíthatóság feltétele, hogy
 \begin{align}\label{eq:observability_generic}
     \left[\begin{array}{c|c|c|c}
-        \bm{CB} & \bm{CAB} & \bm C \bm A^2 \bm B & \bm D
+        \BF{CB} & \BF{CAB} & \BF C \BF A^2 \BF B & \BF D
     \end{array}\right]
 \end{align}
 legyen maximális rangú. Ez csak egy szükséges, de nem elégséges feltétele az impedancia modell alkalmazhatóságának.
 Felhasználva~\eqref{eq:state_space} paramétereit a~\eqref{eq:observability_generic}-es feltételben szereplő mátrix
 \begin{align}
     \begin{bmatrix}
-        0 & 0 & \frac{K_m}{JL} & 0
+        0 & 0 & \frac{K_\RM m}{JL} & 0
     \end{bmatrix},
 \end{align}
 alakba írható át. Továbbá ez a mátrix redukált lépcsős alakban

@@ -1,23 +1,27 @@
 \chapter{Irányíthatóság}\label{chap:controllability}
 A szabályozó akkor tudja követni a számára előírt impedancia modellt, 
 ha megfelelő bemeneti feszültség alkalmazásával eljutttatható az előírt állapotba. 
-Az~\eqref{eq:state_space_generic}-os állapottér modell alapján a kimeneti irányíthatóság feltétele, hogy
+Az~\eqref{eq:state_space_generic}-os állapottér modell alapján a teljes állapot irányíthatóság feltétele, hogy
 \begin{align}\label{eq:observability_generic}
-    \left[\begin{array}{c|c|c|c}
-        \BF{CB} & \BF{CAB} & \BF C \BF A^2 \BF B & \BF D
+    \left[\begin{array}{c|c|c}
+        \BF{B} & \BF{AB} & \BF A^2 \BF B
     \end{array}\right]
 \end{align}
 legyen maximális rangú. Ez csak egy szükséges, de nem elégséges feltétele az impedancia modell alkalmazhatóságának.
 Felhasználva~\eqref{eq:state_space} paramétereit a~\eqref{eq:observability_generic}-es feltételben szereplő mátrix
 \begin{align}
     \begin{bmatrix}
-        0 & 0 & \frac{K_\RM m}{JL} & 0
+        0 & 0 & \frac{K_\RM m}{JL} \\
+        0 & \frac{K_\RM m}{JL} & -\frac{K_\RM m\left(B_\RM m L + JR\right)}{J^2 L^2} \\
+        \frac{1}{L} & -\frac{R}{L^2} & -\frac{K^2_\RM m L + JR^2}{J L^3} \\
     \end{bmatrix},
 \end{align}
 alakba írható át. Továbbá ez a mátrix redukált lépcsős alakban
 \begin{align}
     \begin{bmatrix}
-        0 & 0 & 1 & 0
+        1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1 \\
     \end{bmatrix},
 \end{align}
 mely mátrix rangja megegyezik sorainak számával, így az irányíthatóság feltétele teljesül.

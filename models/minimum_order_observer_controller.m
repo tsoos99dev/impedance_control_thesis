@@ -28,8 +28,8 @@ C = [1 0 0];
 D = [0 0];
 
 % New poles
-P = [Pe -6];
-Po = -8 * [1 1.1];
+P = [Pe -8];
+Po = -8 * [1 1];
 
 motor = ss(A, B, C, D, 'InputName', {'t', 'V'}, 'OutputName', 'a', 'StateName', {'a', 'w', 'i'});
 % step(motor)

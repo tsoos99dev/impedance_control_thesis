@@ -4,7 +4,9 @@ syms po real
 
 sympref('PolynomialDisplayStyle','ascend');
 
-impedance_model = Ke/(s^2*Me + s*Be + Ke);
+pvalues = [0.5 1 0.01 0.01 0.1 0.008 0.032 0.128 -8];
+
+impedance_model = 1/(s^2*Me + s*Be + Ke);
 
 Aaa = 0;
 Aab = [1 0]; 
@@ -23,6 +25,7 @@ Cm = [Bv A*Bv A^2*Bv];
 K = [0 0 1]/Cm*pd;
 Ka = K(1);
 Kb = K(2:end);
+kc = (R+K(3))/Km-Ka/Ke;
 
 pd = (Abb')^2-2*Abb'*po + eye(2)*po^2;
 Cm = [Aab' Abb'*Aab'];
@@ -31,7 +34,7 @@ Kee = ([0 1]/Cm*pd)';
 % vpa(subs(Kee, [L R J Km Bm Me Be Ke po], [0.2 1 0.01 0.01 0.1 1 4 16 -2]))
 
 AA = [A-Bv*K Bv*Kb; zeros(2, 3) Abb-Kee*Aab];
-BB = [Bv*K(1); zeros(2, 1)];
+BB = [Bt - Bv*kc; zeros(2, 1)];
 CC = eye(5);
 DD = zeros(5, 1);
 
@@ -41,10 +44,10 @@ DD = zeros(5, 1);
 s1 = simplify(CC/(s*eye(5)-AA)*BB + DD);
 ds1 = s1(1);
 pretty(ds1)
-pretty(partfrac(ds1))
-pretty(simplify(ilaplace(ds1/s)))
-fplot(subs(ilaplace(ds1/s), [L R J Km Bm Me Be Ke po], [0.5 1 0.01 0.01 0.1 1 4 16 -8]), [0 5])
+% pretty(partfrac(ds1))
+% pretty(simplify(ilaplace(ds1/s)))
+fplot(subs(ilaplace(ds1/s), [L R J Km Bm Me Be Ke po], pvalues), [0 5])
 hold on;
-fplot(subs(ilaplace(impedance_model/s), [L R J Km Bm Me Be Ke po], [0.5 1 0.01 0.01 0.1 1 4 16 -8]), [0 5])
+fplot(subs(ilaplace(impedance_model/s), [L R J Km Bm Me Be Ke po], pvalues), [0 5])
 
-pretty(ilaplace(Ke/s/(Me*s^2+Be*s+Ke)))
+% pretty(ilaplace(Ke/s/(Me*s^2+Be*s+Ke)))

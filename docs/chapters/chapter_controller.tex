@@ -273,14 +273,70 @@ a motor és az impedancia modell paraméterei, valamint a rendszer válasza köz
     \end{center}
 \end{figure}
 
-
-
-A szabályozott rendszer 
-
-Az áthelyezett pólusok közül az első kettőt az impedancia modell
-előírt értékei határozzák meg. A harmadik paraméter, illetve a megfigyelő pólusai függetlenek, meghatározásukhoz az egységugrás bemenetre 
-adott válasz felfutási idejének és túllövésének relatív eltérése ad egy feltételt az impedancia modellhez 
-viszonyítva. Az impedancia modell felfutási ideje és túllövése:
+Először is az impedancia modell paraméterei mind valós pozitív értékkel kell rendelkezzenek, enélkül a rendszer 
+azonnal instabil lesz. Ez a Routh--Hurwitz kritérium alapján következik az impedancia modell karakterisztikus egyenletéből.
+Az áthelyezett pólusok közül az első kettőt az impedancia modell előírt értékei határozzák meg. 
+A harmadik áthelyezett pólus, illetve a megfigyelő pólusai függetlenek. A független pólusok meghatározásához 
+mindegyik azonos lesz és valós értékű. Ha a pólusok túl közel helyezkednek el az impedancia modell pólusaihoz,
+esetleg még a képzetes tengelyhez is közelebb vannak, akkor eltorzítják a választ. Ha túl nagy negatív valós
+értékkel rendelkeznek, az a szabályozó kimenetének szaturációjához vezet, illetve magát a szabályozót is
+instabillá teszik. Ennek elkerülése érdekében a lehető legkisebb abszolút értékű negatív valós pólus használata a cél. 
+A rendszer átviteli függvénye a pozíció referencia jelet tekintve:
 \begin{align}
-    a
+    \frac{\theta(s)}{\theta_\RM r (s)} = \frac{K_\RM e p}{(p-s)(M_\RM e s^2 + B_\RM e s + K_\RM e)}\,,
 \end{align}
+ahol \(p\) a keresett pólus. A pólus hatása közelíthető egy időkéséses taggal, mivel
+\begin{align}
+    e^{-\tau s} = 1 - \tau s + \cdots\,,
+\end{align}
+ahol \(\tau\) az időkésés, az átviteli függvény a következő késleltetett másodrendű rendszerrel közelíthető:
+\begin{align}
+    \frac{\theta(s)}{\theta_\RM r (s)} \approx \frac{K_\RM e}{M_\RM e s^2 + B_\RM e s + K_\RM e}e^{\frac{1}{p}s}\,,
+\end{align}
+tehát \(\tau = -\frac{1}{p}\) felhasználható a pólus maximumának meghatározásához. A továbbiakban 
+ez az időkésés a rendszer beállási idejének legfeljebb 5\%-ára lesz korlátozva, szóval a pólus legfeljebb:
+\begin{align}\label{eq:pole_selection_pos}
+    p_\RM{max} = -\frac{1}{\frac{4}{\zeta \omega_0}} \div 5\% = -\frac{B_\RM e}{8M_\RM e} \div 5\%
+\end{align}
+lesz. A külső nyomatékra adott válasz időtartománybeli vizsgálata további feltételekhez vezet. 
+Nem minden paraméterkombináció ad elfogadható választ, ahogy a~\ref{fig:observer_controller_torque_resp_direct}.
+ábrán is látszik. A rendszer átviteli függvénye a külső nyomaték jelet tekintve:
+\begin{align}
+    \frac{\theta(s)}{\tau_\RM e (s)} = 
+    \frac{Jp - M_\RM e s}{J(p-s)(M_\RM e s^2 + B_\RM e s + K_\RM e)} = 
+    \frac{1 -\frac{M_\RM e}{Jp} s}{(1-\frac{1}{p}s)(M_\RM e s^2 + B_\RM e s + K_\RM e)}\,,
+\end{align}
+hasonlóan az előző feltételhez a függvény közelíthető egy késleltetett másodrendű rendszerrel. A válaszban 
+megjelenik a bemenet deriváltja. Hatásának korlátozása ad újabb maximumot a független pólusok értékére. A 
+továbbiakban a bemeneti jel deriváltjának együtthatója legalább egy nagyságrenddel kisebb kell legyen egynél.
+Ebből következik, hogy a pólus értékének maximuma:
+\begin{align}\label{eq:pole_selection_torque}
+    p_\RM{max} = -10 \cdot \frac{M_\RM e}{J}
+\end{align}
+A két feltétel együtt azt eredményezi, hogy a pólus értéke abszolút értékben a lehető legkisebb, amikor
+az előírt tehetetlenség és a pólus értékének maximuma:
+\begin{equation}\label{eq:pole_selection_extremum}
+    \begin{split}
+        M'_\RM e &= 0.5 \cdot \sqrt{JB_\RM e}\,, \\
+        p'_\RM{max} &= -5 \cdot \sqrt{\frac{B_\RM e}{J}}\,.
+    \end{split}
+\end{equation}
+A szaturáció elkerüléséhez szükséges feltételek részletes vizsgálata túlmutat ezen a dolgozaton, azonban feltételezhetően 
+a pólusválasztásnál van egy minimum érték mely alatt a rendszer nem képes követni az impedancia modellt. Jelölje \(p_\RM{min}\) ezt a 
+minimumot. Ekkor az előírt tehetetlenség lehetséges értékei a~\eqref{eq:pole_selection_pos}. és a~\eqref{eq:pole_selection_torque} 
+egyenletekben szereplő feltételek szerint egy adott intervallumra korlátozódnak:
+\begin{align}
+    -\frac{B_\RM e}{8p_\RM{min}} \div 5\% < M_\RM e < -0.1 \cdot Jp_\RM{min}\,,
+\end{align}
+illetve az előírt viszkózus csillapítási együtthatóra is adódik egy maximális korlát~\eqref{eq:pole_selection_extremum} alapján:
+\begin{align}
+    B_\RM{e,max} = 25 \cdot Jp^2_\RM{min}\,,
+\end{align}
+ami felett nem választható ki olyan pólus, mely a követelményeknek megfelelő választ eredményez.
+
+Az impedancia modell előírt rugóállandójára az előző elemzés nem ad korlátot, viszont 
+ennek a paraméternek a növelésével növekszik a modell sajátfrekvenciája. Ez mindenképp 
+egyre nagyobb előrt gyorsulással jár, mely a motorra kapcsolt feszültség szaturációjához vezet.
+
+Az áthelyezett pólusok értékeinek függvényében a szabályozó önmagában instabil lehet. Mivel a rendszer szabályozás 
+nélkül instabil, mindenképp szükséges független biztonsági mechanizmus beépítése, így ennek az esetnek az elemzése elmarad. 

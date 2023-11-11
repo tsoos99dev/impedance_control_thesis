@@ -9,7 +9,7 @@ impedance_model = tf(Ke, [Me Be Ke]);
 Pe = pole(impedance_model)';
 
 % Motor parameters
-% This has the biggest effect on how distorted 
+% This has the biggest effect on how distorted
 % the torque response is.
 J = 0.01;
 
@@ -37,19 +37,19 @@ C = [1 0 0];
 D = [0 0];
 
 % New poles
-P = [Pe -6];
-Po = -8 * [1 1.1];
+P = [Pe -8];
+Po = -8 * [1 1];
 
 motor = ss(A, B, C, D, 'InputName', {'t', 'V'}, 'OutputName', 'a', 'StateName', {'a', 'w', 'i'});
 % step(motor)
 % ss2tf(A, B, C, D, 1)
 % ss2tf(A, B, C, D, 2)
 
-K = place(A, Bv, P);
+K = acker(A, Bv, P);
 Ka = K(1);
 Kb = K(2:end);
 
-Ko = place(Abb', Aab', Po)';
+Ko = acker(Abb', Aab', Po)';
 
 % Guarantees the correct torque response steady state value.
 kc = (R+K(3))/Km-Ka/Ke;

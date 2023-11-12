@@ -335,9 +335,21 @@ egyenletekben szereplő feltételek szerint egy adott intervallumra korlátozód
 \end{align}
 illetve az előírt viszkózus csillapítási együtthatóra is adódik egy maximális korlát~\eqref{eq:pole_selection_extremum} alapján:
 \begin{align}
-    B_\RM{e,max} = 25 \cdot Jp^2_\RM{min}\,,
+    B_\RM{e,max} = 0.04 \cdot Jp^2_\RM{min}\,,
 \end{align}
 ami felett nem választható ki olyan pólus, mely a követelményeknek megfelelő választ eredményez. 
+Egy adott \(p_\RM{min}\) minimum pólus értékre és \(J\) motor tehetetlenségre ábrázolja 
+a választható tehetetlenség - pólus párokat a~\ref{fig:observer_controller_param_limits}. ábra.
+A kontúrok konstans \(B_\RM e\) előírt viszkózus csillapítási tényezőket jelölnek a~\eqref{eq:pole_selection_pos}.
+egyenlet szerint.
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/observer_controller_param_limits.png}
+    \caption{Az előírható tehetetlenség és a független pólus közötti összefüggés}\label{fig:observer_controller_param_limits}
+    \end{center}
+\end{figure}
+
 Az előző feltételek alapján a pozíció referencia jelre és  külső nyomaték hatására is megfelelő válasz kapható.
 Egy ilyen válasz látható a~\ref{fig:observer_controller_pos_resp_direct_calib}. 
 és a~\ref{fig:observer_controller_torque_resp_direct_calib} ábrán. 

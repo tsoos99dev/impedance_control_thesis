@@ -84,8 +84,8 @@ s2 = plot(t, y, 'Color', palette(2), 'LineWidth', 2);
 % [y, t] = step(c2(1), tmax);
 % s3 = plot(t, y, 'Color', palette(2), 'LineWidth', 2);
 
-xlabel('Id\H o $[s]$', 'Interpreter', 'latex', 'FontSize', 16)
-ylabel('Sz\"ogelfordul\''as $\left[rad\right]$', 'Interpreter', 'latex', 'FontSize', 16)
+xlabel('Id\H o $[\mathrm{s}]$', 'Interpreter', 'latex', 'FontSize', 16)
+ylabel('Sz\"ogelfordul\''as $[\mathrm{rad}]$', 'Interpreter', 'latex', 'FontSize', 16)
 
 hLegend = legend([s1, s2], ...
     'Impedancia modell', 'Pozíció szabályozó', ...
@@ -113,8 +113,8 @@ s1 = plot(t, y, 'Color', palette(1), 'LineWidth', 2);
 [y, t] = step(c2(1), tmax);
 s2 = plot(t, y, 'Color', palette(2), 'LineWidth', 2);
 
-xlabel('Id\H o $[s]$', 'Interpreter', 'latex', 'FontSize', 16)
-ylabel('Sz\"ogelfordul\''as $\left[rad\right]$', 'Interpreter', 'latex', 'FontSize', 16)
+xlabel('Id\H o $[\mathrm{s}]$', 'Interpreter', 'latex', 'FontSize', 16)
+ylabel('Sz\"ogelfordul\''as $[\mathrm{rad}]$', 'Interpreter', 'latex', 'FontSize', 16)
 
 hLegend = legend([s1, s2], ...
     'Impedancia modell', 'Pozíció szabályozó', ...

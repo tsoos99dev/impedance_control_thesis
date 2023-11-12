@@ -106,8 +106,8 @@ Az alkalmazott paramétereket az~\ref{tab:observer_controller_pos_resp}. táblá
     \end{tabular}
 \end{table}
 
-Az áthelyezett pólusok \(P = [-2.00 - 3.46i~~-2.00 + 3.46i~~-6]\) 
-és a megfigyelő pólusai \(P_\RM o = [-8.00~~-8.10]\). Az első két áthelyezett pólust az impedancia modell
+Az áthelyezett pólusok \(P = [-2.00 - 3.46i~~-2.00 + 3.46i~~-8.00]\) 
+és a megfigyelő pólusai \(P_\RM o = [-8.00~~-8.00]\). Az első két áthelyezett pólust az impedancia modell
 határozza meg. A többi pólus meghatározásához szükséges feltételek vizsgálata a nyomatékválasz vizsgálata után következik.
 A pólusok alapján a visszacsatolási mátrixok az Ackermann formulával lettek meghatározva.
 
@@ -254,7 +254,12 @@ látható modell vizsgálata fog folytatódni.
 A kompenzáció csak akkor lehet eredményes, ha a modellezett motor feszültség és külső nyomaték hatására is 
 egyaránt közel azonos sebességgel reagál. A direkt nyomaték méréssel kompenzált modell válasza egységugrás
 bemenetre a~\ref{fig:observer_controller_pos_resp_direct}. és~\ref{fig:observer_controller_torque_resp_direct}. ábrán látható. 
-A felhasznált paramétereket továbbra is azonosak a kompenzálás nélküli modellnél alkalmazott paraméterekkel.  
+A felhasznált paraméterek továbbra is azonosak a kompenzálás nélküli modellnél alkalmazott paraméterekkel.
+A nyomaték kompenzációs együttható
+\begin{equation}
+    K_\RM c = \frac{R+k_3}{K_\RM m} - \frac{k_1}{K_\RM e}
+\end{equation}
+összefüggés szerint számolható, mely a szabályozott rendszer válasza végértékének a függvénye.
 A pozíció referencia jelre adott válasz változatlan, azonban a külső nyomatékra adott válasz végértéke már
 megegyezik az impedancia modell által előírt értékkel. A válaszban megfigyelhető túllövés kiküszöböléshez
 a motor és az impedancia modell paraméterei, valamint a rendszer válasza közötti kapcsolat további vizsgálata szükséges.
@@ -332,7 +337,45 @@ illetve az előírt viszkózus csillapítási együtthatóra is adódik egy maxi
 \begin{align}
     B_\RM{e,max} = 25 \cdot Jp^2_\RM{min}\,,
 \end{align}
-ami felett nem választható ki olyan pólus, mely a követelményeknek megfelelő választ eredményez.
+ami felett nem választható ki olyan pólus, mely a követelményeknek megfelelő választ eredményez. 
+Az előző feltételek alapján a pozíció referencia jelre és  külső nyomaték hatására is megfelelő válasz kapható.
+Egy ilyen válasz látható a~\ref{fig:observer_controller_pos_resp_direct_calib}. 
+és a~\ref{fig:observer_controller_torque_resp_direct_calib} ábrán. 
+Az alkalmazott paramétereket a~\ref{tab:observer_controller_pos_resp_calib}. táblazat tartalmazza.
+
+\begin{table}[ht]
+    \small\centering
+    \caption{A kalibrált szabályozónál alkalmazott paraméterek}\label{tab:observer_controller_pos_resp_calib}
+    \tabcolsep=1pt
+    \begin{tabular}{l>{~}l>{\quad}rl}
+        \toprule
+        \multicolumn{2}{c}{Szimbólum és paraméter név} & \multicolumn{2}{c}{Érték} \\ \midrule
+        \(M_\RM e\) & Előírt tehetetlenség & 0.015 & \(\RM{kg\cdot m^2}\) \\
+        \(B_\RM e\) & Előírt viszkózus csillapítás & 0.06 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
+        \(K_\RM e\) & Előírt rugóállandó & 0.24 & \(\RM{kg\cdot m^2\cdot s^{-2}}\) \\
+        \(J\) & Motor tehetetlensége & 0.01 & \(\RM{kg\cdot m^2}\) \\
+        \(K_\RM m\) & Motor nyomatékállandója & 0.01 & \(\RM{Nm\cdot A^{-1}}\) \\
+        \(B_\RM m\) & Motor modell viszkózus csillapítása & 0.1 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
+        \(L\) & Motor induktivitása & 0.2 & H \\
+        \(R\) & Motor ellenállása & 1 & \(\Omega\) \\
+        \(p\) & További pólusok & -15 & \(\RM{rad \cdot s^{-1}}\) \\
+        \(K_\RM c\) & Nyomaték kompenzációs együttható & -50 & \(\RM{V \cdot N^{-1} m^{-1}}\) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/observer_controller_pos_resp_direct_comp_calib.png}
+    \caption{Az impedancia modell és a kalibrált szabályozó összehasonlítása pozíció egységugrás bemenetre}\label{fig:observer_controller_pos_resp_direct_calib}
+    \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/observer_controller_torque_resp_direct_comp_calib.png}
+    \caption{Az impedancia modell és a kalibrált szabályozó összehasonlítása külső nyomaték egységugrás bemenetre}\label{fig:observer_controller_torque_resp_direct_calib}
+    \end{center}
+\end{figure}
 
 Az impedancia modell előírt rugóállandójára az előző elemzés nem ad korlátot, viszont 
 ennek a paraméternek a növelésével növekszik a modell sajátfrekvenciája. Ez mindenképp 

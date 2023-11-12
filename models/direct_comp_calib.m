@@ -1,13 +1,5 @@
 syms s
 
-% Desired impedance model
-Me = 1;
-Be = 4;
-Ke = 16;
-
-impedance_model = tf(Ke, [Me Be Ke]);
-Pe = pole(impedance_model)';
-
 % Motor parameters
 % This has the biggest effect on how distorted
 % the torque response is.
@@ -16,6 +8,14 @@ Km = 0.01;
 Bm = 0.1;
 L = 0.5;
 R = 1;
+
+% Desired impedance model
+Me = 1.5*J;
+Be = 4*Me;
+Ke = 4*Be;
+
+impedance_model = tf(Ke, [Me Be Ke]);
+Pe = pole(impedance_model)';
 
 % Motor model
 Aaa = 0;
@@ -36,8 +36,9 @@ C = [1 0 0];
 D = [0 0];
 
 % New poles
-P = [Pe -8];
-Po = -8 * [1 1];
+p = min(-Be/8/Me/0.05, -10*Me/J);
+P = [Pe p];
+Po = p * [1 1];
 
 motor = ss(A, B, C, D, 'InputName', {'t', 'V'}, 'OutputName', 'a', 'StateName', {'a', 'w', 'i'});
 % step(motor)
@@ -73,8 +74,6 @@ BB = [Bt - Bv*kc; zeros(2, 1)];
 CC = eye(5);
 DD = zeros(5, 1);
 c2 = ss(AA, BB, CC, DD, 'InputName', {'a0'}, 'OutputName', {'a', 'w', 'i', 'ew', 'ei'}, 'StateName', {'a', 'w', 'i', 'ew', 'ei'});
-O = s*eye(5) - AA;
-vpa(subs(collect(CC/O*BB), s, 0))
 
 palette = ["#79addc" "#ffc09f" "#ffee93" "#fcf5c7" "#adf7b6"];
 
@@ -109,7 +108,7 @@ set(gca, 'Box', 'off', 'TickDir', 'out', 'TickLength', [.02 .02], ...
     'LineWidth', 1)
 
 set(gcf,'PaperPositionMode','auto')
-export_fig("images/observer_controller_pos_resp_direct_comp.png", "-png", "-m4", "-r300")
+export_fig("images/observer_controller_pos_resp_direct_comp_calib.png", "-png", "-m4", "-r300")
 
 figure;
 pbaspect([8,6,1])
@@ -138,4 +137,4 @@ set(gca, 'Box', 'off', 'TickDir', 'out', 'TickLength', [.02 .02], ...
     'LineWidth', 1)
 
 set(gcf,'PaperPositionMode','auto')
-export_fig("images/observer_controller_torque_resp_direct_comp.png", "-png", "-m4", "-r300")
+export_fig("images/observer_controller_torque_resp_direct_comp_calib.png", "-png", "-m4", "-r300")

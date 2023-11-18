@@ -36,8 +36,7 @@ c.LineWidth = 2;
 c.FaceAlpha = 0.5;
 clabel(M,c, 'FontSize', 12)
 
-text(0.015,-2.5,"$p_\mathrm{min} = " + pmin + "$", 'Interpreter','latex', 'FontSize', 16, 'HorizontalAlignment','center')
-text(0.015,pmin-1,"$p = p_\mathrm{min}$", 'Interpreter','latex', 'FontSize', 16, 'HorizontalAlignment','center', 'VerticalAlignment','top')
+text(0.015,pmin-1,"$p_\mathrm{min} = " + pmin + "$", 'Interpreter','latex', 'FontSize', 16, 'HorizontalAlignment','center')
 text(0.02,pmin/2,"$p_\mathrm{max} = -10 \cdot \frac{M_\mathrm{e}}{J}$", 'Interpreter','latex', 'FontSize', 16, 'HorizontalAlignment','center', 'VerticalAlignment','top')
 
 

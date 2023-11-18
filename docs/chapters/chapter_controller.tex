@@ -301,7 +301,7 @@ ahol \(\tau\) az időkésés, az átviteli függvény a következő késleltetet
 tehát \(\tau = -\frac{1}{p}\) felhasználható a pólus maximumának meghatározásához. A továbbiakban 
 ez az időkésés a rendszer beállási idejének legfeljebb 5\%-ára lesz korlátozva, szóval a pólus legfeljebb:
 \begin{align}\label{eq:pole_selection_pos}
-    p_\RM{max} = -\frac{1}{\frac{4}{\zeta \omega_0}} \div 5\% = -\frac{B_\RM e}{8M_\RM e} \div 5\%
+    p_\RM{max} = -\frac{1}{\frac{4}{\zeta \omega_0} \cdot 0.05} = -\frac{B_\RM e}{8M_\RM e \cdot 0.05}
 \end{align}
 lesz. A külső nyomatékra adott válasz időtartománybeli vizsgálata további feltételekhez vezet. 
 Nem minden paraméterkombináció ad elfogadható választ, ahogy a~\ref{fig:observer_controller_torque_resp_direct}.
@@ -331,7 +331,7 @@ a pólusválasztásnál van egy minimum érték mely alatt a rendszer nem képes
 minimumot. Ekkor az előírt tehetetlenség lehetséges értékei a~\eqref{eq:pole_selection_pos}. és a~\eqref{eq:pole_selection_torque} 
 egyenletekben szereplő feltételek szerint egy adott intervallumra korlátozódnak:
 \begin{align}
-    -\frac{B_\RM e}{8p_\RM{min}} \div 5\% < M_\RM e < -0.1 \cdot Jp_\RM{min}\,,
+    -\frac{B_\RM e}{8p_\RM{min} \cdot 0.05} < M_\RM e < -0.1 \cdot Jp_\RM{min}\,,
 \end{align}
 illetve az előírt viszkózus csillapítási együtthatóra is adódik egy maximális korlát~\eqref{eq:pole_selection_extremum} alapján:
 \begin{align}

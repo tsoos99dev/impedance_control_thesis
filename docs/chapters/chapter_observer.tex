@@ -1,6 +1,6 @@
 \chapter{Állapotmegfigyelő}\label{chap:observer}
 Az állapotvisszacsatoláshoz szükséges belső állapotokra (a szögelforduláson kívül)
-egy megfigyelő ad becslést. Elkülönítve a mért és becsült állapotokat~\eqref{eq:state_space_generic} felírható
+egy megfigyelő ad becslést. Elkülönítve a mért és a becsült állapotokat~\eqref{eq:state_space_generic} felírható
 \begin{equation}\label{eq:observer_state}
     \begin{split}
     \left[\begin{array}{c}
@@ -37,7 +37,7 @@ egy megfigyelő ad becslést. Elkülönítve a mért és becsült állapotokat~\
 \end{equation}
 alakban, ahol $x_\RM a = \theta$ a mért szögelfordulás és 
 $\BF{x}_\RM b = [\dot \theta~~i]^{\mathsf T}$ jelöli a becsült állapotokat.
-A továbbiakban jelölje $\tilde{*}$ a becsült paramétereket. Legyen
+A továbbiakban jelölje $\tilde{*}$ a becsült állapotok megfigyelő által számított értékeit. Legyen
 \begin{align}
     \begin{split}
     \hat{\BF A} &= \BF A_\RM{bb} - \BF K_\RM e \BF A_\RM{ab}\,,\\
@@ -47,14 +47,15 @@ A továbbiakban jelölje $\tilde{*}$ a becsült paramétereket. Legyen
 \end{align}
 ahol $\hat{\BF A}$ a megfigyelő belső állapotának (továbbiakban $\tilde{\BF \eta}$) 
 dinamikáját adja meg, $\hat{\BF B}$ és $\hat{\BF F}$ a mért illetve a becsült állapotok 
-bemeneti mátrixai és $\BF K_\RM e$ a megfigyelő hibájának a visszacsatoló mátrixa. A becsült állapotok és az állapotváltozók közötti összefüggés ekkor
+bemeneti mátrixai és $\BF K_\RM e$ a megfigyelő hibájának a visszacsatoló mátrixa. 
+A megfigyelő belső állapota és a becsült állapotváltozók közötti összefüggés ekkor
 \begin{align}
     \begin{split}
     \BF \eta &= \BF x_\RM b - \BF K_\RM e y\,,\\
     \tilde{\BF \eta} &= \tilde{\BF x}_\RM b - \BF K_\RM e y
     \end{split}
 \end{align}
-alakban adható meg. A belső állapot dinamikája
+alakban adható meg. A megfigyelő belső állapotának dinamikája
 \begin{align}
     \begin{split}
     \dot{\tilde{\BF \eta}} = \hat{\BF A} \tilde{\BF \eta} + \hat{\BF B} y + \hat{\BF F} u\,.
@@ -76,6 +77,6 @@ ahol
     \left[\begin{array}{c}
         1 \\ \hline
         \BF K_\RM e
-    \end{array}\right]\,,
+    \end{array}\right]\,.
 \end{align}
-mely tartalmazza a mért állapotot is.
+Ez a teljes állapotvektor, így tartalmazza a mért állapotot is.

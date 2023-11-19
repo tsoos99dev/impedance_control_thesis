@@ -43,7 +43,7 @@ $K_m$ a motorállandó, $V$ a motor feszültsége, $i$ a motoráram és $\theta$
     \label{fig:dc_motor_mechanical}
     \end{center}
 \end{figure}
-A forgórészt merev testnek tekintve, annak mozgásegyenlete a dinamika alaptétele és az SZTÁ (lásd~\ref{fig:dc_motor_mechanical}. ábra) 
+A forgórészt merev testnek tekintve, annak mozgásegyenlete a dinamika alaptétele és a SZTÁ (lásd~\ref{fig:dc_motor_mechanical}. ábra) 
 alapján a következő alakban vezethető le:
 \begin{align}\label{eq:rotor_dynamics}
     J\ddot\theta = -B_\RM m\dot\theta + \tau_\RM m + \tau_\RM e,
@@ -55,16 +55,16 @@ $K_\RM m$ a motorállandó, $\theta$ a szögelfordulás, $i$ a motoráram, $\tau
 A~\eqref{eq:armature_circuit} és~\eqref{eq:rotor_dynamics} egyenletek egyértelműen leírják a 
 rendszer időtartománybeli viselkedését.
 A további vizsgálathoz kedvezőbb a differenciálegyenleteket állapottér modellként felírni.
-Egy állapottér modell általánosan
+Az állapottér modell általánosan
 \begin{equation}\label{eq:state_space_generic}
 \begin{split}
     \dot{\BF x} &= \BF A \BF x + \BF B \BF u\,,\\
     \BF y &= \BF C \BF x + \BF D \BF u
 \end{split}
 \end{equation} 
-alakban írható fel, ahol \(\BF x = [\theta~~\dot \theta~~i]^{\mathsf T}\) az állapotvektor, 
+alakban írható fel. Legyen \(\BF x = [\theta~~\dot \theta~~i]^{\mathsf T}\) az állapotvektor, 
 \(\BF u = [\tau_\RM e~~V]^{\mathsf T}\) a bemeneti vektor és \(y = \theta\) a kimenet.
-Az~\eqref{eq:armature_circuit} és~\eqref{eq:rotor_dynamics} egyenleteket átrendezve 
+A~\eqref{eq:armature_circuit} és a~\eqref{eq:rotor_dynamics} egyenleteket átrendezve 
 az állapot-átmeneti mátrix \(\BF A\), a bemeneti mátrix \(\BF B\), a kimeneti mátrix \(\BF C\) és a segédmátrix \(\BF D\) 
 \begin{equation}\label{eq:state_space}
     \begin{split}
@@ -89,29 +89,29 @@ az állapot-átmeneti mátrix \(\BF A\), a bemeneti mátrix \(\BF B\), a kimenet
 \end{equation}
 alakban származtatható.
 
-A frekvenciatartománybeli vizsgálatokhoz felírható a rendszer 
-szög-nyomaték és szög-feszültség átviteli függvénye. Az állapottér modellt felhasználva
+A frekvenciatartománybeli vizsgálatokhoz szükséges felírni a rendszer 
+szög-nyomaték és szög-feszültség átviteli függvényeit. Az állapottér modellt felhasználva
 \begin{align}\label{eq:transfer_generic}
     \frac{Y(s)}{U(s)} = \BF C{\left(s \BF I - \BF A\right)}^{-1} \BF B
 \end{align}
 általános formában, ahol $\BF I$ az identitás mátrix. Behelyettesítve~\eqref{eq:state_space} 
 paramétereit~\eqref{eq:transfer_generic} alapján a karakterisztikus polinom felírható
 \begin{align}\label{eq:characteristic_polynomial}
-    p(s) := s\left(JLs^2 + \left(B_\RM m L + JR\right)s + K_\RM m^2 + B_\RM m R\right) = 0
+    p(s) = s\left(JLs^2 + \left(B_\RM m L + JR\right)s + K_\RM m^2 + B_\RM m R\right)
 \end{align}
-alakban. Az átviteli függvények pedig felírhatók
+alakban. Az átviteli függvények pedig ez alapján
 \begin{equation}\label{eq:transfer_function}
     \begin{split}
         \frac{\theta(s)}{\tau_\RM e(s)} &= \frac{Ls + R}{p(s)}\,,\\
-        \frac{\theta(s)}{V(s)} &= \frac{K_\RM m}{p(s)}
+        \frac{\theta(s)}{V(s)} &= \frac{K_\RM m}{p(s)}.
     \end{split}
 \end{equation}
-alakban.
 
 \section{Egyenáramú motor stabilitása}
-A motor stabilitása az~\eqref{eq:characteristic_polynomial}-as karakterisztikus egyenletből meghatározható.
-A karakterisztikus egyenletben megjelenik egy zérus, mely az origóban helyezkedik el. Ebből következik, hogy a rendszer
-egységugrás bemenetre korlátlanul nagy szögelfordulással válaszol. Ez a jelen alkalmazásban nem elfogadható. 
+A motor stabilitása a~\eqref{eq:characteristic_polynomial} egyenletben szereplő karakterisztikus 
+polinom segítségével meghatározható.
+A karakterisztikus polinom egyik zérusa az origóban helyezkedik el. Ebből következik, hogy a rendszer
+egységugrás bemenetre korlátlanul nagy szögelfordulással válaszol. Ez utóbbi a Ez a jelen alkalmazásban nem elfogadható. 
 Ha a szabályozókör visszacsatoló ága megszakad, a motor a megengedhető mozgástartományon kívülre fordulhat.
 A biztonságos működéshez szükséges például egy végálláskacsolót beépíteni, mely segítségével a motor 
 mozgástartománya mechanikailag is az előírt tartományon belülre korlátozható.

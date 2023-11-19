@@ -6,32 +6,32 @@ első lépésben teljes állapotvisszacsatolással biztosítható. A rendszer p�
 vizsgált irányíthatósági feltétel teljesülése miatt szabadon áthelyezhetők.
 
 \section{Pozíció szabályozás}
-Az előírt modell két független változót is tartalmaz, a pólusáthelyezés viszont egyetlen bemenetre 
-alkalmazható. Jelen esetben a szögelfordulásra és a külső nyomatékra adott válasz csak az amplitúdóban
-tér el. Ezt kihasználva először kizárólag a szögelfordulás referencia jelére előírt válasz alapján 
+Az előírt modell két független bemenettel rendelkezik. Jelen esetben a szögelfordulásra és a 
+külső nyomatékra adott válasz viszont csak az amplitúdójukban térnek el. Ezt kihasználva először kizárólag a szögelfordulás referencia jelére előírt válasz alapján 
 kerülnek áthelyezésre a pólusok. Teljes állapotvisszacsatolás esetén a motorra kapcsolt feszültség
 \begin{align}\label{eq:position_control_voltage}
-    V = \BF K \tilde{\BF x} + k_1 \theta_\RM r
+    V = K_\RM r \theta_\RM r -\BF K \tilde{\BF x}
 \end{align}
 összefüggéssel adható meg, 
 ahol $\BF K$ az állapotvisszacsatolási mátrix, 
-$k_1$ a az állapotvisszacsatolási mátrix első eleme és 
-$\theta_\RM r$ az előírt szögelfordulás. Az~\eqref{eq:position_control_voltage} egyenletet felhasználásával
-az~\eqref{eq:state_space_generic} állapottér modell belső állapotának dinamikája
+$K_\RM r$ a referencia jel erősítési tényezője és
+$\theta_\RM r$ az előírt szögelfordulás. A~\eqref{eq:position_control_voltage} egyenletet felhasználásával
+a~\eqref{eq:state_space_generic} egyenletben szereplő állapottér modell belső állapotának dinamikája
 \begin{align}\label{eq:position_control_law_state}
-    \dot{\BF x} = \BF A \BF x + \BF B_\RM V\left[-\BF K \tilde{\BF x} + k_1 \theta_\RM r\right] + \BF B_\RM \tau \tau_\RM e,
+    \dot{\BF x} = \BF A \BF x + \BF B_\RM V\left[K_\RM r \theta_\RM r - \BF K \tilde{\BF x}\right] + \BF B_\RM \tau \tau_\RM e,
 \end{align}
-alakban írható át. A $\BF B$ mátrix oszlopai elkülönítve $\BF B_\RM V$ és $\BF B_\RM \tau$ paraméterekként jelennek meg.
-Bevezetve a valós és becsült állapot közötti hibát, mint
+alakra írható át. A $\BF B$ mátrix oszlopai elkülönítve $\BF B_\RM V$ és $\BF B_\RM \tau$ paraméterekként jelennek meg.
+Legyen a továbbiakban a motor becsült állapotai és a megfigyelő által számított állapotok közötti hiba:
 \begin{align}
-    \BF e = \BF x_\RM b - \tilde{\BF x}_\RM b,
+    \BF e = \BF x_\RM b - \tilde{\BF x}_\RM b\,.
 \end{align}
-az~\eqref{eq:position_control_law_state} egyenlet a becsült a állapotok vektorának kiküszöbölésével
+A~\eqref{eq:position_control_law_state} egyenlet a megfigyelő által számított állapotok 
+vektorának kiküszöbölésével
 \begin{align}
     \dot{\BF x} = \left(\BF A - \BF B_\RM V \BF K\right) \BF x + 
     \BF B_\RM V \BF K_\RM b \BF e + 
     \BF B_\RM \tau \tau + 
-    \BF B_\RM V k_1 \theta_\RM r,
+    \BF B_\RM V K_\RM r \theta_\RM r,
 \end{align}
 alakra hozható. A valós és becsült állapot közötti hiba dinamikája~\eqref{eq:observer_state} felhasználásával
 \begin{equation}
@@ -49,7 +49,7 @@ melyeket kivonva egymásból
     \dot{\BF e} = \left(\BF A_\RM{bb} - \BF K_\RM e \BF A_\RM{ab}\right) \BF e + \BF B_\RM{\tau b} \tau_\RM e\,.
 \end{align}
 A rendszer dinamikája blokk mátrix alakban
-\begin{align}
+\begin{align}\label{eq:pos_control_dynamics}
     \begin{bmatrix}
         \dot{\BF x} \\
         \dot{\BF e}
@@ -65,7 +65,7 @@ A rendszer dinamikája blokk mátrix alakban
     \end{bmatrix}
     +
     \begin{bmatrix}
-        \BF B_\RM \tau & \BF B_\RM V k_1\\
+        \BF B_\RM \tau & \BF B_\RM V K_\RM r\\
         \BF B_\RM{\tau b} & \BF 0
     \end{bmatrix}
     \begin{bmatrix}
@@ -73,6 +73,18 @@ A rendszer dinamikája blokk mátrix alakban
         \theta_\RM r
     \end{bmatrix}.
 \end{align}
+
+A referencia jel erősítési tényezője a teljes rendszer átviteli függvénye alapján a végérték tétellel határozható meg.
+A rendszer válaszának végértéke~\eqref{eq:pos_control_dynamics} szerint egységugrás bemenetre:
+\begin{equation}
+    \lim_{s \to 0}~s \cdot \theta(s) = 
+    \lim_{s \to 0}~-\frac{K_\RM m K_\RM r M_\RM e}{JL(p-s)(M_\RM e s^2 + B_\RM e s + K_\RM e)}\frac{s}{s} =
+    -\frac{K_\RM m K_\RM r M_\RM e}{JLpK_\RM e}\,,
+\end{equation}
+ahol \(p\) a függetlenül választható pólus. Az erősítési tényező ez alapján:
+\begin{equation}\label{eq:input_coeff}
+    K_\RM r = -\frac{JLpK_\RM e}{K_\RM m M_\RM e}\,.
+\end{equation}
 
 A megfigyelő belső hibájának (\(\BF e\)) megváltozása nem csak a pillanatnyi belső hibától függ. Még ha \(\BF A_\RM{bb} - \BF K_\RM e \BF A_\RM{ab}\) sajátértékei
 mind negatív valós résszel is rendelkeznek, a megfigyelő belső hibája akkor sem tart nullához külső nyomaték jelenlétében.
@@ -120,7 +132,7 @@ A pólusok alapján a visszacsatolási mátrixok az Ackermann formulával lettek
 
 \section{Nyomaték kompenzáció}
 A rendszer válasza a külső nyomaték bemenetre adott egységugrás jelre a~\ref{fig:observer_controller_torque_resp}. ábrán látható. 
-Az alkalmazott paraméterek ismét a~\ref{tab:observer_controller_pos_resp}. táblazatban szerepelnek.
+Az alkalmazott paraméterek a~\ref{tab:observer_controller_pos_resp}. táblazatban szerepelnek.
 A végérték nem egyezik meg az impedancia modell által előírt értékkel, így további módosításokra van szükség.
 A modell két bemenete közül csak a feszültségre van hatással a 
 szabályozó, így a környezet által kifejtett külső nyomaték 
@@ -129,7 +141,7 @@ a külső nyomaték direkt vagy indirekt visszacsatolásával érhető el.
 Direkt mérés esetén a külső nyomaték értékét egy szenzor adja meg.
 A további vizsgálatok során feltételezett, hogy a szenzor dinamikája elhanyagolhatónak tekinthető. Az
 állapotmegfigyelővel és kompenzációval ellátott rendszer teljes 
-blokkdiagramját az~\ref{fig:block_diagram_direct_compensation}-es ábra mutatja.
+blokkdiagramját a~\ref{fig:block_diagram_direct_compensation}. ábra mutatja.
 \begin{figure}[ht]
     \begin{center}
     \includegraphics[width=\textwidth]{images/compensated_position_control_torque.pdf}
@@ -140,21 +152,21 @@ blokkdiagramját az~\ref{fig:block_diagram_direct_compensation}-es ábra mutatja
 A kompenzált rendszernél alkalmazott visszacsatolási összefüggés az~\eqref{eq:position_control_voltage}. egyenlethez
 hasonló, azonban megjelenik a mért külső nyomaték:
 \begin{align}
-    V = -\BF K \tilde{\BF x} -K_\RM c \tau + k_1 \theta_\RM r,
+    V = K_\RM r \theta_\RM r - K_\RM c \tau_\RM e - \BF K \tilde{\BF x}\,,
 \end{align}
 ahol $\BF K$ az állapot visszacsatolási mátrix, $K_\RM c$ a nyomaték kompenzációs együttható,
-$k_1$ a az állapot visszacsatolási mátrix első eleme és $\theta_\RM r$ az előírt szögelfordulás.
+$K_\RM r$ a bemeneti erősítési tényezője és $\theta_\RM r$ az előírt szögelfordulás.
 A pozíció szabályozónál alkalmazott levezetéshez hasonlóan meghatározható a módosított rendszer teljes dinamikája.
 A visszacsatolási összefüggést behelyettesítve az~\eqref{eq:state_space_generic}. egyenletbe:
 \begin{align}\label{eq:state_control_law_subs}
-    \dot{\BF x} = \BF A \BF x + \BF B_\RM V\left[-\BF K \tilde{\BF x} -K_\RM c \tau + k_1 \theta_\RM r\right] + \BF B_\RM \tau \tau\,,
+    \dot{\BF x} = \BF A \BF x + \BF B_\RM V\left[-\BF K \tilde{\BF x} -K_\RM c \tau + K_\RM r \theta_\RM r\right] + \BF B_\RM \tau \tau\,,
 \end{align}
 mely a becsült és a valódi állapotok közötti hibával kifejezve 
 \begin{align}
     \dot{\BF x} = \left(\BF A - \BF B_\RM V \BF K\right) \BF x + 
     \BF B_\RM V \BF K \BF e + 
     \left(\BF B_\RM \tau - \BF B_\RM V K_\RM c\right) \tau + 
-    \BF B_\RM V k_1 \theta_\RM r\,,
+    \BF B_\RM V K_\RM r \theta_\RM r\,,
 \end{align}
 alakra hozható. A megfigyelő bemenetét kiegészítve a mért külső nyomatékkal:
 \begin{equation}
@@ -188,7 +200,7 @@ A rendszer dinamikája blokk mátrix alakban
     \end{bmatrix}
     +
     \begin{bmatrix}
-        \BF B_\RM \tau - \BF B_\RM V K_\RM c & \BF B_\RM V k_1\\
+        \BF B_\RM \tau - \BF B_\RM V K_\RM c & \BF B_\RM V K_\RM r\\
         \BF 0 & \BF 0
     \end{bmatrix}
     \begin{bmatrix}
@@ -218,7 +230,7 @@ ahol \(\ddot \theta_\RM s\) a forgorész mért szöggyursulása és \(\BF C_{\dd
 alakban, a becsült állapot és a mért szöggyorsulás kombinációjával adható meg.
 A feszültségjel a becsült nyomatékértékkel:
 \begin{align}
-    V = -\BF K \tilde{\BF x} -K_c \tilde \tau + k_1 \theta_r.
+    V = K_\RM r \theta_r - K_c \tilde \tau - \BF K \tilde{\BF x}.
 \end{align}
 Az előző levezetéshez hasonlóan meghatározható a teljes rendszer dinamikája:
 \begin{align}
@@ -237,7 +249,7 @@ Az előző levezetéshez hasonlóan meghatározható a teljes rendszer dinamiká
     \end{bmatrix}
     +
     \begin{bmatrix}
-        \BF B_\RM \tau - \BF B_\RM V K_\RM c & \BF B_\RM V k_1\\
+        \BF B_\RM \tau - \BF B_\RM V K_\RM c & \BF B_\RM V K_\RM r\\
         \BF 0 & \BF 0
     \end{bmatrix}
     \begin{bmatrix}
@@ -257,9 +269,9 @@ bemenetre a~\ref{fig:observer_controller_pos_resp_direct}. és~\ref{fig:observer
 A felhasznált paraméterek továbbra is azonosak a kompenzálás nélküli modellnél alkalmazott paraméterekkel.
 A nyomaték kompenzációs együttható
 \begin{equation}
-    K_\RM c = \frac{R+k_3}{K_\RM m} - \frac{k_1}{K_\RM e}
+    K_\RM c = L\frac{- B_\RM m M_\RM e + B_\RM e J - J M_\RM e p + J^2 p}{J K_\RM m M_\RM e}
 \end{equation}
-összefüggés szerint számolható, mely a szabályozott rendszer válasza végértékének a függvénye.
+összefüggés szerint számolható.
 A pozíció referencia jelre adott válasz változatlan, azonban a külső nyomatékra adott válasz végértéke már
 megegyezik az impedancia modell által előírt értékkel. A válaszban megfigyelhető túllövés kiküszöböléshez
 a motor és az impedancia modell paraméterei, valamint a rendszer válasza közötti kapcsolat további vizsgálata szükséges.
@@ -286,7 +298,7 @@ mindegyik azonos lesz és valós értékű. Ha a pólusok túl közel helyezkedn
 esetleg még a képzetes tengelyhez is közelebb vannak, akkor eltorzítják a választ. Ha túl nagy negatív valós
 értékkel rendelkeznek, az a szabályozó kimenetének szaturációjához vezet, illetve magát a szabályozót is
 instabillá teszik. Ennek elkerülése érdekében a lehető legkisebb abszolút értékű negatív valós pólus használata a cél. 
-A rendszer átviteli függvénye a pozíció referencia jelet tekintve:
+A rendszer átviteli függvénye a pozíció referencia jelet tekintve~\eqref{eq:input_coeff} felhasználásával:
 \begin{align}
     \frac{\theta(s)}{\theta_\RM r (s)} = \frac{K_\RM e p}{(p-s)(M_\RM e s^2 + B_\RM e s + K_\RM e)}\,,
 \end{align}
@@ -299,7 +311,7 @@ ahol \(\tau\) az időkésés, az átviteli függvény a következő késleltetet
     \frac{\theta(s)}{\theta_\RM r (s)} \approx \frac{K_\RM e}{M_\RM e s^2 + B_\RM e s + K_\RM e}e^{\frac{1}{p}s}\,,
 \end{align}
 tehát \(\tau = -\frac{1}{p}\) felhasználható a pólus maximumának meghatározásához. A továbbiakban 
-ez az időkésés a rendszer beállási idejének legfeljebb 5\%-ára lesz korlátozva, szóval a pólus legfeljebb:
+ez az időkésés a rendszer beállási idejének legfeljebb 5\%-ára lesz korlátozva. Eszerint a pólus legfeljebb:
 \begin{align}\label{eq:pole_selection_pos}
     p_\RM{max} = -\frac{1}{\frac{4}{\zeta \omega_0} \cdot 0.05} = -\frac{B_\RM e}{8M_\RM e \cdot 0.05}
 \end{align}

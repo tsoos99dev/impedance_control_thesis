@@ -41,7 +41,7 @@ B = [Bv Bt];
 C = [1 0 0];
 D = [0 0];
 
-sub = @(s) subs(s, [J Km Bm L R po t_d], [J0 Km0 Bm0 L0 R0 po0 0]);
+sub = @(s) subs(s, [J Km Bm L R po], [J0 Km0 Bm0 L0 R0 po0]);
 
 motor = C/(s*eye(3) - A)*B + D;
 
@@ -77,22 +77,47 @@ BB = [Bv*Ka Bt - Bv*kc; zeros([2, 2])];
 CC = eye(5);
 DD = zeros([5, 2]);
 
-controller = -(Ctilde/(s*eye(2) - Atilde)*Btilde + Dtilde);
+controller = Ctilde/(s*eye(2) - Atilde)*Btilde + Dtilde;
 closed_loop = CC/(s*eye(5) - AA)*BB + DD;
 % pretty(simplify((controller(1, 1))))
 % pretty(simplify(closed_loop(1, 2)))
 
 delay = exp(-s*t_d);
-yC0 = 1/(1+motor(1, 1)*controller(1, 3)*delay);
+yC0 = 1-motor(1, 1)*controller(1, 3)*delay;
 yCR = motor(1, 1)*controller(1, 1)*delay;
 yCtau = motor(1, 2) + motor(1, 1)*controller(1, 2)*delay;
 
-ri = 1;
-taui = 0;
-y = yC0*(yCR*ri + yCtau*taui);
-[num, den] = numden(sub(y));
-pc = collect(den, s);
-simplify(fliplr(coeffs(pc, s))/(400*Me*exp(s*t_d)))
+% y = 1/yC0*(yCR*ri + yCtau*taui);
+[mn, md] = numden(motor(1, 1));
+[nn, nd] = numden(controller(1, 3));
+
+y = nd*md - nn*mn*delay;
+% y = sub(y);
+pc = collect(y, s);
+coeff = fliplr(coeffs(pc, s));
+coeff = simplify(expand(coeff/coeff(1)));
+% collect(expand(coeff(2)))
+% collect(expand(coeff(3)))
+% ca = coeffs(expand(coeff(4)), exp(-s*t_d));
+% ca1 = simplify(coeffs(ca(1), [Be Ke]));
+% latex(expand(ca1(1)))
+% latex(expand(ca1(2)))
+% latex(expand(ca1(3)))
+% ca1 = simplify(coeffs(ca(2), [Be Ke]));
+% latex(expand(ca1(1)))
+% latex(expand(ca1(2)))
+% latex(expand(ca1(3)))
+% ca = coeffs(expand(coeff(5)), exp(-s*t_d));
+% ca1 = simplify(coeffs(ca(1), [Be Ke]));
+% latex(expand(ca1(1)))
+% latex(expand(ca1(2)))
+% latex(expand(ca1(3)))
+% ca1 = simplify(coeffs(ca(2), [Be Ke]));
+% latex(expand(ca1(1)))
+% latex(expand(ca1(2)))
+% latex(expand(ca1(3)))
+% ca = coeffs(expand(coeff(6)), exp(-s*t_d));
+% latex(expand(ca))
 
 % sub = @(s) subs(s, [Me Be Ke J Km Bm L R po t_d], [1 5 10 J0 Km0 Bm0 L0 R0 po0 0]);
 % vpasolve(sub(pc) == 0)
@@ -161,61 +186,61 @@ TN = TN.*tns;
 X = vpa(subs(sol.KM, {t, t_d}, {TN, TDN}));
 Y = vpa(subs(sol.BM, {t, t_d}, {TN, TDN}));
 
-figure;
-pbaspect([8,6,1])
-set(gcf,'color','w');
-set(gca, 'FontName', 'Helvetica');
-
-xlim([0, 100]);
-ylim([0, 100]);
-
-prevBoundX = [100 0];
-prevBoundY = [0 0];
-
-cn = summer(numel(tdn) + 1);
-
-hold on;
-for i=1:size(X, 1)
-    fX = [X(i,:), prevBoundX];
-    fY = [Y(i,:), prevBoundY];
-    h = fill(fX, fY, cn(i, :));
-    h.LineStyle = 'none';
-    h.FaceAlpha = 0.5;
-    prevBoundX = flip(X(i, :));
-    prevBoundY = flip(Y(i, :));
-end
-
-fX = [0, prevBoundX];
-fY = [0, prevBoundY];
-h = fill(fX, fY, cn(end, :));
-h.LineStyle = 'none';
-h.FaceAlpha = 0.5;
-
-for i=1:size(X, 1)
-    tl = tln(i);
-    angle = double(rad2deg(atan2(Y(i, tl + 1) - Y(i, tl), X(i, tl + 1) - X(i, tl))));
-    
-    th = text(X(i, tl), Y(i, tl), num2str(tdn(i)), 'Clipping', 'on', 'FontSize', 12, 'HorizontalAlignment','center', 'Rotation', angle);
-    bb = th.Extent;
-    x = X(i,:);
-    y = Y(i,:);
-    
-    x(bb(1) < x & x < bb(1) + bb(3) & bb(2) < y & y < bb(2) + bb(4)) = nan;
-    plot(x, y, 'Color', [0,0,0,0.3], 'LineWidth', 2)
-    
-end
-
-set(gca, 'Box', 'off', 'TickDir', 'out', 'TickLength', [.02 .02], ...
-    'XMinorTick', 'on', 'YMinorTick', 'on', 'YGrid', 'on', ...
-    'XColor', [.3 .3 .3], 'YColor', [.3 .3 .3], ...
-    'LineWidth', 1)
-
-xlabel('$\frac{K_\mathrm{e}}{M_\mathrm{e}}~\mathrm{[m \cdot s^{-2}]}$', 'Interpreter', 'latex', 'FontSize', 16)
-ylabel('$\frac{B_\mathrm{e}}{M_\mathrm{e}}~\mathrm{[m \cdot s^{-1}]}$', 'Interpreter', 'latex', 'FontSize', 16)
-
-set(gcf,'PaperPositionMode','auto')
-export_fig("images/time_delay_stab_map.png", "-png", "-m4", "-r300")
-
+% figure;
+% pbaspect([8,6,1])
+% set(gcf,'color','w');
+% set(gca, 'FontName', 'Helvetica');
+% 
+% xlim([0, 100]);
+% ylim([0, 100]);
+% 
+% prevBoundX = [100 0];
+% prevBoundY = [0 0];
+% 
+% cn = summer(numel(tdn) + 1);
+% 
+% hold on;
+% for i=1:size(X, 1)
+%     fX = [X(i,:), prevBoundX];
+%     fY = [Y(i,:), prevBoundY];
+%     h = fill(fX, fY, cn(i, :));
+%     h.LineStyle = 'none';
+%     h.FaceAlpha = 0.5;
+%     prevBoundX = flip(X(i, :));
+%     prevBoundY = flip(Y(i, :));
+% end
+% 
+% fX = [0, prevBoundX];
+% fY = [0, prevBoundY];
+% h = fill(fX, fY, cn(end, :));
+% h.LineStyle = 'none';
+% h.FaceAlpha = 0.5;
+% 
+% for i=1:size(X, 1)
+%     tl = tln(i);
+%     angle = double(rad2deg(atan2(Y(i, tl + 1) - Y(i, tl), X(i, tl + 1) - X(i, tl))));
+% 
+%     th = text(X(i, tl), Y(i, tl), num2str(tdn(i)), 'Clipping', 'on', 'FontSize', 12, 'HorizontalAlignment','center', 'Rotation', angle);
+%     bb = th.Extent;
+%     x = X(i,:);
+%     y = Y(i,:);
+% 
+%     x(bb(1) < x & x < bb(1) + bb(3) & bb(2) < y & y < bb(2) + bb(4)) = nan;
+%     plot(x, y, 'Color', [0,0,0,0.3], 'LineWidth', 2)
+% 
+% end
+% 
+% set(gca, 'Box', 'off', 'TickDir', 'out', 'TickLength', [.02 .02], ...
+%     'XMinorTick', 'on', 'YMinorTick', 'on', 'YGrid', 'on', ...
+%     'XColor', [.3 .3 .3], 'YColor', [.3 .3 .3], ...
+%     'LineWidth', 1)
+% 
+% xlabel('$\frac{K_\mathrm{e}}{M_\mathrm{e}}~\mathrm{[m \cdot s^{-2}]}$', 'Interpreter', 'latex', 'FontSize', 16)
+% ylabel('$\frac{B_\mathrm{e}}{M_\mathrm{e}}~\mathrm{[m \cdot s^{-1}]}$', 'Interpreter', 'latex', 'FontSize', 16)
+% 
+% set(gcf,'PaperPositionMode','auto')
+% export_fig("images/time_delay_stab_map.png", "-png", "-m4", "-r300")
+% 
 
 
 

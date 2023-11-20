@@ -1,5 +1,9 @@
 \chapter{Stabilitásvizsgálat időkéséssel}\label{chap:time_delay_stability}
 
+A modell és a motor paramétereken kívül a rendszer különböző elemeiben megjelenő időkésés 
+is hatással van a stabilitásra. Elegendően nagy időkésés mellett nem csak a mozgásra előírt 
+feltételek sérülnek, hanem teljesen instabillá válhat a rendszer. Az időkésés hatását vizsgálja
+a következő fejezet.
 
 % \section{Vizsgálati módszerek összehasonlítása}
 % A rúd differenciálegyenlete
@@ -34,11 +38,190 @@
 % különböző rendű közelítéssekkel
 
 \section{Stabilitás folytonos időben}
+
+Időkésés megjelenhet a rendszer különböző pontjain. A motor kimenetének mérése, az adatáramlás 
+a szabályozó részegységei között és a szabályozó jel kiszámítása mind időt vesznek igénybe. 
+Ezeknek a hatásoknak az összeségét egy konstans átlag időkésés reprezentálja. A továbbiakban ez a 
+paraméter legyen \(\tau_\RM d\).
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=12cm]{images/time_delay_example.png}
+    \caption{Reprezentatív ábra az időkésés hatásáról folytonos időben}\label{fig:time_delay_example}
+    \end{center}
+\end{figure}
+A szabályozó jel \(\tau_\RM d\) időegységgel eltolódva jelenik meg a motor bemenetén, ahogy a
+~\ref{fig:time_delay_example}. ábra szemlélteti.
+
+A stabilitásvizsgálat az időkéséssel kiegészített szögelfordulás-referencia jel átviteli függvényből 
+kiindulva végezhető el. Az időkéséssel kiegészített blokk diagram egyszerűsített alakban 
+a~\ref{fig:block_diagram_time_delay}. ábrán látható.
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/block_diagram_time_delay.pdf}
+    \caption{Az előírható tehetetlenség és a független pólus közötti összefüggés}\label{fig:block_diagram_time_delay}
+    \end{center}
+\end{figure}
+A motor átviteli függvényei a~\eqref{eq:transfer_function}. egyenletekben szerepelnek. A szabályozó dinamikáját 
+az átláthatóság érdekében a következő egyenletek összegzik:
+\begin{equation}
+    \begin{split}
+        \dot{\tilde{\BF \eta}} &= \hat{\BF A} \tilde{\BF \eta} + \hat{\BF B} y + \hat{\BF F}_\RM V V + \hat{\BF F}_\RM \tau \tau_\RM e\,, \\
+        \tilde{\BF \eta} &= \tilde{\BF x}_\RM b - \BF K_\RM e y\,, \\
+        V &= K_\RM r \theta_\RM r - K_\RM c \tau_\RM e - \BF K \tilde{\BF x}\,,
+    \end{split}
+\end{equation}
+ahol a megfigyelő belső dinamikáját leíró egyenletben megjelenő mátrixok~\eqref{eq:observer_params}-hez hasonlóan:
+\begin{align}
+    \begin{split}
+        \hat{\BF A} &= \BF A_\RM{bb} - \BF K_\RM e \BF A_\RM{ab}\,,\\
+        \hat{\BF B} &= \hat{\BF A} \BF K_\RM e + \BF A_\RM {ba} - \BF K_\RM e A_\RM {aa}\,,\\
+        \hat{\BF F} &= \BF B_\RM b - \BF K_\RM e B_\RM a\,.
+    \end{split}
+\end{align}
+A kimeneti feszültség egyenletében található becsült állapotvektor kifejezhető a megfigyelő belső állapotával és a mért kimenettel:
+\begin{equation}
+    \begin{split}
+        V &= K_\RM r \theta_\RM r - K_\RM c \tau_\RM e - (K_a + \BF K_\RM b \BF K_\RM e) y - \BF K_\RM b \tilde{\BF \eta}\,,
+    \end{split}
+\end{equation}
+behelyettesítve a megfigyelő dinamikai egyeneletébe:
+\begin{align}\label{eq:observer_transfer_transformed}
+    \begin{split}
+        \dot{\tilde{\BF \eta}} &= \hat{\BF A} \tilde{\BF \eta} + 
+        \hat{\BF B} y + 
+        \hat{\BF F}_\RM V\left[K_\RM r \theta_\RM r - K_\RM c \tau_\RM e - (K_a + \BF K_\RM b \BF K_\RM e) y - \BF K_\RM b \tilde{\BF \eta}\right] + 
+        \hat{\BF F}_\RM \tau \tau_\RM e \\
+        &= (\hat{\BF A} - \hat{\BF F}_\RM V \BF K_\RM b)\tilde{\BF \eta} + 
+        [\hat{\BF B} - \hat{\BF F}_\RM V (K_\RM a + \BF K_\RM b \BF K_\RM e)]y + 
+        \hat{\BF F}_\RM V K_\RM r \theta_\RM r + 
+        (\hat{\BF F}_\RM \tau - \hat{\BF F}_\RM V K_\RM c) \tau_\RM e\,.
+    \end{split}
+\end{align}
+A szabályozó dinamikája ez alapján kifejezhető egy új állapottér modell formájában:
+\begin{align}
+    \begin{split}
+        \dot{\tilde{\BF \eta}} &= \tilde{\BF A}\tilde{\BF \eta} + 
+        \tilde{\BF B}_\RM y y + 
+        \tilde{\BF B}_\RM r \theta_\RM r +
+        \tilde{\BF B}_\RM \tau \tau\RM e\,, \\
+        V &= \tilde{\BF C}\tilde{\BF \eta} + 
+        \tilde{\BF D}_\RM y y + 
+        \tilde{\BF D}_\RM r \theta_\RM r + 
+        \tilde{\BF D}_\RM \tau \tau_\RM e\,,
+    \end{split}
+\end{align}
+ahol a mátrix paraméterek~\eqref{eq:observer_transfer_transformed} szerint:
+\begin{align}
+    \begin{split}
+        \tilde{\BF A} &= \hat{\BF A} - \hat{\BF F}_\RM V \BF K_\RM b\,,\\
+        \tilde{\BF B}_\RM y &= \hat{\BF B} - \hat{\BF F}_\RM V (K_\RM a + \BF K_\RM b \BF K_\RM e)\,,\\
+        \tilde{\BF B}_\RM r &= \hat{\BF F}_\RM V K_\RM r\,, \\
+        \tilde{\BF B}_\RM \tau &= \hat{\BF F}_\RM \tau - \hat{\BF F}_\RM V K_\RM c\,, \\
+        \tilde{\BF C} &= -\BF K_\RM b\,, \\
+        \tilde{\BF D}_\RM y &= -(K_\RM a + \BF K_\RM b \BF K_\RM e)\,, \\
+        \tilde{\BF D}_\RM r &= K_\RM r\,, \\
+        \tilde{\BF D}_\RM \tau &= -K_\RM c\,.
+    \end{split}
+\end{align}
+A szabályozó és a motor állapottér egyenletei időkéséssel kiegészítve a következő átviteli 
+függvénnyel írhatók le:
+\begin{align}
+    \begin{split}
+        y = \left(C^\RM V_\RM r \theta_\RM r + 
+        C^\RM V_\RM \tau \tau_\RM e +
+        C^\RM V_\RM y y\right)M^\RM y_\RM V e^{-s\tau_\RM d} +
+        M^\RM y_\RM\tau \tau_\RM e\,,
+    \end{split}
+\end{align}
+ahol a \(C^\RM n_\RM m\) és \(M^\RM n_\RM m\) a szabályozó és a motor átviteli függvényei adott 
+bemenetekre és kimenetekre. Az átviteli egyenlet zárt körben:
+\begin{align}
+    \begin{split}
+        y = \frac{1}{1 - M^\RM y_\RM V C^\RM V_\RM y e^{-s\tau_\RM d}}
+        \left[
+            M^\RM y_\RM V C^\RM V_\RM r \theta_\RM r e^{-s\tau_\RM d} + 
+            \left(M^\RM y_\RM\tau + M^\RM y_\RM V C^\RM V_\RM \tau e^{-s\tau_\RM d}\right) \tau_\RM e
+        \right]
+    \end{split}
+\end{align}
+alakban írható le. A motor és a szabályozó átviteli függvényei bemenettől és kimenettől 
+függetlenül ugyanazokkal a pólusokkal rendelkeznek, így mindkét bemenetre ugyanazok a stabilitási 
+feltételek érvényesek. Az átviteli függvény pólusait a következő egyenlet megoldásai adják:
+\begin{align}\label{eq:delay_characteristic}
+    \begin{split}
+        &s^5 + 
+        \left(c_{41} + c_{42}\frac{B_\RM e}{M_\RM e}\right)s^4 +
+        \left(c_{31} + c_{32}\frac{B_\RM e}{M_\RM e} + c_{33}\frac{K_\RM e}{M_\RM e}\right)s^3 + \\
+        &\left[c_{21} + c_{22}\frac{B_\RM e}{M_\RM e} + c_{23}\frac{K_\RM e}{M_\RM e} + \left(
+        c_{24} + c_{25}\frac{B_\RM e}{M_\RM e} + c_{26}\frac{K_\RM e}{M_\RM e}\right)e^{-s\tau_\RM d}\right]s^2 + \\
+        &\left[c_{11} + c_{12}\frac{B_\RM e}{M_\RM e} + c_{13}\frac{K_\RM e}{M_\RM e} + \left(
+        c_{14} + c_{15}\frac{B_\RM e}{M_\RM e} + c_{16}\frac{K_\RM e}{M_\RM e}\right)e^{-s\tau_\RM d}\right]s + 
+        c_0 \frac{K_\RM e}{M_\RM e} = 0\,,
+    \end{split}
+\end{align}
+ahol az együtthatókat a ... táblázat tartalmazza. D-szeparációt alkalmazva az egyenlet valós és 
+képzetes részei:
+\begin{align}\label{eq:delay_complex_separation}
+    \begin{split}
+        a_4\omega^4-(a_{21} + a_{22}\cos{\omega\tau_\RM d})\omega^2+a_{12}\omega\sin{\omega\tau_\RM d} + a_0\cos{\omega\tau_\RM d} &= 0 \\
+        \omega^5 -a_3\omega^3 + a_{22}\omega^2\sin{\omega\tau_\RM d} + (a_{11} + a_{12}\cos{\omega\tau_\RM d})\omega - a_0\sin{\omega\tau_\RM d}  &= 0 \,,
+    \end{split}
+\end{align}
+ami \(s=jw\) behelyettesítés után adódik. Az új együtthatók~\eqref{eq:delay_characteristic} alapján:
+\begin{align}
+    \begin{split}
+        a_4 &= c_{41} + c_{42}\frac{B_\RM e}{M_\RM e}\\ 
+        a_3 &= c_{31} + c_{32}\frac{B_\RM e}{M_\RM e} + c_{33}\frac{K_\RM e}{M_\RM e}\\ 
+        a_{21} &= c_{21} + c_{22}\frac{B_\RM e}{M_\RM e} + c_{23}\frac{K_\RM e}{M_\RM e}\\ 
+        a_{22} &= c_{24} + c_{25}\frac{B_\RM e}{M_\RM e} + c_{26}\frac{K_\RM e}{M_\RM e}\\ 
+        a_{11} &= c_{11} + c_{12}\frac{B_\RM e}{M_\RM e} + c_{13}\frac{K_\RM e}{M_\RM e}\\ 
+        a_{12} &= c_{14} + c_{15}\frac{B_\RM e}{M_\RM e} + c_{16}\frac{K_\RM e}{M_\RM e}\\ 
+        a_0 &= c_0 \frac{K_\RM e}{M_\RM e}\,.
+    \end{split}
+\end{align}
+A~\eqref{eq:delay_complex_separation}-ben szereplő egyenletrendszert megoldva \(\frac{B_\RM e}{M_\RM e}\)
+és \(\frac{K_\RM e}{M_\RM e}\) kifejezésekre egy paraméteres görbe adódik. 
+A független paraméter \(\omega\) a stabilitás határán fellépő csillapítatlan rezgés frekvenciájval
+arányos. A görbe minden pontjához egy tisztán képzetes póluspár vagy nulla kapcsolódik. 
+A nulla megoldások a \(\frac{K_\RM e}{M_\RM e} = 0\) egyenesen helyezkednek el. 
+A kapott görbét a~\ref{tab:delay_stab_params}. táblázat paramétereit behelyettesítve 
+a~\ref{fig:time_delay_stab_map}. ábra mutatja. A kontúrvonalakon szereplő értékek \(\tau_\RM d\)
+időkésés különböző értékeit jelölik szekundumban kifejezve.
+
+\begin{table}[ht]
+    \small\centering
+    \caption{A folytonos idejű stabilitásvizsgálatnál alkalmazott paraméterek}\label{tab:delay_stab_params}
+    \tabcolsep=1pt
+    \begin{tabular}{l>{~}l>{\quad}rl}
+        \toprule
+        \multicolumn{2}{c}{Szimbólum és paraméter név} & \multicolumn{2}{c}{Érték} \\ \midrule
+        \(J\) & Motor tehetetlensége & 0.01 & \(\RM{kg\cdot m^2}\) \\
+        \(K_\RM m\) & Motor nyomatékállandója & 0.01 & \(\RM{Nm\cdot A^{-1}}\) \\
+        \(B_\RM m\) & Motor modell viszkózus csillapítása & 0.1 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
+        \(L\) & Motor induktivitása & 0.2 & H \\
+        \(R\) & Motor ellenállása & 1 & \(\Omega\) \\
+        \(p\) & További pólusok & -15 & \(\RM{rad \cdot s^{-1}}\) \\
+        \(K_\RM c\) & Nyomaték kompenzációs együttható & -50 & \(\RM{V \cdot N^{-1} m^{-1}}\) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
 \begin{figure}[ht]
     \begin{center}
     \includegraphics[width=\textwidth]{images/time_delay_stab_map.png}
-    \caption{Az előírható tehetetlenség és a független pólus közötti összefüggés}\label{fig:observer_controller_param_limits}
+    \caption{}\label{fig:time_delay_stab_map}
     \end{center}
 \end{figure}
+
+Időkésés nélkül a görbe pontjai a \(\frac{B_\RM e}{M_\RM e} = 0\) egyenesen maradnak.
+A behatárolt stabilitástartomány éppen megegyezik a Routh--Hurwitz kritérium által 
+kapott tartománnyal, tehát:
+\begin{equation}
+    M_\RM e > 0,~~B_\RM e > 0,~~K_\RM e > 0.
+\end{equation}
+Az időkésés növekedésével egyre szűkül a stabil tartomány, egy kritikus érték alatt azonban
+csak \(\frac{K_\RM e}{M_\RM e}\) kifejezésre adódik maximum, \(\frac{B_\RM e}{M_\RM e}\)
+tetszőleges pozítív értéket felvehet. A kritikus időkésés felett egy véges területet határolnak be 
+a görbe \(\omega > 0\) és \(\omega = 0\) szegmensei. 
 
 \section{Stabilitás diszkrét időben}

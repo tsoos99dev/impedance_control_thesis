@@ -134,7 +134,8 @@ függvénnyel írhatók le:
     \end{split}
 \end{align}
 ahol a \(C^\RM n_\RM m\) és \(M^\RM n_\RM m\) a szabályozó és a motor átviteli függvényei adott 
-bemenetekre és kimenetekre. Az átviteli egyenlet zárt körben:
+bemenetekre és kimenetekre. A felső index jelöli a kimenetet, az alsó index pedig a bemenetet.
+Az átviteli egyenlet zárt körben:
 \begin{align}
     \begin{split}
         y = \frac{1}{1 - M^\RM y_\RM V C^\RM V_\RM y e^{-s\tau_\RM d}}
@@ -167,7 +168,7 @@ képzetes részei:
         \omega^5 -a_3\omega^3 + a_{22}\omega^2\sin{\omega\tau_\RM d} + (a_{11} + a_{12}\cos{\omega\tau_\RM d})\omega - a_0\sin{\omega\tau_\RM d}  &= 0 \,,
     \end{split}
 \end{align}
-ami \(s=jw\) behelyettesítés után adódik. Az új együtthatók~\eqref{eq:delay_characteristic} alapján:
+melyek \(s=jw\) behelyettesítés után adódnak. Az új együtthatók~\eqref{eq:delay_characteristic} alapján:
 \begin{align}
     \begin{split}
         a_4 &= c_{41} + c_{42}\frac{B_\RM e}{M_\RM e}\\ 
@@ -225,3 +226,9 @@ tetszőleges pozítív értéket felvehet. A kritikus időkésés felett egy vé
 a görbe \(\omega > 0\) és \(\omega = 0\) szegmensei. 
 
 \section{Stabilitás diszkrét időben}
+A folytonos időben végzett stabilitásvizsgálat alapján belátható, hogy az 
+időkésés korlátozza az impedancia modell által előírható paramétereket.
+A valós rendszerben egy digitális feldolgozóegység végzi el a száblyozó jel
+meghatározásához szükséges számításokat, közel állandó időnként. Két ilyen 
+ciklus között a szabályozó jel állandó marad. Ezeket figyelembe véve a 
+folytonos időben végzett stabilitásvizsgálat eredménye tovább pontosítható.

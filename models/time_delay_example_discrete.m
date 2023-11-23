@@ -48,6 +48,11 @@ text(tj+td, 0.05, '$t_\mathrm{j} + \tau_\mathrm{d}$', 'Interpreter','latex','Bac
 xlim([0 pi]);
 ylim([0 1]);
 
+xlabel('Id\H o', 'Interpreter', 'latex', 'FontSize', 16)
+
+legend('Szögelfordulás', 'Szabályozó jel', 'Location', 'southeast', 'FontSize', 10)
+legend boxoff;
+
 set(gca, 'Box', 'off', 'TickDir', 'out', 'TickLength', [.02 .02], ...
     'XMinorTick', 'on', 'YMinorTick', 'on', 'YGrid', 'on', ...
     'XColor', [.3 .3 .3], 'YColor', [.3 .3 .3], ...
@@ -57,4 +62,4 @@ set(gca,'Xticklabel',[])
 set(gca,'Yticklabel',[]) 
 
 set(gcf,'PaperPositionMode','auto')
-export_fig("images/time_delay_example.png", "-png", "-m4", "-r300")
+export_fig("images/time_delay_example_discrete.png", "-png", "-m4", "-r300")

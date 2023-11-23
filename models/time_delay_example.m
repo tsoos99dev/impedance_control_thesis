@@ -46,6 +46,8 @@ text(tj+td, 0.05, '$t_\mathrm{j} + \tau_\mathrm{d}$', 'Interpreter','latex','Bac
 xlim([0 pi]);
 ylim([0 1]);
 
+xlabel('Id\H o', 'Interpreter', 'latex', 'FontSize', 16)
+
 legend('Szögelfordulás', 'Szabályozó jel', 'Location', 'southeast', 'FontSize', 10)
 legend boxoff;
 

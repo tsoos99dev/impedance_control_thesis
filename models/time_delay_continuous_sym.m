@@ -70,7 +70,7 @@ Btilde_y = Bhat - Fhat_v*(Ka + Kb*Ko);
 Btilde_tau = Fhat_tau - Fhat_v*kc;
 Btilde = [Btilde_r Btilde_tau Btilde_y];
 Ctilde = -Kb;
-Dtilde = [Ka kc -(Ka + Kb*Ko)];
+Dtilde = [Ka -kc -(Ka + Kb*Ko)];
 
 AA = [A-Bv*K Bv*Kb; zeros([2, 3]) Abb - Ko*Aab];
 BB = [Bv*Ka Bt - Bv*kc; zeros([2, 2])];
@@ -93,13 +93,13 @@ yCtau = motor(1, 2) + motor(1, 1)*controller(1, 2)*delay;
 
 y = nd*md - nn*mn*delay;
 % y = sub(y);
-pc = collect(y, s);
-coeff = fliplr(coeffs(pc, s));
-coeff = simplify(expand(coeff/coeff(1)));
+% pc = collect(y, s);
+% coeff = fliplr(coeffs(pc, s));
+% coeff = simplify(expand(coeff/coeff(1)))
 % collect(expand(coeff(2)))
 % collect(expand(coeff(3)))
 % ca = coeffs(expand(coeff(4)), exp(-s*t_d));
-% ca1 = simplify(coeffs(ca(1), [Be Ke]));
+% ca1 = simplify(coeffs(ca(1), [Be Ke]))
 % latex(expand(ca1(1)))
 % latex(expand(ca1(2)))
 % latex(expand(ca1(3)))

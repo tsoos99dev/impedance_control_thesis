@@ -98,7 +98,7 @@ behelyettesítve a megfigyelő dinamikai egyeneletébe:
     \end{split}
 \end{align}
 A szabályozó dinamikája ez alapján kifejezhető egy új állapottér modell formájában:
-\begin{align}
+\begin{align}\label{eq:controller_state_space}
     \begin{split}
         \dot{\tilde{\BF \eta}} &= \tilde{\BF A}\tilde{\BF \eta} + 
         \tilde{\BF B}_\RM y y + 
@@ -228,7 +228,112 @@ a görbe \(\omega > 0\) és \(\omega = 0\) szegmensei.
 \section{Stabilitás diszkrét időben}
 A folytonos időben végzett stabilitásvizsgálat alapján belátható, hogy az 
 időkésés korlátozza az impedancia modell által előírható paramétereket.
-A valós rendszerben egy digitális feldolgozóegység végzi el a száblyozó jel
+A valós rendszerben egy digitális feldolgozóegység végzi el a szabályozó jel
 meghatározásához szükséges számításokat, közel állandó időnként. Két ilyen 
 ciklus között a szabályozó jel állandó marad. Ezeket figyelembe véve a 
 folytonos időben végzett stabilitásvizsgálat eredménye tovább pontosítható.
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=12cm]{images/time_delay_example_discrete.png}
+    \caption{Reprezentatív ábra az időkésés hatásáról diszkrét időben}\label{fig:time_delay_example_discrete}
+    \end{center}
+\end{figure}
+
+A mért szögelfordulás és a diszkrét idejű szabályozó jel kapcsolatát szemlélteti a~\ref{fig:time_delay_example_discrete}. ábra.
+Két mintavételezési pont között a szabályozó jel állandó marad (zero-order hold). A mért szögelfordulás érték 
+feldolgozása után az új szabályozó jel mindig egy mintavételezési periódussal később jelenik meg a motor bemenetén.
+A továbbiakban feltételezett, hogy a jelfeldolgozáshoz szükséges időn kívül minden egyéb késés elhanyagolható, 
+így a mintavételezési periódus megegyezik a korábban bevezetett \(\tau_\RM d\) időkéséssel. Legyen \(C(t-\tau(t))\) 
+a szabályozó jel időfüggvénye. Ebben az alakban a mintavételezési pontok között konstans kimenet feltétele, hogy 
+az időkésés maga (\(\tau(t)\)) egy periodikus fűrészjelet kövessen, ahogy a~\ref{fig:time_delay_example_zoh}. ábra is mutatja.
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=12cm]{images/delay_zoh_example_discrete.png}
+    \caption{Az időkésés periodikus függvénye}\label{fig:time_delay_example_zoh}
+    \end{center}
+\end{figure}
+
+A diszkrét idejű stabilitásvizsgálathoz először diszkretizálni kell a szabályozó folytonos idejű állapottér modelljét.
+Ehhez legyen a kiindulási alap a~\eqref{eq:controller_state_space}. egyeneletek által definiált modell.
+Beszorozva mindkét oldalt \(e^{-\tilde {\BF A} t}\)-vel:
+\begin{align}
+    \begin{split}
+        e^{-\tilde {\BF A} t}\dot\tilde{\BF \eta}(t) &= e^{-\tilde {\BF A} t}\tilde {\BF A} \tilde{\BF \eta}(t) +
+        e^{-\tilde {\BF A} t}\left[\tilde{\BF B}_\RM y y(t) + 
+        \tilde{\BF B}_\RM r \theta_\RM r(t) +
+        \tilde{\BF B}_\RM \tau \tau_\RM e(t)\right] \\
+        \frac{\RM d}{\RM d t}\left(e^{-\tilde {\BF A} t}\tilde{\BF \eta}(t)\right) &= e^{-\tilde {\BF A} t}\left[\tilde{\BF B}_\RM y y(t) + 
+        \tilde{\BF B}_\RM r \theta_\RM r(t) +
+        \tilde{\BF B}_\RM \tau \tau_\RM e(t)\right]\,, 
+    \end{split}        
+\end{align}
+a kapott egyenletet integrálva:
+\begin{align}\label{eq:controller_state_integral}
+    \begin{split}
+        e^{-\tilde {\BF A} t}\tilde{\BF \eta}(t) - e^0 \tilde{\BF \eta}(0) &= \int_{0}^{t} e^{-\tilde {\BF A} t'}\left[\tilde{\BF B}_\RM y y(t') + 
+        \tilde{\BF B}_\RM r \theta_\RM r(t') +
+        \tilde{\BF B}_\RM \tau \tau_\RM e(t')\right] \RM dt' \\
+        \tilde{\BF \eta}(t) &= e^{\tilde {\BF A} t}\tilde{\BF \eta}(0) + \int_{0}^{t} e^{\tilde {\BF A} (t-t')}\left[\tilde{\BF B}_\RM y y(t') + 
+        \tilde{\BF B}_\RM r \theta_\RM r(t') +
+        \tilde{\BF B}_\RM \tau \tau_\RM e(\tau)\right] \RM dt'\,.
+    \end{split}        
+\end{align}
+A mintevételezési periódus alatt a szabályozó összes bemenete konstans marad, így a bemenetek az 
+integrálon kívülre helyezhetők. Legyen \(\tilde{\BF \eta}[k] := \tilde{\BF \eta}(k\tau_\RM d)\) a 
+a szabályázó belső állapota a \(k\)-adik diszkrét időlépésnél. Ezzel a~\eqref{eq:controller_state_integral}. 
+egyenlet a \(k\)-adik és a (\(k+1\))-edik lépéseknél:
+\begin{align}
+    \begin{split}
+        \tilde{\BF \eta}[k] &= e^{\tilde {\BF A} k\tau_\RM d}\tilde{\BF \eta}(0) + \int_{0}^{k\tau_\RM d} e^{\tilde {\BF A} (k\tau_\RM d-t')}\left[\tilde{\BF B}_\RM y y(t') + 
+        \tilde{\BF B}_\RM r \theta_\RM r(t') +
+        \tilde{\BF B}_\RM \tau \tau_\RM e(t')\right]\RM dt' \\
+        \tilde{\BF \eta}[k+1] &= e^{\tilde {\BF A}\tau_\RM d}\tilde{\BF \eta}[k] + \int_{k\tau_\RM d}^{(k+1)\tau_\RM d} e^{\tilde {\BF A} (k\tau_\RM d + \tau_\RM d-t')}\left[\tilde{\BF B}_\RM y y(t') + 
+        \tilde{\BF B}_\RM r \theta_\RM r(t') +
+        \tilde{\BF B}_\RM \tau \tau_\RM e(t')\right] \RM dt' \\
+        \tilde{\BF \eta}[k+1] &= e^{\tilde {\BF A}\tau_\RM d}\tilde{\BF \eta}[k] + \int_{k\tau_\RM d}^{(k+1)\tau_\RM d} e^{\tilde {\BF A} (k\tau_\RM d + \tau_\RM d-t')}\RM dt'\left[\tilde{\BF B}_\RM y y[k] + 
+        \tilde{\BF B}_\RM r \theta_\RM r[k] +
+        \tilde{\BF B}_\RM \tau \tau_\RM e[k]\right] \\
+        \tilde{\BF \eta}[k+1] &= e^{\tilde {\BF A}\tau_\RM d}\tilde{\BF \eta}[k] + \tilde{\BF A}^{-1}\left(e^{\tilde {\BF A}\tau_\RM d}-\BF I\right)\left[\tilde{\BF B}_\RM y y[k] + 
+        \tilde{\BF B}_\RM r \theta_\RM r[k] +
+        \tilde{\BF B}_\RM \tau \tau_\RM e[k]\right]\,.
+    \end{split}        
+\end{align}
+Tehát a diszkrét idejű szabályozó állapotér modelljét leírő mátrixok:
+\begin{align}\label{eq:discrete_controller_matrices}
+    \begin{split}
+        \tilde{\BF A}_\RM d &= e^{\tilde {\BF A}\tau_\RM d} \\
+        \tilde{\BF B}_\RM d &= \tilde{\BF A}^{-1}\left(e^{\tilde {\BF A}\tau_\RM d}-\BF I\right)\left[\tilde{\BF B}_\RM y~~\tilde{\BF B}_\RM r~~\tilde{\BF B}_\RM \tau\right] \\
+        \tilde{\BF C}_\RM d &= \tilde{\BF C} \\
+        \tilde{\BF D}_\RM d &= \tilde{\BF D} \,,
+    \end{split}        
+\end{align}
+ahol a mátrix exponenciális kifejezés szükség esetén például Taylor polinommal közelíthető. A további számítások ezt 
+a pontos alakot használják.
+
+A folytonos esethez hasonlóan, a stabilitásvizsgálat során a bemenetek értéke zérus a visszacsatolt szögelforduláson kívül.???
+Következő lépésként a zárt kör dinamkáját is ki kell fejezni a diszkrét időlépések függvényeként. 
+A szabályozónál alkalmazott levezetéshez hasonlóan~\eqref{eq:state_space}-ban szereplő mátrixok alapján:
+\begin{align}
+    \begin{split}    
+        \BF x[k+1] &= e^{\BF A \tau_\RM d}\BF x[k] + 
+        \BF A^{-1}\left(e^{\BF A \tau_\RM d} - \BF I\right)\BF B_\RM V V[k-1] + 
+        \int_{k\tau_\RM d}^{(k+1)\tau_\RM d} e^{\BF A (k\tau_\RM d + \tau_\RM d-t')}\BF B_\RM \tau \tau_\RM e(t')~\RM dt'\\
+        y[k] &= \BF C \BF x[k]\,.
+    \end{split}        
+\end{align}
+ahol megjelenik \(V[k-1]\) a szabályozó jel egy egész mintavételezési periódussal késleltetett értéke. 
+Legyenek a diszkretizált motor modell új paraméterei:
+\begin{align}\label{eq:discrete_controller_matrices}
+    \begin{split}
+        \BF A_\RM d &= e^{\BF A\tau_\RM d} \\
+        \BF B_\RM d &= \BF A^{-1}\left(e^{\BF A\tau_\RM d}-\BF I\right)\BF B_\RM V \\
+        \BF C_\RM d &= \BF C \\
+        \BF D_\RM d &= \BF D \,,
+    \end{split}        
+\end{align}
+Behelyettesítve a szabályozó késleltetett kimenetét~\eqref{eq:discrete_controller_matrices} szerint:
+% \begin{equation}
+%     y[k+1] = \BF C\left[\BF A_\RM d\right]
+%     \,.
+% \end{equation}

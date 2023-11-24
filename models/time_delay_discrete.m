@@ -2,8 +2,8 @@ syms s
 
 % Desired impedance model
 Me = 0.015;
-Be = 0.06;
-Ke = Me*4.2;
+Be = 0.0658;
+Ke = 0.1141;
 
 Aimp = [0 1; -Ke/Me -Be/Me];
 Bimp = [0 0; Ke/Me 1/Me];
@@ -47,7 +47,7 @@ Kb = K(2:end);
 
 Ko = acker(Abb', Aab', Po)';
 
-xi = [0; 0; 0];
+xi = [1; 0; 0];
 xai = xi(1);
 xbi = xi(2:end);
 nui = xbi - Ko*xai;
@@ -80,10 +80,46 @@ DD = zeros([5, 2]);
 
 controller = Ctilde/(s*eye(2) - Atilde)*Btilde + Dtilde;
 
-t_d = 0.2;
-Ad = expm(Atilde*t_d);
-Bd = Atilde\(Ad-eye(2))*Btilde;
-Cd = Ctilde;
-Dd = Dtilde;
+t_d = 0.1;
+% Ad = expm(A*t_d);
+% Bd = A\(Ad-eye(3))*B;
 
-delay = exp(-s*t_d);
+Md = expm([A Bv; zeros([1, 4])]*t_d);
+Ad = Md(1:3, 1:3);
+Bd = Md(1:3, 4:end);
+Cd = C;
+Dd = D;
+
+Adtilde = expm(Atilde*t_d);
+Bdtilde = Atilde\(Adtilde-eye(2))*Btilde;
+Bdtilder = Bdtilde(:, 1);
+Bdtildet = Bdtilde(:, 2);
+Bdtildey = Bdtilde(:, 3);
+
+Cdtilde = Ctilde;
+Ddtilde = Dtilde;
+
+Adaa = Ad(1, 1);
+Adab = Ad(1, 2:end);
+Adba = Ad(2:end, 1);
+Adbb = Ad(2:end, 2:end);
+
+Bda = Bd(1, :);
+Bdb = Bd(2:end, :);
+
+AAdx = [-Bd*K Bd*Kb Ad zeros(3, 2)];
+
+AAdexa = Adba + Adtilde*Ko - Ko*Adaa - Bdtildey;
+AAdexb = Adbb - Adtilde - Ko*Adab;
+AAdex1 = -(Bdb-Ko*Bda)*K;
+AAdee = Adtilde;
+AAdee1 = (Bdb-Ko*Bda)*Kb;
+AAde = [AAdex1 AAdee1 AAdexa AAdexb AAdee];
+
+AAd = [
+    zeros([3, 5]) eye(3) zeros([3, 2])
+    zeros([2, 5]) zeros([2,3]) eye(2)
+    AAdx
+    AAde
+];
+

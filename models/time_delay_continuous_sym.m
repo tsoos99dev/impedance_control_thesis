@@ -186,61 +186,61 @@ TN = TN.*tns;
 X = vpa(subs(sol.KM, {t, t_d}, {TN, TDN}));
 Y = vpa(subs(sol.BM, {t, t_d}, {TN, TDN}));
 
-% figure;
-% pbaspect([8,6,1])
-% set(gcf,'color','w');
-% set(gca, 'FontName', 'Helvetica');
-% 
-% xlim([0, 100]);
-% ylim([0, 100]);
-% 
-% prevBoundX = [100 0];
-% prevBoundY = [0 0];
-% 
-% cn = summer(numel(tdn) + 1);
-% 
-% hold on;
-% for i=1:size(X, 1)
-%     fX = [X(i,:), prevBoundX];
-%     fY = [Y(i,:), prevBoundY];
-%     h = fill(fX, fY, cn(i, :));
-%     h.LineStyle = 'none';
-%     h.FaceAlpha = 0.5;
-%     prevBoundX = flip(X(i, :));
-%     prevBoundY = flip(Y(i, :));
-% end
-% 
-% fX = [0, prevBoundX];
-% fY = [0, prevBoundY];
-% h = fill(fX, fY, cn(end, :));
-% h.LineStyle = 'none';
-% h.FaceAlpha = 0.5;
-% 
-% for i=1:size(X, 1)
-%     tl = tln(i);
-%     angle = double(rad2deg(atan2(Y(i, tl + 1) - Y(i, tl), X(i, tl + 1) - X(i, tl))));
-% 
-%     th = text(X(i, tl), Y(i, tl), num2str(tdn(i)), 'Clipping', 'on', 'FontSize', 12, 'HorizontalAlignment','center', 'Rotation', angle);
-%     bb = th.Extent;
-%     x = X(i,:);
-%     y = Y(i,:);
-% 
-%     x(bb(1) < x & x < bb(1) + bb(3) & bb(2) < y & y < bb(2) + bb(4)) = nan;
-%     plot(x, y, 'Color', [0,0,0,0.3], 'LineWidth', 2)
-% 
-% end
-% 
-% set(gca, 'Box', 'off', 'TickDir', 'out', 'TickLength', [.02 .02], ...
-%     'XMinorTick', 'on', 'YMinorTick', 'on', 'YGrid', 'on', ...
-%     'XColor', [.3 .3 .3], 'YColor', [.3 .3 .3], ...
-%     'LineWidth', 1)
-% 
-% xlabel('$\frac{K_\mathrm{e}}{M_\mathrm{e}}~\mathrm{[m \cdot s^{-2}]}$', 'Interpreter', 'latex', 'FontSize', 16)
-% ylabel('$\frac{B_\mathrm{e}}{M_\mathrm{e}}~\mathrm{[m \cdot s^{-1}]}$', 'Interpreter', 'latex', 'FontSize', 16)
-% 
-% set(gcf,'PaperPositionMode','auto')
-% export_fig("images/time_delay_stab_map.png", "-png", "-m4", "-r300")
-% 
+figure;
+pbaspect([8,6,1])
+set(gcf,'color','w');
+set(gca, 'FontName', 'Helvetica');
+
+xlim([0, 100]);
+ylim([0, 100]);
+
+prevBoundX = [100 0];
+prevBoundY = [0 0];
+
+cn = summer(numel(tdn) + 1);
+
+hold on;
+for i=1:size(X, 1)
+    fX = [X(i,:), prevBoundX];
+    fY = [Y(i,:), prevBoundY];
+    h = fill(fX, fY, cn(i, :));
+    h.LineStyle = 'none';
+    h.FaceAlpha = 0.5;
+    prevBoundX = flip(X(i, :));
+    prevBoundY = flip(Y(i, :));
+end
+
+fX = [0, prevBoundX];
+fY = [0, prevBoundY];
+h = fill(fX, fY, cn(end, :));
+h.LineStyle = 'none';
+h.FaceAlpha = 0.5;
+
+for i=1:size(X, 1)
+    tl = tln(i);
+    angle = double(rad2deg(atan2(Y(i, tl + 1) - Y(i, tl), X(i, tl + 1) - X(i, tl))));
+
+    th = text(X(i, tl), Y(i, tl), num2str(tdn(i)), 'Clipping', 'on', 'FontSize', 12, 'HorizontalAlignment','center', 'Rotation', angle);
+    bb = th.Extent;
+    x = X(i,:);
+    y = Y(i,:);
+
+    x(bb(1) < x & x < bb(1) + bb(3) & bb(2) < y & y < bb(2) + bb(4)) = nan;
+    plot(x, y, 'Color', [0,0,0,0.3], 'LineWidth', 2)
+
+end
+
+set(gca, 'Box', 'off', 'TickDir', 'out', 'TickLength', [.02 .02], ...
+    'XMinorTick', 'on', 'YMinorTick', 'on', 'YGrid', 'on', ...
+    'XColor', [.3 .3 .3], 'YColor', [.3 .3 .3], ...
+    'LineWidth', 1)
+
+xlabel('$\frac{K_\mathrm{e}}{M_\mathrm{e}}~\mathrm{[s^{-2}]}$', 'Interpreter', 'latex', 'FontSize', 16)
+ylabel('$\frac{B_\mathrm{e}}{M_\mathrm{e}}~\mathrm{[s^{-1}]}$', 'Interpreter', 'latex', 'FontSize', 16)
+
+set(gcf,'PaperPositionMode','auto')
+export_fig("images/time_delay_stab_map.png", "-png", "-m4", "-r300")
+
 
 
 

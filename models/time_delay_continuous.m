@@ -52,7 +52,7 @@ Kb = K(2:end);
 
 Ko = acker(Abb', Aab', Po)';
 
-xi = [0; 0; 0];
+xi = [1; 0; 0];
 xai = xi(1);
 xbi = xi(2:end);
 nui = xbi - Ko*xai;

@@ -311,10 +311,9 @@ Tehát a diszkrét idejű szabályozó állapotér modelljét leírő mátrixok:
 ahol a mátrix exponenciális kifejezés szükség esetén például Taylor polinommal közelíthető. A további számítások ezt 
 a pontos alakot használják.
 
-A folytonos esethez hasonlóan, a stabilitásvizsgálat során a bemenetek értéke zérus a visszacsatolt szögelforduláson kívül.???
 Következő lépésként a zárt kör dinamkáját is ki kell fejezni a diszkrét időlépések függvényeként. 
 A szabályozónál alkalmazott levezetéshez hasonlóan~\eqref{eq:state_space}-ban szereplő mátrixok alapján:
-\begin{align}
+\begin{align}\label{eq:discrete_motor_state}
     \begin{split}    
         \BF x[k+1] &= e^{\BF A \tau_\RM d}\BF x[k] + 
         \BF A^{-1}\left(e^{\BF A \tau_\RM d} - \BF I\right)\BF B_\RM V V[k-1] + 
@@ -324,16 +323,124 @@ A szabályozónál alkalmazott levezetéshez hasonlóan~\eqref{eq:state_space}-b
 \end{align}
 ahol megjelenik \(V[k-1]\) a szabályozó jel egy egész mintavételezési periódussal késleltetett értéke. 
 Legyenek a diszkretizált motor modell új paraméterei:
-\begin{align}\label{eq:discrete_controller_matrices}
+\begin{align}\label{eq:discrete_motor_matrices}
     \begin{split}
         \BF A_\RM d &= e^{\BF A\tau_\RM d} \\
         \BF B_\RM d &= \BF A^{-1}\left(e^{\BF A\tau_\RM d}-\BF I\right)\BF B_\RM V \\
         \BF C_\RM d &= \BF C \\
-        \BF D_\RM d &= \BF D \,,
+        \BF D_\RM d &= \BF D \,.
     \end{split}        
 \end{align}
-Behelyettesítve a szabályozó késleltetett kimenetét~\eqref{eq:discrete_controller_matrices} szerint:
-% \begin{equation}
-%     y[k+1] = \BF C\left[\BF A_\RM d\right]
-%     \,.
-% \end{equation}
+
+A stabilitásvizsgálathoz a bemenet zérus. A következőkben a zárt kör teljes dinamikájának levezetése 
+következik zérus bemenettel. A~\eqref{eq:discrete_motor_state} állapotegyenletbe behelyettesítve a 
+szabályozó késleltetett kimenetét:
+\begin{align}
+    \begin{split}
+    \BF x[k+1] &= \BF A_\RM d x[k] + 
+    \BF B_\RM d \left(\tilde{\BF C}_\RM d \tilde{\BF \eta}[k-1] + 
+    \tilde{\BF D}_\RM {d,y} y[k-1]\right)\,'
+    \end{split}        
+\end{align}
+Felhasználva \(\tilde{\BF \eta}\) és a paraméterek definícióját:
+\begin{align}\label{eq:discrete_motor_state_closed}
+    \begin{split}
+        \BF x[k+1] &= \BF A_\RM d x[k] - 
+        \BF B_\RM d \BF K_\RM a y[k-1] - 
+        \BF B_\RM d \BF K_\RM b \tilde{\BF x}_\RM b[k-1] \\
+        &= \BF A_\RM d x[k] - 
+        \BF B_\RM d \BF K \BF x[k-1] +
+        \BF B_\RM d \BF K_\RM b \BF e[k-1]\,.
+    \end{split}        
+\end{align}
+A becsült állapot hibájának differencia egyenletei pedig:
+\begin{align}
+    \begin{split}
+        \BF e[k+1] &= \BF x_\RM b[k+1] - \tilde{\BF x}_\RM b[k+1] \\
+        &= \BF E_{\RM{xa},k}\BF x_\RM a[k] + 
+        \BF E_{\RM{xb},k}\BF x_\RM b[k] + 
+        \BF E_{\RM x,k-1}\BF x[k-1] + 
+        \BF E_{\RM e,k}\BF e[k] + 
+        \BF E_{\RM e,k-1}\BF e[k-1]
+        \,,
+    \end{split}        
+\end{align}
+ahol a mátrix együtthatók:
+\begin{align}
+    \begin{split}
+        \BF E_{\RM{xa},k} &= \BF A_\RM{d,ba} + 
+        \tilde{\BF A}_\RM d \BF K_\RM e -
+        \BF K_\RM e \BF A_\RM{d,aa} \\
+        \BF E_{\RM{xb},k} &= \BF A_\RM{d,bb} + 
+        \tilde{\BF A}_\RM d -
+        \BF K_\RM e \BF A_\RM{d,ab} \\
+        \BF E_{\RM x,k-1} &= -(\BF B_\RM{d,b} -
+        \BF K_\RM e \BF B_\RM{d,a})\RM K \\
+        \BF E_{\RM e,k} &= \tilde{\BF A}_\RM d \\
+        \BF E_{\RM e,k-1} &= (\BF B_\RM{d,b} -
+        \BF K_\RM e \BF B_\RM{d,a})\RM K_\RM b\,.
+    \end{split}        
+\end{align}
+A~\eqref{eq:pos_control_dynamics} egyenlethez hasonlóan a 
+teljes rendszer belső állapotának dinamikája:
+\begin{align}
+    \begin{split}
+        \begin{bmatrix}
+        \BF x[k] \\
+        \BF e[k] \\
+        \BF x[k+1] \\ 
+        \BF e[k+1] \\ 
+        \end{bmatrix} &=
+        \begin{bmatrix}
+            \BF 0 & \BF 0 & \BF I & \BF 0 \\
+            \BF 0 & \BF 0 & \BF 0 & \BF I \\
+            -\BF B_\RM d \BF K & \BF B_\RM d \BF K_\RM b & \BF A_\RM d & \BF 0 \\
+            \BF E_{\RM x,k-1} & \BF E_{\RM e,k-1} & \BF E_{\RM x,k} & \BF E_{\RM e,k} \\ 
+        \end{bmatrix}
+        \begin{bmatrix}
+            \BF x[k-1] \\
+            \BF e[k-1] \\
+            \BF x[k] \\ 
+            \BF e[k] \\ 
+        \end{bmatrix}\,.
+    \end{split}        
+\end{align}
+A stabilitás feltétele, hogy a kapott diszkrét állapot átmeneti mátrix minden sajátértéke abszolút 
+értékben egynél szigorúan kisebb legyen. A~\ref{fig:}. ábra a~\ref{tab:}. táblázat paraméterei alapján numerikusan 
+meghatározott stabilitás térképet ábrázolja \(K_\RM e\) és \(B_\RM e\) impedancia paraméterek függvényében. 
+A sajátértékek egy 150x150 méretű, egyenletesen elosztott rács pontjain lettek meghatározva. Ezután a 
+pontok közül az előbb említett stabilitási feltétel szerint lettek elkülönítve a stabil pontok. Majd a 
+stabil pontok Delaunay-háromszögelése és annak konvex burka került kirajzolásra.
+\begin{table}[ht]
+    \small\centering
+    \caption{A folytonos idejű stabilitásvizsgálatnál alkalmazott paraméterek}\label{tab:delay_stab_params}
+    \tabcolsep=1pt
+    \begin{tabular}{l>{~}l>{\quad}rl}
+        \toprule
+        \multicolumn{2}{c}{Szimbólum és paraméter név} & \multicolumn{2}{c}{Érték} \\ \midrule
+        \(J\) & Motor tehetetlensége & 0.01 & \(\RM{kg\cdot m^2}\) \\
+        \(K_\RM m\) & Motor nyomatékállandója & 0.01 & \(\RM{Nm\cdot A^{-1}}\) \\
+        \(B_\RM m\) & Motor modell viszkózus csillapítása & 0.1 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
+        \(L\) & Motor induktivitása & 0.2 & H \\
+        \(R\) & Motor ellenállása & 1 & \(\Omega\) \\
+        \(p\) & További pólusok & -15 & \(\RM{rad \cdot s^{-1}}\) \\
+        \(M_\RM e\) & Előírt tehetetlenség & 0.015 & \(\RM{kg\cdot m^2}\) \\
+        \(\tau_\RM d\) & Mintavételezśi idő & 0.01 & \(\RM{s}\) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/time_delay_stab_map_discrete.png}
+    \caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map}
+    \end{center}
+\end{figure}
+A kontúrok a különböző becsült beállási időket jelölnek, melyek a legnagyobb abszolút értékű sajártérték 
+alapján lettek meghatározva:
+\begin{align}
+    \begin{split}
+        t_\RM s \approx \tau_\RM d \frac{\ln{0.02}}{\ln{|\lambda|_\RM{max}}}
+    \end{split}        
+\end{align}
+alapján, ahol \(\tau_\RM d\) a mintavételezési idő és \(|\lambda|_\RM{max}\) jelöli a legnagyobb sajátértéket
+ abszolút értékben. Az alkalmazott paraméterekkel a minimális beállási idő közelítőleg 1.2 s.

@@ -2,8 +2,8 @@ syms s
 
 % Desired impedance model
 Me = 0.015;
-Be = 0.0658;
-Ke = 0.1141;
+Be = 0.1;
+Ke = 0.001;
 
 Aimp = [0 1; -Ke/Me -Be/Me];
 Bimp = [0 0; Ke/Me 1/Me];

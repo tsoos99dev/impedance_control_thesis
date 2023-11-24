@@ -406,14 +406,14 @@ teljes rendszer belső állapotának dinamikája:
     \end{split}        
 \end{align}
 A stabilitás feltétele, hogy a kapott diszkrét állapot átmeneti mátrix minden sajátértéke abszolút 
-értékben egynél szigorúan kisebb legyen. A~\ref{fig:}. ábra a~\ref{tab:}. táblázat paraméterei alapján numerikusan 
+értékben egynél szigorúan kisebb legyen. A~\ref{fig:time_delay_stab_map_discrete}. ábra a~\ref{tab:delay_stab_params_discrete}. táblázat paraméterei alapján numerikusan 
 meghatározott stabilitás térképet ábrázolja \(K_\RM e\) és \(B_\RM e\) impedancia paraméterek függvényében. 
 A sajátértékek egy 150x150 méretű, egyenletesen elosztott rács pontjain lettek meghatározva. Ezután a 
 pontok közül az előbb említett stabilitási feltétel szerint lettek elkülönítve a stabil pontok. Majd a 
 stabil pontok Delaunay-háromszögelése és annak konvex burka került kirajzolásra.
 \begin{table}[ht]
     \small\centering
-    \caption{A folytonos idejű stabilitásvizsgálatnál alkalmazott paraméterek}\label{tab:delay_stab_params}
+    \caption{A diszkrét idejű stabilitásvizsgálatnál alkalmazott paraméterek}\label{tab:delay_stab_params_discrete}
     \tabcolsep=1pt
     \begin{tabular}{l>{~}l>{\quad}rl}
         \toprule
@@ -432,7 +432,7 @@ stabil pontok Delaunay-háromszögelése és annak konvex burka került kirajzol
 \begin{figure}[ht]
     \begin{center}
     \includegraphics[width=\textwidth]{images/time_delay_stab_map_discrete.png}
-    \caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map}
+    \caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map_discrete}
     \end{center}
 \end{figure}
 A kontúrok a különböző becsült beállási időket jelölnek, melyek a legnagyobb abszolút értékű sajártérték 
@@ -442,5 +442,8 @@ alapján lettek meghatározva:
         t_\RM s \approx \tau_\RM d \frac{\ln{0.02}}{\ln{|\lambda|_\RM{max}}}
     \end{split}        
 \end{align}
-alapján, ahol \(\tau_\RM d\) a mintavételezési idő és \(|\lambda|_\RM{max}\) jelöli a legnagyobb sajátértéket
- abszolút értékben. Az alkalmazott paraméterekkel a minimális beállási idő közelítőleg 1.2 s.
+alapján, ahol \(\tau_\RM d\) a mintavételezési idő és \(|\lambda|_\RM{max}\) jelöli a legnagyobb sajátértéket 
+abszolút értékben. Az alkalmazott paraméterekkel a minimális beállási idő közelítőleg 1.2 s. 
+
+A diszkretizáció negatív hatással van a rendszer stabilitására. A folytonos idejű időkéséses rendszernél 0.1 s 
+időkéséssel még mindig végtelen nagy a stabil régió ugyanezen paraméterekkel. 

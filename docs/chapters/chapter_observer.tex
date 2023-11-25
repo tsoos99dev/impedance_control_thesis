@@ -1,6 +1,8 @@
 \chapter{Állapotmegfigyelő}\label{chap:observer}
-Az állapotvisszacsatoláshoz szükséges belső állapotokra (a szögelforduláson kívül)
-egy megfigyelő ad becslést. Elkülönítve a mért és a becsült állapotokat~\eqref{eq:state_space_generic} felírható
+Ahogy a jelen alkalmazásban is, sokszor nem áll rendelkezésre az állapotvisszacsatoláshoz szükséges 
+összes belső állapotot közvetlen mérésből. Ilyenkor egy állapotmegfigyelő adhat becslést az ismeretlen 
+állapotokra~\cite{kalman1960new}. Elkülönítve a mért és a becsült állapotokat~\eqref{eq:state_space_generic} 
+felírható:
 \begin{equation}\label{eq:observer_state}
     \begin{split}
     \left[\begin{array}{c}

@@ -379,10 +379,7 @@ teljes rendszer belső állapotának dinamikája:
 A stabilitás feltétele, hogy a kapott diszkrét állapot átmeneti mátrix minden sajátértéke abszolút 
 értékben egynél szigorúan kisebb legyen. A~\ref{fig:time_delay_stab_map_discrete}. ábra a~\ref{tab:delay_stab_params_discrete}. táblázat paraméterei alapján numerikusan 
 meghatározott stabilitás térképet ábrázolja \(K_\RM e\) és \(B_\RM e\) impedancia paraméterek függvényében. 
-A sajátértékek egy 150x150 méretű, egyenletesen elosztott rács pontjain lettek meghatározva. Ezután a 
-pontok közül az előbb említett stabilitási feltétel szerint lettek elkülönítve a stabil pontok. Majd a 
-stabil pontok Delaunay-háromszögelése és annak konvex burka került kirajzolásra.
-\begin{table}[ht]
+\begin{table}[H]
     \small\centering
     \caption{A diszkrét idejű stabilitásvizsgálatnál alkalmazott paraméterek}\label{tab:delay_stab_params_discrete}
     \tabcolsep=1pt
@@ -400,7 +397,10 @@ stabil pontok Delaunay-háromszögelése és annak konvex burka került kirajzol
         \bottomrule
     \end{tabular}
 \end{table}
-\begin{figure}[ht]
+A sajátértékek egy 150x150 méretű, egyenletesen elosztott rács pontjain lettek meghatározva. Ezután a 
+pontok közül az előbb említett stabilitási feltétel szerint lettek elkülönítve a stabil pontok. Majd a 
+stabil pontok Delaunay-háromszögelése és annak konvex burka került kirajzolásra.
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=\textwidth]{images/time_delay_stab_map_discrete.png}
     \caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map_discrete}

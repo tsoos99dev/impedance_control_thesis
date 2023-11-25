@@ -17,7 +17,7 @@ paraméter legyen \(\tau_\RM d\).
 \begin{figure}[ht]
     \begin{center}
     \includegraphics[width=12cm]{images/time_delay_example.png}
-    \caption{Reprezentatív ábra az időkésés haftásáról folytonos időben}\label{fig:time_delay_example}
+    \caption{Reprezentatív ábra az időkésés hatásáról folytonos időben}\label{fig:time_delay_example}
     \end{center}
 \end{figure}
 A szabályozó jel \(\tau_\RM d\) időegységgel eltolódva jelenik meg a motor bemenetén, ahogy a
@@ -55,7 +55,7 @@ A kimeneti feszültség egyenletében található becsült állapotvektor kifeje
         V &= K_\RM r \theta_\RM r - K_\RM c \tau_\RM e - (K_a + \BF K_\RM b \BF K_\RM e) y - \BF K_\RM b \tilde{\BF \eta}\,,
     \end{split}
 \end{equation}
-behelyettesítve a megfigyelő dinamikai egyeneletébe:
+behelyettesítve a megfigyelő dinamikai egyenletébe:
 \begin{align}\label{eq:observer_transfer_transformed}
     \begin{split}
         \dot{\tilde{\BF \eta}} &= \hat{\BF A} \tilde{\BF \eta} + 
@@ -153,7 +153,7 @@ melyek \(s=jw\) behelyettesítés után adódnak. Az új együtthatók~\eqref{eq
 \end{align}
 A~\eqref{eq:delay_complex_separation}-ben szereplő egyenletrendszert megoldva \(\frac{B_\RM e}{M_\RM e}\)
 és \(\frac{K_\RM e}{M_\RM e}\) kifejezésekre egy paraméteres görbe adódik. 
-A független paraméter \(\omega\) a stabilitás határán fellépő csillapítatlan rezgés frekvenciájval
+A független paraméter \(\omega\) a stabilitás határán fellépő csillapítatlan rezgés frekvenciájával
 arányos. A görbe minden pontjához egy tisztán képzetes póluspár vagy nulla kapcsolódik. 
 A nulla megoldások a \(\frac{K_\RM e}{M_\RM e} = 0\) egyenesen helyezkednek el. 
 A kapott görbét a~\ref{tab:delay_stab_params}. táblázat paramétereit behelyettesítve 
@@ -193,7 +193,7 @@ kapott tartománnyal, tehát:
 \end{equation}
 Az időkésés növekedésével egyre szűkül a stabil tartomány, egy kritikus érték alatt azonban
 csak \(\frac{K_\RM e}{M_\RM e}\) kifejezésre adódik maximum, \(\frac{B_\RM e}{M_\RM e}\)
-tetszőleges pozítív értéket felvehet. A kritikus időkésés felett egy véges területet határolnak be 
+tetszőleges pozitív értéket felvehet. A kritikus időkésés felett egy véges területet határolnak be 
 a görbe \(\omega > 0\) és \(\omega = 0\) szegmensei. 
 
 \section{Stabilitás diszkrét időben}
@@ -216,7 +216,7 @@ feldolgozása után az új szabályozó jel mindig egy mintavételezési periód
 A továbbiakban feltételezett, hogy a jelfeldolgozáshoz szükséges időn kívül minden egyéb késés elhanyagolható, 
 így a mintavételezési periódus megegyezik a korábban bevezetett \(\tau_\RM d\) időkéséssel. Legyen \(C(t-\tau(t))\) 
 a szabályozó jel időfüggvénye. Ebben az alakban a mintavételezési pontok között konstans kimenet feltétele, hogy 
-az időkésés maga (\(\tau(t)\)) egy periodikus fűrészjelet kövessen, ahogy a~\ref{fig:time_delay_example_zoh}. ábra is mutatja.
+az időkésés maga (\(\tau(t)\)) egy periodikus fűrész jelet kövessen, ahogy a~\ref{fig:time_delay_example_zoh}. ábra is mutatja.
 
 \begin{figure}[ht]
     \begin{center}
@@ -226,7 +226,7 @@ az időkésés maga (\(\tau(t)\)) egy periodikus fűrészjelet kövessen, ahogy 
 \end{figure}
 
 A diszkrét idejű stabilitásvizsgálathoz először diszkretizálni kell a szabályozó folytonos idejű állapottér modelljét.
-Ehhez legyen a kiindulási alap a~\eqref{eq:controller_state_space}. egyeneletek által definiált modell.
+Ehhez legyen a kiindulási alap a~\eqref{eq:controller_state_space}. egyenletek által definiált modell.
 Beszorozva mindkét oldalt \(e^{-\tilde {\BF A} t}\)-vel:
 \begin{align}
     \begin{split}
@@ -250,7 +250,7 @@ a kapott egyenletet integrálva:
         \tilde{\BF B}_\RM \tau \tau_\RM e(\tau)\right] \RM dt'\,.
     \end{split}        
 \end{align}
-A mintevételezési periódus alatt a szabályozó összes bemenete konstans marad, így a bemenetek az 
+A mintavételezési periódus alatt a szabályozó összes bemenete konstans marad, így a bemenetek az 
 integrálon kívülre helyezhetők. Legyen \(\tilde{\BF \eta}[k] := \tilde{\BF \eta}(k\tau_\RM d)\) a 
 a szabályázó belső állapota a \(k\)-adik diszkrét időlépésnél. Ezzel a~\eqref{eq:controller_state_integral}. 
 egyenlet a \(k\)-adik és a (\(k+1\))-edik lépéseknél:
@@ -406,7 +406,7 @@ stabil pontok Delaunay-háromszögelése~\cite{Okabe00} és annak konvex burka k
     \caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map_discrete}
     \end{center}
 \end{figure}
-A kontúrok a különböző becsült beállási időket jelölnek, melyek a legnagyobb abszolút értékű sajártérték 
+A kontúrok a különböző becsült beállási időket jelölnek, melyek a legnagyobb abszolút értékű sajátérték 
 alapján lettek meghatározva:
 \begin{align}
     \begin{split}

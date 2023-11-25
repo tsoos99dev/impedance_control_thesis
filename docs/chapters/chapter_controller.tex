@@ -217,7 +217,7 @@ A pólusok alapján a visszacsatolási mátrixok az Ackermann formulával lettek
 
 \section{Nyomaték kompenzáció}
 A rendszer válasza a külső nyomaték bemenetre adott egységugrás jelre a~\ref{fig:observer_controller_torque_resp}. ábrán látható. 
-Az alkalmazott paraméterek a~\ref{tab:observer_controller_pos_resp}. táblazatban szerepelnek.
+Az alkalmazott paraméterek a~\ref{tab:observer_controller_pos_resp}. táblázatban szerepelnek.
 A végérték nem egyezik meg az impedancia modell által előírt értékkel, így további módosításokra van szükség.
 A modell két bemenete közül csak a feszültségre van hatással a 
 szabályozó, így a környezet által kifejtett külső nyomaték 
@@ -311,7 +311,7 @@ Ekkor egy becsült nyomaték érték kerül visszacsatolásra:
 \begin{align}
     \tilde \tau = J \ddot \theta_\RM s - \BF C_{\ddot\theta} \BF A \tilde{\BF x}\,,
 \end{align}
-ahol \(\ddot \theta_\RM s\) a forgorész mért szöggyursulása és \(\BF C_{\ddot\theta} = [0~~1~~0]\).
+ahol \(\ddot \theta_\RM s\) a forgórész mért szöggyorsulása és \(\BF C_{\ddot\theta} = [0~~1~~0]\).
 alakban, a becsült állapot és a mért szöggyorsulás kombinációjával adható meg.
 A feszültségjel a becsült nyomatékértékkel:
 \begin{align}
@@ -450,7 +450,7 @@ egyenlet szerint.
 Az előző feltételek alapján a pozíció referencia jelre és külső nyomaték hatására is megfelelő válasz kapható.
 Egy ilyen válasz látható a~\ref{fig:observer_controller_pos_resp_direct_calib}. 
 és a~\ref{fig:observer_controller_torque_resp_direct_calib} ábrán. 
-Az alkalmazott paramétereket a~\ref{tab:observer_controller_pos_resp_calib}. táblazat tartalmazza.
+Az alkalmazott paramétereket a~\ref{tab:observer_controller_pos_resp_calib}. táblázat tartalmazza.
 
 \begin{table}[H]
     \small\centering
@@ -488,7 +488,7 @@ Az alkalmazott paramétereket a~\ref{tab:observer_controller_pos_resp_calib}. t�
 
 Az impedancia modell előírt rugóállandójára az előző elemzés nem ad korlátot, viszont 
 ennek a paraméternek a növelésével növekszik a modell sajátfrekvenciája. Ez mindenképp 
-egyre nagyobb előrt gyorsulással jár, mely a motorra kapcsolt feszültség szaturációjához vezet.
+egyre nagyobb előírt gyorsulással jár, mely a motorra kapcsolt feszültség szaturációjához vezet.
 
 Az áthelyezett pólusok értékeinek függvényében a szabályozó önmagában instabil lehet. Mivel a rendszer szabályozás 
 nélkül instabil, mindenképp szükséges független biztonsági mechanizmus beépítése, így ennek az esetnek az elemzése elmarad. 

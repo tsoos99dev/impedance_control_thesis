@@ -31,7 +31,7 @@ J = Jm + 1/gr^2 * Jl;
 
 Bm = Km*Ifinal/vfinal;
 
-L = 0.452;
+L = 0.452e-3;
 R = 10.6;
 
 % Motor model

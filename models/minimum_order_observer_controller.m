@@ -6,7 +6,7 @@ Be = 4;
 Ke = 16;
 
 impedance_model = tf(Ke, [Me Be Ke]);
-Pe = pole(impedance_model)'
+Pe = pole(impedance_model)';
 
 % Motor parameters
 J = 0.01;

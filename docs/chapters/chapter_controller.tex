@@ -177,14 +177,7 @@ Amennyiben \(\BF A - \BF B_\RM V \BF K\) sajátértékei is mind negatív valós
 a teljes rendszer exponenciálisan stabil, de a külső nyomatékra adott válasz végértéke eltér az impedancia modell
 által előírt értéktől. Ez a szabályozó még nem felel meg az alkalmazás előírásainak. A rendszer válasza a pozíció referencia bemenetre adott egységugrás jelre a~\ref{fig:observer_controller_pos_resp}. ábrán látható. 
 Az alkalmazott paramétereket az~\ref{tab:observer_controller_pos_resp}. táblázat tartalmazza. 
-\begin{figure}[ht]
-    \begin{center}
-    \includegraphics[width=\textwidth]{images/observer_controller_pos_resp.png}
-    \caption{Az impedancia modell és a szabályozó összehasonlítása pozíció egységugrás bemenetre}\label{fig:observer_controller_pos_resp}
-    \end{center}
-\end{figure}
-
-\begin{table}[ht]
+\begin{table}[H]
     \small\centering
     \caption{Pozíció referencia bemenetre adott egységugrás jelnél alkalmazott paraméterek}\label{tab:observer_controller_pos_resp}
     \tabcolsep=1pt
@@ -202,18 +195,24 @@ Az alkalmazott paramétereket az~\ref{tab:observer_controller_pos_resp}. táblá
         \bottomrule
     \end{tabular}
 \end{table}
-
 Az áthelyezett pólusok \(P = [-2.00 - 3.46i~~-2.00 + 3.46i~~-8.00]\) 
 és a megfigyelő pólusai \(P_\RM o = [-8.00~~-8.00]\). Az első két áthelyezett pólust az impedancia modell
-határozza meg. A többi pólus meghatározásához szükséges feltételek vizsgálata a nyomatékválasz vizsgálata után következik.
-A pólusok alapján a visszacsatolási mátrixok az Ackermann formulával lettek meghatározva.
-
-\begin{figure}[ht]
+határozza meg.
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/observer_controller_pos_resp.png}
+    \caption{Az impedancia modell és a szabályozó összehasonlítása pozíció egységugrás bemenetre}\label{fig:observer_controller_pos_resp}
+    \end{center}
+\end{figure}
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=\textwidth]{images/observer_controller_torque_resp.png}
     \caption{Az impedancia modell és a szabályozó összehasonlítása külső nyomaték egységugrás bemenetre}\label{fig:observer_controller_torque_resp}
     \end{center}
 \end{figure}
+
+A többi pólus meghatározásához szükséges feltételek vizsgálata a nyomatékválasz vizsgálata után következik.
+A pólusok alapján a visszacsatolási mátrixok az Ackermann formulával lettek meghatározva.
 
 \section{Nyomaték kompenzáció}
 A rendszer válasza a külső nyomaték bemenetre adott egységugrás jelre a~\ref{fig:observer_controller_torque_resp}. ábrán látható. 
@@ -351,7 +350,42 @@ látható modell vizsgálata fog folytatódni.
 A kompenzáció csak akkor lehet eredményes, ha a modellezett motor feszültség és külső nyomaték hatására is 
 egyaránt közel azonos sebességgel reagál. A direkt nyomaték méréssel kompenzált modell válasza egységugrás
 bemenetre a~\ref{fig:observer_controller_pos_resp_direct}. és~\ref{fig:observer_controller_torque_resp_direct}. ábrán látható. 
-A felhasznált paraméterek továbbra is azonosak a kompenzálás nélküli modellnél alkalmazott paraméterekkel.
+A nyomaték jelre adott válasznál a bemenet \(0.1~\RM{Nm}\) nagyságú. A felhasznált paramétereket 
+a~\ref{tab:observer_controller_direct_comp_params} táblázat tartalmazza.
+\begin{table}[H]
+    \small\centering
+    \caption{A kompenzált szabályozónál alkalmazott paraméterek}\label{tab:observer_controller_direct_comp_params}
+    \tabcolsep=1pt
+    \begin{tabular}{l>{~}l>{\quad}rl}
+        \toprule
+        \multicolumn{2}{c}{Szimbólum és paraméter név} & \multicolumn{2}{c}{Érték} \\ \midrule
+        \(M_\RM e\) & Előírt tehetetlenség & \num{1.00e-6} & \(\RM{kg\cdot m^2}\) \\
+        \(B_\RM e\) & Előírt viszkózus csillapítás & \num{4.00e-6} & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
+        \(K_\RM e\) & Előírt rugóállandó & \num{1.60e-5} & \(\RM{kg\cdot m^2\cdot s^{-2}}\) \\
+        \(J_\RM a\) & Rotor tehetetlensége & \num{1.44e-7} & \(\RM{kg\cdot m^2}\) \\
+        \(J_\RM L\) & Terhelés tehetetlensége & \num{1.00e-4} & \(\RM{kg\cdot m^2}\) \\
+        \(J\) & Átszámított tehetetlenség & \num{1.58e-7} & \(\RM{kg\cdot m^2}\) \\
+        \(g\) & Áttételi arány & \num{84.3284} & \\
+        \(i_\RM{f}\) & Terhelés nélküli állapot állandósult motorárama & \num{4.01e-2} & \(\RM{A}\) \\
+        \(\dot{\theta}_\RM{f}\) & Terhelés nélküli állapot állandósult szögsebessége & \num{7.10e2} & \(\RM{rad \cdot s^{-1}}\) \\
+        \(B_\RM m\) & Motor modell viszkózus csillapítása & \num{5.64e-5} & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
+        \(K_\RM m\) & Motor nyomatékállandója & 0.998 & \(\RM{Nm\cdot A^{-1}}\) \\
+        \(L\) & Motor induktivitása & 0.452 & H \\
+        \(R\) & Motor ellenállása & 10.6 & \(\Omega\) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+A pólusok továbbra is a~\ref{tab:observer_controller_pos_resp}. táblázat után definitált értékek.
+A motorparaméterek a~\ref{fig:motor_params1}. és~\ref{fig:motor_params2}. ábrákon szereplő paraméterek 
+alapján lettek meghatározva. Az ábrák egy tervezett kísérleti összeállítás motorjának paramétereit 
+tartalmazzák. Ez az összeállítás tartalmaz egy fogaskerekes áttételt, így bizonyos paramétereket 
+át kell számítani a terhelési oldalról a motor oldalára. A motor viszkózus csillapítása és tehetetlensége származtatott értékek, melyek 
+\begin{align}
+    \begin{split}
+        J &= J_\RM a + \frac{1}{g^2}J_\RM L \\
+        B_\RM m &= \frac{K_\RM m i_\RM{f}}{\dot{\theta}_\RM{f}}
+    \end{split}
+\end{align}
 A nyomaték kompenzációs együttható
 \begin{equation}
     K_\RM c = L\frac{- B_\RM m M_\RM e + B_\RM e J - J M_\RM e p + J^2 p}{J K_\RM m M_\RM e}
@@ -437,7 +471,7 @@ illetve az előírt viszkózus csillapítási együtthatóra is adódik egy maxi
 ami felett nem választható ki olyan pólus, mely a követelményeknek megfelelő választ eredményez. 
 Egy adott \(p_\RM{min}\) minimum pólus értékre és \(J\) motor tehetetlenségre ábrázolja 
 a választható tehetetlenség - pólus párokat a~\ref{fig:observer_controller_param_limits}. ábra.
-A kontúrok konstans \(B_\RM e\) előírt viszkózus csillapítási tényezőket jelölnek a~\eqref{eq:pole_selection_pos}.
+A kontúrok konstans normalizált \(\frac{B_\RM e}{J}\) előírt viszkózus csillapítási tényezőket jelölnek a~\eqref{eq:pole_selection_pos}.
 egyenlet szerint.
 
 \begin{figure}[H]
@@ -450,7 +484,9 @@ egyenlet szerint.
 Az előző feltételek alapján a pozíció referencia jelre és külső nyomaték hatására is megfelelő válasz kapható.
 Egy ilyen válasz látható a~\ref{fig:observer_controller_pos_resp_direct_calib}. 
 és a~\ref{fig:observer_controller_torque_resp_direct_calib} ábrán. 
-Az alkalmazott paramétereket a~\ref{tab:observer_controller_pos_resp_calib}. táblázat tartalmazza.
+A módosított impedancia modell paramétereket a~\ref{tab:observer_controller_pos_resp_calib}. táblázat tartalmazza.
+Az összes többi paraméter továbra is megegyezik a~\ref{tab:observer_controller_direct_comp_params}. 
+táblázatban megtalálható értékekkel. 
 
 \begin{table}[H]
     \small\centering
@@ -459,16 +495,11 @@ Az alkalmazott paramétereket a~\ref{tab:observer_controller_pos_resp_calib}. t�
     \begin{tabular}{l>{~}l>{\quad}rl}
         \toprule
         \multicolumn{2}{c}{Szimbólum és paraméter név} & \multicolumn{2}{c}{Érték} \\ \midrule
-        \(M_\RM e\) & Előírt tehetetlenség & 0.015 & \(\RM{kg\cdot m^2}\) \\
-        \(B_\RM e\) & Előírt viszkózus csillapítás & 0.06 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
-        \(K_\RM e\) & Előírt rugóállandó & 0.24 & \(\RM{kg\cdot m^2\cdot s^{-2}}\) \\
-        \(J\) & Motor tehetetlensége & 0.01 & \(\RM{kg\cdot m^2}\) \\
-        \(K_\RM m\) & Motor nyomatékállandója & 0.01 & \(\RM{Nm\cdot A^{-1}}\) \\
-        \(B_\RM m\) & Motor modell viszkózus csillapítása & 0.1 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
-        \(L\) & Motor induktivitása & 0.2 & H \\
-        \(R\) & Motor ellenállása & 1 & \(\Omega\) \\
-        \(p\) & További pólusok & -15 & \(\RM{rad \cdot s^{-1}}\) \\
-        \(K_\RM c\) & Nyomaték kompenzációs együttható & -50 & \(\RM{V \cdot N^{-1} m^{-1}}\) \\
+        \(M_\RM e\) & Előírt tehetetlenség (\(2J\)) & \num{3.16e-7} & \(\RM{kg\cdot m^2}\) \\
+        \(B_\RM e\) & Előírt viszkózus csillapítás (\(4M_\RM e\)) & \num{1.26e-6} & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
+        \(K_\RM e\) & Előírt rugóállandó (\(4B_\RM e\)) & \num{5.06e-6} & \(\RM{kg\cdot m^2\cdot s^{-2}}\) \\
+        \(p\) & További pólusok & -20 & \(\RM{rad \cdot s^{-1}}\) \\
+        \(K_\RM c\) & Nyomaték kompenzációs együttható & -160.83 & \(\RM{V \cdot N^{-1} m^{-1}}\) \\
         \bottomrule
     \end{tabular}
 \end{table}

@@ -1,4 +1,4 @@
-J = 0.01;
+J = 1;
 pmin = -25;
 
 Mmax = -0.1*J*pmin;
@@ -9,7 +9,7 @@ Mmax = -0.1*J*pmin;
 % P = B/M;
 % contour(M,B,P,'ShowText','on')
 
-m = linspace(0,0.03, 1000);
+m = linspace(0,3*J, 1000);
 p = linspace(0,-30, 1000);
 [M,P] = meshgrid(m,p);
 B = -8*P.*M*0.05;
@@ -31,16 +31,16 @@ plot(m, p1, 'LineWidth', 2, 'Color', 'black');
 xline(Mmax, '--', 'Alpha', 0.5)
 
 colormap("summer")
-[M, c] = contourf(M,P,B,horzcat(0.01, 0:0.025:1),'ShowText',true);
+[M, c] = contourf(M,P,B,horzcat(J, linspace(0, 24*J, 11)),'ShowText',true);
 c.LineWidth = 2;
 c.FaceAlpha = 0.5;
 clabel(M,c, 'FontSize', 12)
 
-text(0.015,pmin-1,"$p_\mathrm{min} = " + pmin + "$", 'Interpreter','latex', 'FontSize', 16, 'HorizontalAlignment','center')
-text(0.02,pmin/2,"$p_\mathrm{max} = -10 \cdot \frac{M_\mathrm{e}}{J}$", 'Interpreter','latex', 'FontSize', 16, 'HorizontalAlignment','center', 'VerticalAlignment','top')
+text(J,pmin-1,"$p_\mathrm{min} = " + pmin + "$", 'Interpreter','latex', 'FontSize', 16, 'HorizontalAlignment','center')
+text(2*J,pmin/2,"$p_\mathrm{max} = -10 \cdot \frac{M_\mathrm{e}}{J}$", 'Interpreter','latex', 'FontSize', 16, 'HorizontalAlignment','center', 'VerticalAlignment','top')
 
 
-xlabel('$M_\mathrm{e}~\mathrm{[kg \cdot m^2]}$', 'Interpreter', 'latex', 'FontSize', 16)
+xlabel('$\frac{M_\mathrm{e}}{J}~\mathrm{[-]}$', 'Interpreter', 'latex', 'FontSize', 16)
 ylabel('$p~\mathrm{[rad \cdot s^{-1}]}$', 'Interpreter', 'latex', 'FontSize', 16)
 
 set(gca, 'Box', 'off', 'TickDir', 'out', 'TickLength', [.02 .02], ...

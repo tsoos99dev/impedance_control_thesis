@@ -1,9 +1,10 @@
 syms s
 
 % Desired impedance model
-Me = 1;
-Be = 4;
-Ke = 16;
+sf = 1e-6;
+Me = 1*sf;
+Be = 4*sf;
+Ke = 16*sf;
 
 impedance_model = tf(Ke, [Me Be Ke]);
 Pe = pole(impedance_model)';
@@ -11,11 +12,27 @@ Pe = pole(impedance_model)';
 % Motor parameters
 % This has the biggest effect on how distorted
 % the torque response is.
-J = 0.01;
-Km = 0.01;
-Bm = 0.1;
-L = 0.5;
-R = 1;
+% J = 0.01;
+% Km = 0.01;
+% Bm = 0.1;
+% L = 0.5;
+% R = 1;
+
+Km = 0.998;
+Jm = 1.44e-7;
+
+Ifinal = 40.1e-3;
+vfinal = 2*pi/60 * 6780;
+vgear = 2*pi/60 * 80.4;
+gr = vfinal/vgear;
+
+Jl = 1e-4;
+J = Jm + 1/gr^2 * Jl;
+
+Bm = Km*Ifinal/vfinal;
+
+L = 0.452;
+R = 10.6;
 
 % Motor model
 Aaa = 0;
@@ -117,12 +134,13 @@ set(gcf,'color','w');
 set(gca, 'FontName', 'Helvetica');
 hold on;
 
+sf = 1e-1/gr^2;
 tmax = 5;
-yline(1/Ke, '--', Color='black', LineWidth=2, Alpha=0.2)
-yline(dcgain(c2(1)), '--', Color='black', LineWidth=2, Alpha=0.2)
-[y, t] = step(impedance_model/Ke, tmax);
+yline(1/Ke*sf, '--', Color='black', LineWidth=2, Alpha=0.2)
+yline(dcgain(c2(1)*sf), '--', Color='black', LineWidth=2, Alpha=0.2)
+[y, t] = step(impedance_model/Ke*sf, tmax);
 s1 = plot(t, y, 'Color', palette(1), 'LineWidth', 2);
-[y, t] = step(c2(1), tmax);
+[y, t] = step(c2(1)*sf, tmax);
 s2 = plot(t, y, 'Color', palette(2), 'LineWidth', 2);
 
 xlabel('Id\H o $[\mathrm{s}]$', 'Interpreter', 'latex', 'FontSize', 16)

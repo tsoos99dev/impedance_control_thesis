@@ -393,7 +393,7 @@ meghatározott stabilitás térképet ábrázolja \(K_\RM e\) és \(B_\RM e\) im
         \(R\) & Motor ellenállása & 1 & \(\Omega\) \\
         \(p\) & További pólusok & -15 & \(\RM{rad \cdot s^{-1}}\) \\
         \(M_\RM e\) & Előírt tehetetlenség & 0.015 & \(\RM{kg\cdot m^2}\) \\
-        \(\tau_\RM d\) & Mintavételezśi idő & 0.01 & \(\RM{s}\) \\
+        \(\tau_\RM d\) & Mintavételezśi idő & 0.1 & \(\RM{s}\) \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -417,9 +417,46 @@ alapján, ahol \(\tau_\RM d\) a mintavételezési idő és \(|\lambda|_\RM{max}\
 abszolút értékben. Az alkalmazott paraméterekkel a minimális beállási idő közelítőleg 1.2 s. 
 
 A diszkretizáció negatív hatással van a rendszer stabilitására. A folytonos idejű időkéséses rendszernél 0.1 s 
-időkéséssel még mindig végtelen nagy a stabil régió ugyanezen paraméterekkel. 
+időkéséssel még mindig végtelen nagy a stabil régió ugyanezen paraméterekkel. Az impedancia modell által 
+előírt beállási időt összehasonlítva a becsült beállási idővel ábrázolja a~\ref{fig:time_delay_stab_map_discrete_diff}.
+ábra.
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/time_delay_stab_map_discrete_diff.png}
+    \caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map_discrete_diff}
+    \end{center}
+\end{figure}
+
+A kontúrok a becsült és az előírt beállási idők hányadosát jelölik. Az alkalmazás specifikációjától függően lehet, 
+hogy csak egy igen kis része felhasználható a stabil tartomáynak. Az ábrán megfigyelhető, hogy van olyan tartomány is, 
+ahol az előírtnál gyorsabban beáll a rendszer.
 
 A stabilitási határon legalább egy sajátérték abszolút értékben egy. Ennek következtében a rendszer 
 \(t\rightarrow\infty\) határértékben csillapítatlan rezgőmozgást végez. A rezgőmozgás frekvenciája és az 
 impedancia modell paraméterei közötti összefüggés numerikusan meghatározható például a diszkrét 
-Fourier-transzformáció segítségével. A 
+Fourier-transzformáció segítségével. A legnagyobb frekvencia a mintavételezési frekvencia fele a Nyquist--Shannon 
+mintavételezési tétel alapján 
+\begin{align}
+    f_\RM{max} = \frac{1}{2\tau_\RM d}\,.
+\end{align}
+
+A frekvencia felbontás pedig a mintavételek száma és a mintavételezési frekvencia alapján
+\begin{align}
+    \Delta f = \frac{1}{N\tau_\RM d}\,.
+\end{align}
+
+A stabil tartomány jobb széle \(B_\RM e\) értékével lett paraméterezve. Ezután minden pontban  
+\(N = 100\) időlépésen át lett szimulálva a rendszer. A diszkrét Fourier-transzformált 
+legnagyobb abszolút értékű frekvenciája és \(B_\RM e\) közötti kapcsolat látható 
+a~\ref{fig:time_delay_stab_map_discrete_fourier}. ábra jobb oldali grafikonján. A vízszintes 
+tengelyre a csillapítatlan rezgési frenvencia és a mintavételezési frekvencia hányadosa került.
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/time_delay_stab_map_discrete_fourier.png}
+    \caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map_discrete_fourier}
+    \end{center}
+\end{figure}
+A stabil tartomány bal alsó sarkában nullától indulva egyre nő a csillapítatlan 
+rezgési frekvencia, mig a tartomány bal felső sarkában el nem éri a maximumát, mely ebben az 
+esetben \(\approx 1.2~\RM{Hz}\)

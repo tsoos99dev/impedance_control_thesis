@@ -1,7 +1,7 @@
 \chapter{Szabályozó modellezése}\label{chap:controller}
 
 Az~\ref{chap:observer}.\ fejezetben levezetett állapotmegfigyelő és a szögelfordulás közvetlen mérése
-együtt a rendszer teljes állapotvektorát elérhetővé teszi. Az impedancia modell által előírt dinamikai összefüggés
+együtt a rendszer teljes állapotvektorát elérhetővé teszi. Az impedanciamodell által előírt dinamikai összefüggés
 első lépésben teljes állapotvisszacsatolással biztosítható. A rendszer pólusai a~\ref{chap:controllability}.\ fejezetben
 vizsgált irányíthatósági feltétel teljesülése miatt szabadon áthelyezhetők.
 
@@ -174,7 +174,7 @@ ahol \(p\) a függetlenül választható pólus. Az erősítési tényező ez al
 A megfigyelő belső hibájának (\(\BF e\)) megváltozása nem csak a pillanatnyi belső hibától függ. Még ha \(\BF A_\RM{bb} - \BF K_\RM e \BF A_\RM{ab}\) sajátértékei
 mind negatív valós résszel is rendelkeznek, a megfigyelő belső hibája akkor sem tart nullához külső nyomaték jelenlétében.
 Amennyiben \(\BF A - \BF B_\RM V \BF K\) sajátértékei is mind negatív valós résszel rendelkeznek,
-a teljes rendszer exponenciálisan stabil, de a külső nyomatékra adott válasz végértéke eltér az impedancia modell
+a teljes rendszer exponenciálisan stabil, de a külső nyomatékra adott válasz végértéke eltér az impedanciamodell
 által előírt értéktől. Ez a szabályozó még nem felel meg az alkalmazás előírásainak. A rendszer válasza a pozíció referencia bemenetre adott egységugrás jelre a~\ref{fig:observer_controller_pos_resp}. ábrán látható. 
 Az alkalmazott paramétereket az~\ref{tab:observer_controller_pos_resp}. táblázat tartalmazza. 
 \begin{table}[H]
@@ -196,18 +196,18 @@ Az alkalmazott paramétereket az~\ref{tab:observer_controller_pos_resp}. táblá
     \end{tabular}
 \end{table}
 Az áthelyezett pólusok \(P = [-2.00 - 3.46i~~-2.00 + 3.46i~~-8.00]\) 
-és a megfigyelő pólusai \(P_\RM o = [-8.00~~-8.00]\). Az első két áthelyezett pólust az impedancia modell
+és a megfigyelő pólusai \(P_\RM o = [-8.00~~-8.00]\). Az első két áthelyezett pólust az impedanciamodell
 határozza meg.
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=\textwidth]{images/observer_controller_pos_resp.png}
-    \caption{Az impedancia modell és a szabályozó összehasonlítása pozíció egységugrás bemenetre}\label{fig:observer_controller_pos_resp}
+    \caption{Az impedanciamodell és a szabályozó összehasonlítása pozíció egységugrás bemenetre}\label{fig:observer_controller_pos_resp}
     \end{center}
 \end{figure}
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=\textwidth]{images/observer_controller_torque_resp.png}
-    \caption{Az impedancia modell és a szabályozó összehasonlítása külső nyomaték egységugrás bemenetre}\label{fig:observer_controller_torque_resp}
+    \caption{Az impedanciamodell és a szabályozó összehasonlítása külső nyomaték egységugrás bemenetre}\label{fig:observer_controller_torque_resp}
     \end{center}
 \end{figure}
 
@@ -217,7 +217,7 @@ A pólusok alapján a visszacsatolási mátrixok az Ackermann formulával lettek
 \section{Nyomaték kompenzáció}
 A rendszer válasza a külső nyomaték bemenetre adott egységugrás jelre a~\ref{fig:observer_controller_torque_resp}. ábrán látható. 
 Az alkalmazott paraméterek a~\ref{tab:observer_controller_pos_resp}. táblázatban szerepelnek.
-A végérték nem egyezik meg az impedancia modell által előírt értékkel, így további módosításokra van szükség.
+A végérték nem egyezik meg az impedanciamodell által előírt értékkel, így további módosításokra van szükség.
 A modell két bemenete közül csak a feszültségre van hatással a 
 szabályozó, így a környezet által kifejtett külső nyomaték 
 hatását is a feszültség megváltoztatásával kell kompenzálni. A kompenzáció
@@ -392,28 +392,28 @@ A nyomaték kompenzációs együttható
 \end{equation}
 összefüggés szerint számolható.
 A pozíció referencia jelre adott válasz változatlan, azonban a külső nyomatékra adott válasz végértéke már
-megegyezik az impedancia modell által előírt értékkel. A válaszban megfigyelhető túllövés kiküszöböléshez
-a motor és az impedancia modell paraméterei, valamint a rendszer válasza közötti kapcsolat további vizsgálata szükséges.
+megegyezik az impedanciamodell által előírt értékkel. A válaszban megfigyelhető túllövés kiküszöböléshez
+a motor és az impedanciamodell paraméterei, valamint a rendszer válasza közötti kapcsolat további vizsgálata szükséges.
 
 \begin{figure}[ht]
     \begin{center}
     \includegraphics[width=\textwidth]{images/observer_controller_pos_resp_direct_comp.png}
-    \caption{Az impedancia modell és a kompenzált szabályozó összehasonlítása pozíció egységugrás bemenetre}\label{fig:observer_controller_pos_resp_direct}
+    \caption{Az impedanciamodell és a kompenzált szabályozó összehasonlítása pozíció egységugrás bemenetre}\label{fig:observer_controller_pos_resp_direct}
     \end{center}
 \end{figure}
 
 \begin{figure}[ht]
     \begin{center}
     \includegraphics[width=\textwidth]{images/observer_controller_torque_resp_direct_comp.png}
-    \caption{Az impedancia modell és a kompenzált szabályozó összehasonlítása külső nyomaték egységugrás bemenetre}\label{fig:observer_controller_torque_resp_direct}
+    \caption{Az impedanciamodell és a kompenzált szabályozó összehasonlítása külső nyomaték egységugrás bemenetre}\label{fig:observer_controller_torque_resp_direct}
     \end{center}
 \end{figure}
 
-Először is az impedancia modell paraméterei mind valós pozitív értékkel kell rendelkezzenek, enélkül a rendszer 
-azonnal instabil lesz. Ez a Routh--Hurwitz kritérium alapján következik az impedancia modell karakterisztikus egyenletéből.
-Az áthelyezett pólusok közül az első kettőt az impedancia modell előírt értékei határozzák meg. 
+Először is az impedanciamodell paraméterei mind valós pozitív értékkel kell rendelkezzenek, enélkül a rendszer 
+azonnal instabil lesz. Ez a Routh--Hurwitz kritérium alapján következik az impedanciamodell karakterisztikus egyenletéből.
+Az áthelyezett pólusok közül az első kettőt az impedanciamodell előírt értékei határozzák meg. 
 A harmadik áthelyezett pólus, illetve a megfigyelő pólusai függetlenek. A független pólusok meghatározásához 
-mindegyik azonos lesz és valós értékű. Ha a pólusok túl közel helyezkednek el az impedancia modell pólusaihoz,
+mindegyik azonos lesz és valós értékű. Ha a pólusok túl közel helyezkednek el az impedanciamodell pólusaihoz,
 esetleg még a képzetes tengelyhez is közelebb vannak, akkor eltorzítják a választ. Ha túl nagy negatív valós
 értékkel rendelkeznek, az a szabályozó kimenetének szaturációjához vezet, illetve magát a szabályozót is
 instabillá teszik. Ennek elkerülése érdekében a lehető legkisebb abszolút értékű negatív valós pólus használata a cél. 
@@ -458,7 +458,7 @@ az előírt tehetetlenség és a pólus értékének maximuma:
     \end{split}
 \end{equation}
 A szaturáció elkerüléséhez szükséges feltételek részletes vizsgálata túlmutat ezen a dolgozaton, azonban feltételezhetően 
-a pólusválasztásnál van egy minimum érték, mely alatt a rendszer nem képes követni az impedancia modellt. Jelölje \(p_\RM{min}\) ezt a 
+a pólusválasztásnál van egy minimum érték, mely alatt a rendszer nem képes követni az impedanciamodellt. Jelölje \(p_\RM{min}\) ezt a 
 minimumot. Ekkor az előírt tehetetlenség lehetséges értékei a~\eqref{eq:pole_selection_pos} és a~\eqref{eq:pole_selection_torque} 
 egyenletekben szereplő feltételek szerint egy adott intervallumra korlátozódnak:
 \begin{align}
@@ -484,7 +484,7 @@ egyenlet szerint.
 Az előző feltételek alapján a pozíció referencia jelre és külső nyomaték hatására is megfelelő válasz kapható.
 Egy ilyen válasz látható a~\ref{fig:observer_controller_pos_resp_direct_calib}. 
 és a~\ref{fig:observer_controller_torque_resp_direct_calib}. ábrán. 
-A módosított impedancia modell paramétereket a~\ref{tab:observer_controller_pos_resp_calib}. táblázat tartalmazza.
+A módosított impedanciamodell paramétereket a~\ref{tab:observer_controller_pos_resp_calib}. táblázat tartalmazza.
 Az összes többi paraméter továbra is megegyezik a~\ref{tab:observer_controller_direct_comp_params}. 
 táblázatban megtalálható értékekkel. 
 
@@ -507,17 +507,17 @@ táblázatban megtalálható értékekkel.
 \begin{figure}[!htb]
     \begin{center}
     \includegraphics[width=13cm]{images/observer_controller_pos_resp_direct_comp_calib.png}
-    \caption{Az impedancia modell és a kalibrált szabályozó összehasonlítása pozíció egységugrás bemenetre}\label{fig:observer_controller_pos_resp_direct_calib}
+    \caption{Az impedanciamodell és a kalibrált szabályozó összehasonlítása pozíció egységugrás bemenetre}\label{fig:observer_controller_pos_resp_direct_calib}
     \end{center}
 \end{figure}
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=13cm]{images/observer_controller_torque_resp_direct_comp_calib.png}
-    \caption{Az impedancia modell és a kalibrált szabályozó összehasonlítása külső nyomaték egységugrás bemenetre}\label{fig:observer_controller_torque_resp_direct_calib}
+    \caption{Az impedanciamodell és a kalibrált szabályozó összehasonlítása külső nyomaték egységugrás bemenetre}\label{fig:observer_controller_torque_resp_direct_calib}
     \end{center}
 \end{figure}
 
-Az impedancia modell előírt rugóállandójára az előző elemzés nem ad korlátot, viszont 
+Az impedanciamodell előírt rugóállandójára az előző elemzés nem ad korlátot, viszont 
 ennek a paraméternek a növelésével növekszik a modell sajátfrekvenciája. Ez mindenképp 
 egyre nagyobb előírt gyorsulással jár, mely a motorra kapcsolt feszültség szaturációjához vezet.
 

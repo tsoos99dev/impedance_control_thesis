@@ -198,7 +198,7 @@ a görbe \(\omega > 0\) és \(\omega = 0\) szegmensei.
 
 \section{Stabilitás diszkrét időben}
 A folytonos időben végzett stabilitásvizsgálat alapján belátható, hogy az 
-időkésés korlátozza az impedancia modell által előírható paramétereket.
+időkésés korlátozza az impedanciamodell által előírható paramétereket.
 A valós rendszerben egy digitális feldolgozóegység végzi el a szabályozó jel
 meghatározásához szükséges számításokat, közel állandó időnként. Két ilyen 
 ciklus között a szabályozó jel állandó marad. Ezeket figyelembe véve a 
@@ -378,7 +378,7 @@ teljes rendszer belső állapotának dinamikája:
 \end{align}
 A stabilitás feltétele, hogy a kapott diszkrét állapot átmeneti mátrix minden sajátértéke abszolút 
 értékben egynél szigorúan kisebb legyen. A~\ref{fig:time_delay_stab_map_discrete}. ábra a~\ref{tab:delay_stab_params_discrete}. táblázat paraméterei alapján numerikusan 
-meghatározott stabilitás térképet ábrázolja \(K_\RM e\) és \(B_\RM e\) impedancia paraméterek függvényében. 
+meghatározott stabilitástérképet ábrázolja \(K_\RM e\) és \(B_\RM e\) impedancia paraméterek függvényében. 
 \begin{table}[H]
     \small\centering
     \caption{A diszkrét idejű stabilitásvizsgálatnál alkalmazott paraméterek}\label{tab:delay_stab_params_discrete}
@@ -397,8 +397,8 @@ meghatározott stabilitás térképet ábrázolja \(K_\RM e\) és \(B_\RM e\) im
         \bottomrule
     \end{tabular}
 \end{table}
-A sajátértékek egy 150x150 méretű, egyenletesen elosztott rács pontjain lettek meghatározva. Ezután a 
-pontok közül az előbb említett stabilitási feltétel szerint lettek elkülönítve a stabil pontok. Majd a 
+A sajátértékek egy 150x150 méretű, egyenletesen elosztott rács pontjain lettek meghatározva. Ezután 
+az előbb említett stabilitási feltétel szerint különítettem el a stabil pontokat. Majd a 
 stabil pontok Delaunay-háromszögelése~\cite{Okabe00} és annak konvex burka került kirajzolásra.
 \begin{figure}[H]
     \begin{center}
@@ -417,7 +417,7 @@ alapján, ahol \(\tau_\RM d\) a mintavételezési idő és \(|\lambda|_\RM{max}\
 abszolút értékben. Az alkalmazott paraméterekkel a minimális beállási idő közelítőleg 1.2 s. 
 
 A diszkretizáció negatív hatással van a rendszer stabilitására. A folytonos idejű időkéséses rendszernél 0.1 s 
-időkéséssel még mindig végtelen nagy a stabil régió ugyanezen paraméterekkel. Az impedancia modell által 
+időkéséssel még mindig végtelen nagy a stabil régió ugyanezen paraméterekkel. Az impedanciamodell által 
 előírt beállási időt összehasonlítva a becsült beállási idővel ábrázolja a~\ref{fig:time_delay_stab_map_discrete_diff}.
 ábra.
 
@@ -434,7 +434,7 @@ ahol az előírtnál gyorsabban beáll a rendszer.
 
 A stabilitási határon legalább egy sajátérték abszolút értékben egy. Ennek következtében a rendszer 
 \(t\rightarrow\infty\) határértékben csillapítatlan rezgőmozgást végez. A rezgőmozgás frekvenciája és az 
-impedancia modell paraméterei közötti összefüggés numerikusan meghatározható például a diszkrét 
+impedanciamodell paraméterei közötti összefüggés numerikusan meghatározható például a diszkrét 
 Fourier-transzformáció segítségével. A legnagyobb frekvencia a mintavételezési frekvencia fele a Nyquist--Shannon 
 mintavételezési tétel alapján 
 \begin{align}

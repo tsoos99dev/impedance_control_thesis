@@ -189,7 +189,7 @@ Az alkalmazott paramétereket az~\ref{tab:observer_controller_pos_resp}. táblá
         \(K_\RM e\) & Előírt rugóállandó & 16 & \(\RM{kg\cdot m^2\cdot s^{-2}}\) \\
         \(J\) & Motor tehetetlensége & 0.01 & \(\RM{kg\cdot m^2}\) \\
         \(K_\RM m\) & Motor nyomatékállandója & 0.01 & \(\RM{Nm\cdot A^{-1}}\) \\
-        \(B_\RM m\) & Motor modell viszkózus csillapítása & 0.1 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
+        \(B_\RM m\) & Motormodell viszkózus csillapítása & 0.1 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
         \(L\) & Motor induktivitása & 0.2 & H \\
         \(R\) & Motor ellenállása & 1 & \(\Omega\) \\
         \bottomrule
@@ -368,7 +368,7 @@ a~\ref{tab:observer_controller_direct_comp_params} táblázat tartalmazza.
         \(g\) & Áttételi arány & \num{84.3284} & \\
         \(i_\RM{f}\) & Terhelés nélküli állapot állandósult motorárama & \num{4.01e-2} & \(\RM{A}\) \\
         \(\dot{\theta}_\RM{f}\) & Terhelés nélküli állapot állandósult szögsebessége & \num{7.10e2} & \(\RM{rad \cdot s^{-1}}\) \\
-        \(B_\RM m\) & Motor modell viszkózus csillapítása & \num{5.64e-5} & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
+        \(B_\RM m\) & Motormodell viszkózus csillapítása & \num{5.64e-5} & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
         \(K_\RM m\) & Motor nyomatékállandója & 0.998 & \(\RM{Nm\cdot A^{-1}}\) \\
         \(L\) & Motor induktivitása & 0.452 & H \\
         \(R\) & Motor ellenállása & 10.6 & \(\Omega\) \\
@@ -458,8 +458,8 @@ az előírt tehetetlenség és a pólus értékének maximuma:
     \end{split}
 \end{equation}
 A szaturáció elkerüléséhez szükséges feltételek részletes vizsgálata túlmutat ezen a dolgozaton, azonban feltételezhetően 
-a pólusválasztásnál van egy minimum érték mely alatt a rendszer nem képes követni az impedancia modellt. Jelölje \(p_\RM{min}\) ezt a 
-minimumot. Ekkor az előírt tehetetlenség lehetséges értékei a~\eqref{eq:pole_selection_pos}. és a~\eqref{eq:pole_selection_torque} 
+a pólusválasztásnál van egy minimum érték, mely alatt a rendszer nem képes követni az impedancia modellt. Jelölje \(p_\RM{min}\) ezt a 
+minimumot. Ekkor az előírt tehetetlenség lehetséges értékei a~\eqref{eq:pole_selection_pos} és a~\eqref{eq:pole_selection_torque} 
 egyenletekben szereplő feltételek szerint egy adott intervallumra korlátozódnak:
 \begin{align}
     -\frac{B_\RM e}{8p_\RM{min} \cdot 0.05} < M_\RM e < -0.1 \cdot Jp_\RM{min}\,,
@@ -471,7 +471,7 @@ illetve az előírt viszkózus csillapítási együtthatóra is adódik egy maxi
 ami felett nem választható ki olyan pólus, mely a követelményeknek megfelelő választ eredményez. 
 Egy adott \(p_\RM{min}\) minimum pólus értékre és \(J\) motor tehetetlenségre ábrázolja 
 a választható tehetetlenség - pólus párokat a~\ref{fig:observer_controller_param_limits}. ábra.
-A kontúrok konstans normalizált \(\frac{B_\RM e}{J}\) előírt viszkózus csillapítási tényezőket jelölnek a~\eqref{eq:pole_selection_pos}.
+A kontúrok konstans normalizált \(\frac{B_\RM e}{J}\) előírt viszkózus csillapítási tényezőket jelölnek a~\eqref{eq:pole_selection_pos}
 egyenlet szerint.
 
 \begin{figure}[H]
@@ -483,7 +483,7 @@ egyenlet szerint.
 
 Az előző feltételek alapján a pozíció referencia jelre és külső nyomaték hatására is megfelelő válasz kapható.
 Egy ilyen válasz látható a~\ref{fig:observer_controller_pos_resp_direct_calib}. 
-és a~\ref{fig:observer_controller_torque_resp_direct_calib} ábrán. 
+és a~\ref{fig:observer_controller_torque_resp_direct_calib}. ábrán. 
 A módosított impedancia modell paramétereket a~\ref{tab:observer_controller_pos_resp_calib}. táblázat tartalmazza.
 Az összes többi paraméter továbra is megegyezik a~\ref{tab:observer_controller_direct_comp_params}. 
 táblázatban megtalálható értékekkel. 

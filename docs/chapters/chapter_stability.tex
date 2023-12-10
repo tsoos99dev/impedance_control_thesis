@@ -128,10 +128,10 @@ feltételek érvényesek. Az átviteli függvény pólusait a következő egyenl
         c_{24} + c_{25}\frac{B_\RM e}{M_\RM e} + c_{26}\frac{K_\RM e}{M_\RM e}\right)e^{-s\tau_\RM d}\right]s^2 + \\
         &\left[c_{11} + c_{12}\frac{B_\RM e}{M_\RM e} + c_{13}\frac{K_\RM e}{M_\RM e} + \left(
         c_{14} + c_{15}\frac{B_\RM e}{M_\RM e} + c_{16}\frac{K_\RM e}{M_\RM e}\right)e^{-s\tau_\RM d}\right]s + 
-        c_0 \frac{K_\RM e}{M_\RM e} = 0\,,
+        c_0 \frac{K_\RM e}{M_\RM e} = 0\,.
     \end{split}
 \end{align}
-ahol az együtthatókat a ... táblázat tartalmazza. D-szeparációt alkalmazva az egyenlet valós és 
+D-szeparációt alkalmazva az egyenlet valós és 
 képzetes részei:
 \begin{align}\label{eq:delay_complex_separation}
     \begin{split}
@@ -169,7 +169,7 @@ időkésés különböző értékeit jelölik szekundumban kifejezve.
         \multicolumn{2}{c}{Szimbólum és paraméter név} & \multicolumn{2}{c}{Érték} \\ \midrule
         \(J\) & Motor tehetetlensége & 0.01 & \(\RM{kg\cdot m^2}\) \\
         \(K_\RM m\) & Motor nyomatékállandója & 0.01 & \(\RM{Nm\cdot A^{-1}}\) \\
-        \(B_\RM m\) & Motor modell viszkózus csillapítása & 0.1 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
+        \(B_\RM m\) & Motormodell viszkózus csillapítása & 0.1 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
         \(L\) & Motor induktivitása & 0.2 & H \\
         \(R\) & Motor ellenállása & 1 & \(\Omega\) \\
         \(p\) & További pólusok & -15 & \(\RM{rad \cdot s^{-1}}\) \\
@@ -279,7 +279,7 @@ Tehát a diszkrét idejű szabályozó állapotér modelljét leírő mátrixok:
         \tilde{\BF D}_\RM d &= \tilde{\BF D} \,,
     \end{split}        
 \end{align}
-ahol a mátrix exponenciális kifejezés szükség esetén például Taylor polinommal közelíthető. A további számítások ezt 
+ahol a mátrix exponenciális kifejezés szükség esetén például Taylor-polinommal közelíthető. A további számítások ezt 
 a pontos alakot használják.
 
 Következő lépésként a zárt kör dinamkáját is ki kell fejezni a diszkrét időlépések függvényeként. 
@@ -293,7 +293,7 @@ A szabályozónál alkalmazott levezetéshez hasonlóan~\eqref{eq:state_space}-b
     \end{split}        
 \end{align}
 ahol megjelenik \(V[k-1]\) a szabályozó jel egy egész mintavételezési periódussal késleltetett értéke. 
-Legyenek a diszkretizált motor modell új paraméterei:
+Legyenek a diszkretizált motormodell új paraméterei:
 \begin{align}\label{eq:discrete_motor_matrices}
     \begin{split}
         \BF A_\RM d &= e^{\BF A\tau_\RM d} \\
@@ -310,7 +310,7 @@ szabályozó késleltetett kimenetét:
     \begin{split}
     \BF x[k+1] &= \BF A_\RM d x[k] + 
     \BF B_\RM d \left(\tilde{\BF C}_\RM d \tilde{\BF \eta}[k-1] + 
-    \tilde{\BF D}_\RM {d,y} y[k-1]\right)\,'
+    \tilde{\BF D}_\RM {d,y} y[k-1]\right)\,,
     \end{split}        
 \end{align}
 Felhasználva \(\tilde{\BF \eta}\) és a paraméterek definícióját:
@@ -388,7 +388,7 @@ meghatározott stabilitás térképet ábrázolja \(K_\RM e\) és \(B_\RM e\) im
         \multicolumn{2}{c}{Szimbólum és paraméter név} & \multicolumn{2}{c}{Érték} \\ \midrule
         \(J\) & Motor tehetetlensége & 0.01 & \(\RM{kg\cdot m^2}\) \\
         \(K_\RM m\) & Motor nyomatékállandója & 0.01 & \(\RM{Nm\cdot A^{-1}}\) \\
-        \(B_\RM m\) & Motor modell viszkózus csillapítása & 0.1 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
+        \(B_\RM m\) & Motormodell viszkózus csillapítása & 0.1 & \(\RM{kg\cdot m^2\cdot s^{-1}}\) \\
         \(L\) & Motor induktivitása & 0.2 & H \\
         \(R\) & Motor ellenállása & 1 & \(\Omega\) \\
         \(p\) & További pólusok & -15 & \(\RM{rad \cdot s^{-1}}\) \\

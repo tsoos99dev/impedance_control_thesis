@@ -32,7 +32,7 @@ a~\ref{fig:block_diagram_time_delay}. ábrán látható.
     \caption{Időkéséssel kiegészített egyszerűsített blokk diagram}\label{fig:block_diagram_time_delay}
     \end{center}
 \end{figure}
-A motor átviteli függvényei a~\eqref{eq:transfer_function}. egyenletekben szerepelnek. A szabályozó dinamikáját 
+A motor átviteli függvényei a~\eqref{eq:transfer_function} egyenletekben szerepelnek. A szabályozó dinamikáját 
 az átláthatóság érdekében a következő egyenletek összegzik:
 \begin{equation}
     \begin{split}
@@ -41,7 +41,7 @@ az átláthatóság érdekében a következő egyenletek összegzik:
         V &= K_\RM r \theta_\RM r - K_\RM c \tau_\RM e - \BF K \tilde{\BF x}\,,
     \end{split}
 \end{equation}
-ahol a megfigyelő belső dinamikáját leíró egyenletben megjelenő mátrixok~\eqref{eq:observer_params}-hez hasonlóan:
+ahol a megfigyelő belső dinamikáját leíró egyenletben megjelenő mátrixok a~\eqref{eq:observer_params} kifejezésekhez hasonlóan:
 \begin{align}
     \begin{split}
         \hat{\BF A} &= \BF A_\RM{bb} - \BF K_\RM e \BF A_\RM{ab}\,,\\
@@ -52,10 +52,10 @@ ahol a megfigyelő belső dinamikáját leíró egyenletben megjelenő mátrixok
 A kimeneti feszültség egyenletében található becsült állapotvektor kifejezhető a megfigyelő belső állapotával és a mért kimenettel:
 \begin{equation}
     \begin{split}
-        V &= K_\RM r \theta_\RM r - K_\RM c \tau_\RM e - (K_a + \BF K_\RM b \BF K_\RM e) y - \BF K_\RM b \tilde{\BF \eta}\,,
+        V &= K_\RM r \theta_\RM r - K_\RM c \tau_\RM e - (K_a + \BF K_\RM b \BF K_\RM e) y - \BF K_\RM b \tilde{\BF \eta}\,.
     \end{split}
 \end{equation}
-behelyettesítve a megfigyelő dinamikai egyenletébe:
+Behelyettesítve a megfigyelő dinamikai egyenletébe:
 \begin{align}\label{eq:observer_transfer_transformed}
     \begin{split}
         \dot{\tilde{\BF \eta}} &= \hat{\BF A} \tilde{\BF \eta} + 
@@ -84,11 +84,11 @@ A szabályozó dinamikája ez alapján kifejezhető egy új állapottér modell 
 ahol a mátrix paraméterek~\eqref{eq:observer_transfer_transformed} szerint:
 \begin{align}
     \begin{split}
-        \tilde{\BF A} &= \hat{\BF A} - \hat{\BF F}_\RM V \BF K_\RM b\,,\\
+        \tilde{\BF A}\ &= \hat{\BF A} - \hat{\BF F}_\RM V \BF K_\RM b\,,\\
         \tilde{\BF B}_\RM y &= \hat{\BF B} - \hat{\BF F}_\RM V (K_\RM a + \BF K_\RM b \BF K_\RM e)\,,\\
         \tilde{\BF B}_\RM r &= \hat{\BF F}_\RM V K_\RM r\,, \\
         \tilde{\BF B}_\RM \tau &= \hat{\BF F}_\RM \tau - \hat{\BF F}_\RM V K_\RM c\,, \\
-        \tilde{\BF C} &= -\BF K_\RM b\,, \\
+        \tilde{\BF C}\ &= -\BF K_\RM b\,, \\
         \tilde{\BF D}_\RM y &= -(K_\RM a + \BF K_\RM b \BF K_\RM e)\,, \\
         \tilde{\BF D}_\RM r &= K_\RM r\,, \\
         \tilde{\BF D}_\RM \tau &= -K_\RM c\,.
@@ -178,7 +178,7 @@ időkésés különböző értékeit jelölik szekundumban kifejezve.
     \end{tabular}
 \end{table}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=\textwidth]{images/time_delay_stab_map.png}
     \caption{Folytonos idejű stabilitástérkép}\label{fig:time_delay_stab_map}
@@ -200,7 +200,7 @@ a görbe \(\omega > 0\) és \(\omega = 0\) szegmensei.
 A folytonos időben végzett stabilitásvizsgálat alapján belátható, hogy az 
 időkésés korlátozza az impedanciamodell által előírható paramétereket.
 A valós rendszerben egy digitális feldolgozóegység végzi el a szabályozó jel
-meghatározásához szükséges számításokat, közel állandó időnként. Két ilyen 
+meghatározásához szükséges számításokat, közel azonos időnként. Két ilyen 
 ciklus között a szabályozó jel állandó marad. Ezeket figyelembe véve a 
 folytonos időben végzett stabilitásvizsgálat eredménye tovább pontosítható.
 \begin{figure}[ht]
@@ -211,14 +211,13 @@ folytonos időben végzett stabilitásvizsgálat eredménye tovább pontosíthat
 \end{figure}
 
 A mért szögelfordulás és a diszkrét idejű szabályozó jel kapcsolatát szemlélteti a~\ref{fig:time_delay_example_discrete}. ábra.
-Két mintavételezési pont között a szabályozó jel állandó marad (zero-order hold). A mért szögelfordulás érték 
+Két mintavételezési pont között a szabályozó jel változatlan marad (zero-order hold). A mért szögelfordulás érték 
 feldolgozása után az új szabályozó jel mindig egy mintavételezési periódussal később jelenik meg a motor bemenetén.
 A továbbiakban feltételezett, hogy a jelfeldolgozáshoz szükséges időn kívül minden egyéb késés elhanyagolható, 
 így a mintavételezési periódus megegyezik a korábban bevezetett \(\tau_\RM d\) időkéséssel. Legyen \(C(t-\tau(t))\) 
-a szabályozó jel időfüggvénye. Ebben az alakban a mintavételezési pontok között konstans kimenet feltétele, hogy 
-az időkésés maga (\(\tau(t)\)) egy periodikus fűrész jelet kövessen, ahogy a~\ref{fig:time_delay_example_zoh}. ábra is mutatja.
-
-\begin{figure}[ht]
+a szabályozó jel időfüggvénye. Ebben az alakban a mintavételezési pontok között akkor marad állandó a kimenet, ha 
+az időkésés maga (\(\tau(t)\)) egy periodikus fűrész jelet követ, ahogy a~\ref{fig:time_delay_example_zoh}. ábra is mutatja.
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=12cm]{images/delay_zoh_example_discrete.png}
     \caption{Az időkésés periodikus függvénye}\label{fig:time_delay_example_zoh}
@@ -226,11 +225,11 @@ az időkésés maga (\(\tau(t)\)) egy periodikus fűrész jelet kövessen, ahogy
 \end{figure}
 
 A diszkrét idejű stabilitásvizsgálathoz először diszkretizálni kell a szabályozó folytonos idejű állapottér modelljét.
-Ehhez legyen a kiindulási alap a~\eqref{eq:controller_state_space}. egyenletek által definiált modell.
+Ehhez legyen a kiindulási alap a~\eqref{eq:controller_state_space} egyenletek által definiált modell.
 Beszorozva mindkét oldalt \(e^{-\tilde {\BF A} t}\)-vel:
 \begin{align}
     \begin{split}
-        e^{-\tilde {\BF A} t}\dot\tilde{\BF \eta}(t) &= e^{-\tilde {\BF A} t}\tilde {\BF A} \tilde{\BF \eta}(t) +
+        e^{-\tilde {\BF A} t}\dot{\tilde{\BF \eta}}(t) &= e^{-\tilde {\BF A} t}\tilde {\BF A} \tilde{\BF \eta}(t) +
         e^{-\tilde {\BF A} t}\left[\tilde{\BF B}_\RM y y(t) + 
         \tilde{\BF B}_\RM r \theta_\RM r(t) +
         \tilde{\BF B}_\RM \tau \tau_\RM e(t)\right] \\
@@ -251,7 +250,7 @@ a kapott egyenletet integrálva:
     \end{split}        
 \end{align}
 A mintavételezési periódus alatt a szabályozó összes bemenete konstans marad, így a bemenetek az 
-integrálon kívülre helyezhetők. Legyen \(\tilde{\BF \eta}[k] := \tilde{\BF \eta}(k\tau_\RM d)\) a 
+integrálon kívülre helyezhetők. Legyen \(\tilde{\BF \eta}[k] \stackrel{\text{def}}{=} \tilde{\BF \eta}(k\tau_\RM d)\) a 
 a szabályázó belső állapota a \(k\)-adik diszkrét időlépésnél. Ezzel a~\eqref{eq:controller_state_integral}. 
 egyenlet a \(k\)-adik és a (\(k+1\))-edik lépéseknél:
 \begin{align}
@@ -407,13 +406,13 @@ stabil pontok Delaunay-háromszögelése~\cite{Okabe00} és annak konvex burka k
     \end{center}
 \end{figure}
 A kontúrok a különböző becsült beállási időket jelölnek, melyek a legnagyobb abszolút értékű sajátérték 
-alapján lettek meghatározva:
+alapján lettek meghatározva 2\%-os hibasávot alapul véve:
 \begin{align}
     \begin{split}
-        t_\RM s \approx \tau_\RM d \frac{\ln{0.02}}{\ln{|\lambda|_\RM{max}}}
+        t_\RM s \approx \tau_\RM d \frac{\ln{0.02}}{\ln{|\lambda|_\RM{max}}}\,,
     \end{split}        
 \end{align}
-alapján, ahol \(\tau_\RM d\) a mintavételezési idő és \(|\lambda|_\RM{max}\) jelöli a legnagyobb sajátértéket 
+ahol \(\tau_\RM d\) a mintavételezési idő és \(|\lambda|_\RM{max}\) jelöli a legnagyobb sajátértéket 
 abszolút értékben. Az alkalmazott paraméterekkel a minimális beállási idő közelítőleg 1.2 s. 
 
 A diszkretizáció negatív hatással van a rendszer stabilitására. A folytonos idejű időkéséses rendszernél 0.1 s 
@@ -430,9 +429,9 @@ előírt beállási időt összehasonlítva a becsült beállási idővel ábrá
 
 A kontúrok a becsült és az előírt beállási idők hányadosát jelölik. Az alkalmazás specifikációjától függően lehet, 
 hogy csak egy igen kis része felhasználható a stabil tartomáynak. Az ábrán megfigyelhető, hogy van olyan tartomány is, 
-ahol az előírtnál gyorsabban beáll a rendszer.
+ahol az előírtnál gyorsabban áll be a rendszer.
 
-A stabilitási határon legalább egy sajátérték abszolút értékben egy. Ennek következtében a rendszer 
+A stabilitási határon legalább egy sajátérték vagy komplex konjugált pár abszolút értékben egy. Ennek következtében a rendszer 
 \(t\rightarrow\infty\) határértékben csillapítatlan rezgőmozgást végez. A rezgőmozgás frekvenciája és az 
 impedanciamodell paraméterei közötti összefüggés numerikusan meghatározható például a diszkrét 
 Fourier-transzformáció segítségével. A legnagyobb frekvencia a mintavételezési frekvencia fele a Nyquist--Shannon 
@@ -458,5 +457,5 @@ tengelyre a csillapítatlan rezgési frenvencia és a mintavételezési frekvenc
     \end{center}
 \end{figure}
 A stabil tartomány bal alsó sarkában nullától indulva egyre nő a csillapítatlan 
-rezgési frekvencia, mig a tartomány bal felső sarkában el nem éri a maximumát, mely ebben az 
+rezgési frekvencia, míg a tartomány bal felső sarkában el nem éri a maximumát, mely ebben az 
 esetben \(\approx 1.2~\RM{Hz}\)

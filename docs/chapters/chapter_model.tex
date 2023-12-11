@@ -1,6 +1,6 @@
 \chapter{Fizikai modell}\label{chap:physical_system}
 
-Ebben a fejezetben a robot egyetlen motorjának fizikai modellje kerül bevezetésre. A kapott dinamikai leírás
+Ebben a fejezetben a robotujj egyetlen motorjának fizikai modellje kerül bevezetésre. A kapott dinamikai leírás
 lehetővé teszi az időkéséssel kiegészített stabilitásvizsgálatot. 
 
 \section{Egyenáramú motor dinamikája}
@@ -14,7 +14,7 @@ lehetővé teszi az időkéséssel kiegészített stabilitásvizsgálatot.
 \end{center}
 \end{figure}
 
-A robot motorjának modelljét a~\ref{fig:dc_motor_electric}-es ábra mutatja. A felhasznált motor feltételezetten állandó gerjesztésű. A kifejtett nyomaték 
+A robot motorjának modelljét a~\ref{fig:dc_motor_electric}. ábra mutatja. A felhasznált motor feltételezetten állandó gerjesztésű. A kifejtett nyomaték 
 a Biot--Savart-törvény szerint arányos a forgórészen átfolyó árammal. A forgórészben
 indukált feszültség pedig arányos annak szögsebességével. A Lenz-törvény alapján 
 \begin{equation}
@@ -24,17 +24,17 @@ indukált feszültség pedig arányos annak szögsebességével. A Lenz-törvén
 \end{split}
 \end{equation}
 ahol $K_\RM \tau$ a nyomatékállandó, $K_\RM e$ a sebesség-feszültség állandó, $\tau_\RM m$ a kifejtett 
-nyomaték, $i$ a rotor árama, $V_\RM b$ az rotorban indukált feszültség és $\dot\theta$ a rotor szögsebessége.
+nyomaték, $i$ a rotor árama, $V_\RM b$ a rotorban indukált feszültség és $\dot\theta$ a rotor szögsebessége.
 Az energiamegmaradás törvénye alapján a két konstans értéke megegyezik
 \begin{align}
-    K_\RM m := K_\RM \tau = K_\RM e,
+    K_\RM m \stackrel{\text{def}}{=} K_\RM \tau = K_\RM e,
 \end{align}
-így a következőkben $K_m$ paraméterként jelennek meg. A forgórész áramkörére Kirchhoff I. törvénye alapján felírható
+így a következőkben $K_\RM m$ paraméterként jelennek meg. A forgórész áramkörére Kirchhoff I. törvénye alapján felírható
 \begin{align}\label{eq:armature_circuit}
     V - Ri - L\DIFF{i}{t} - K_\RM m\dot\theta = 0,
 \end{align}
 ahol $R$ a forgórész tekercsének ellenállása, $L$ a tekercs induktivitása, 
-$K_m$ a motorállandó, $V$ a motor feszültsége, $i$ a motoráram és $\theta$ a szögelfordulás.
+$K_\RM m$ a motorállandó, $V$ a motor feszültsége, $i$ a motoráram és $\theta$ a szögelfordulás.
 \begin{figure}[h]
     \begin{center}
     %\phantomsection{}
@@ -44,7 +44,7 @@ $K_m$ a motorállandó, $V$ a motor feszültsége, $i$ a motoráram és $\theta$
     \end{center}
 \end{figure}
 A forgórészt merev testnek tekintve, annak mozgásegyenlete a dinamika alaptétele és a~\ref{fig:dc_motor_mechanical}. számú 
-szabadtest-ábra alapján a következő alakban vezethető le:
+szabadtest-ábra alapján a következő alakban írható fel:
 \begin{align}\label{eq:rotor_dynamics}
     J\ddot\theta = -B_\RM m\dot\theta + \tau_\RM m + \tau_\RM e,
 \end{align}
@@ -108,19 +108,20 @@ alakban. Az átviteli függvények pedig ez alapján
 \end{equation}
 
 \section{Egyenáramú motor stabilitása}
-A motor stabilitása a~\eqref{eq:characteristic_polynomial} egyenletben szereplő karakterisztikus 
-polinom segítségével meghatározható.
+A motormodell stabilitási tulajdonságai a~\eqref{eq:characteristic_polynomial} egyenletben szereplő karakterisztikus 
+polinom segítségével meghatározhatók.
 A karakterisztikus polinom egyik zérusa az origóban helyezkedik el. Ebből következik, hogy a rendszer
 egységugrás bemenetre korlátlanul nagy szögelfordulással válaszol. Ez utóbbi a jelen alkalmazásban nem elfogadható. 
 Ha a szabályozókör visszacsatoló ága megszakad, a motor a megengedhető mozgástartományon kívülre fordulhat.
 A biztonságos működéshez szükséges például egy végálláskacsolót beépíteni, mely segítségével a motor 
-mozgástartománya mechanikailag is az előírt tartományon belülre korlátozható.
+mozgása a szabályozástól függetlenül is az előírt tartományon belülre korlátozható.
 
 \section{Megfigyelhetőség}\label{chap:observability}
-A felhasznált szenzorok minimalizálása érdekében egyetlen kimenet mérése a cél, így a kimenetek közül egyedül a 
-szögelfordulás áll elő a továbbiakban közvetlen mérésből. A szabályozó teljes állapotvisszacsatolásra épül, 
-így a kimenet mérésével minden állapot megfigyelhető kell legyen. 
-Az~\eqref{eq:state_space_generic} és~\eqref{eq:state_space} egyenletek alapján a kimeneti megfigyelhetőség feltétele, hogy
+A felhasznált szenzorok számának minimalizálása érdekében a lehető legkevesebb belső állapot közvetlen mérése 
+a cél. A továbbiakban egyedül a szögelfordulás áll elő közvetlen mérésből. 
+A szabályozó teljes állapotvisszacsatolásra épül, így a kimenet mérésével minden további belső állapot 
+megfigyelhető kell legyen. 
+A~\eqref{eq:state_space_generic} és~\eqref{eq:state_space} egyenletek alapján a kimeneti megfigyelhetőség feltétele, hogy a
 \begin{align}
     \left[\begin{array}{c}
         \BF{C} \\ \hline
@@ -128,7 +129,8 @@ Az~\eqref{eq:state_space_generic} és~\eqref{eq:state_space} egyenletek alapján
         \BF C \BF A^2
     \end{array}\right]
 \end{align}
-mátrix legyen maximális rangú. A feltételben szereplő mátrixot a motorparaméterekkel kifejezve~\eqref{eq:state_space} alapján:
+mátrix legyen maximális rangú. A feltételben szereplő mátrixot a motorparaméterekkel kifejezve 
+a~\eqref{eq:state_space} egyenlet alapján:
 \begin{align}
     \begin{bmatrix}
         1 & 0 & 0 \\
@@ -150,16 +152,15 @@ ami valóban maximális rangú, tehát a rendszer minden állapota megfigyelhet�
 A szabályozó akkor tudja követni a számára előírt impedanciamodellt, 
 ha megfelelő bemeneti feszültség alkalmazásával eljuttatható az előírt állapotba~\cite{kalman1963controllability}.
 A rendszer pólusai áthelyezhetők kell legyenek az impedanciamodell pólusaiba. Ehhez 
-a rendszer teljesen állapot irányítható kell legyen, azonban ez csak egy szükséges, 
-de nem elégséges feltétele az impedanciamodell alkalmazhatóságának.
-A~\eqref{eq:state_space_generic} egyenlet állapottér modellje alapján a teljes állapot irányíthatóság feltétele, hogy
+a rendszer teljesen állapot irányítható kell legyen.
+A~\eqref{eq:state_space_generic} egyenlet állapottér modellje alapján a teljes állapot irányíthatóság feltétele, hogy a
 \begin{align}\label{eq:observability_generic}
     \left[\begin{array}{c|c|c}
         \BF{B} & \BF{AB} & \BF A^2 \BF B
     \end{array}\right]
 \end{align}
-legyen maximális rangú. 
-Felhasználva~\eqref{eq:state_space} paramétereit a~\eqref{eq:observability_generic}-es feltételben szereplő mátrix
+mátrix legyen maximális rangú. 
+Felhasználva a~\eqref{eq:state_space} kifejezés paramétereit a~\eqref{eq:observability_generic} feltételben szereplő mátrix
 \begin{align}
     \begin{bmatrix}
         0 & 0 & \frac{K_\RM m}{JL} \\
@@ -175,5 +176,5 @@ alakba írható át. Továbbá ez a mátrix redukált lépcsős alakban
         0 & 0 & 1 \\
     \end{bmatrix},
 \end{align}
-mely mátrix rangja megegyezik sorainak számával, így az irányíthatósági feltétele teljesül.
+mely mátrix rangja megegyezik sorainak számával, így az teljes állapot irányíthatóság feltétele teljesül.
 

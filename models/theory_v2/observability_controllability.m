@@ -12,7 +12,7 @@ display(rref(Ob));
 rank(Ob)
 unobs = length(A) - rank(Ob);
 
-Co = [B A*B];
+Co = [B(:, 1) A*B(:,1)];
 display(rref(Co));
 rank(Co)
 unco = length(A) - rank(Co);

@@ -159,7 +159,7 @@ a cél. A továbbiakban egyedül a szögelfordulás áll elő közvetlen mérés
 A szabályozó teljes állapotvisszacsatolásra épül, így a kimenet mérésével minden további belső állapot 
 megfigyelhető kell legyen. 
 A~\eqref{eq:state_space_generic} és~\eqref{eq:state_space} egyenletek alapján a kimeneti megfigyelhetőség feltétele, hogy a
-\begin{align}
+\begin{align}\label{eq:observability_generic}
     \left[\begin{array}{c}
         \BF{C} \\ \hline
         \BF{CA} \\ \hline
@@ -184,6 +184,23 @@ mely redukált lépcsős alakban
     \end{bmatrix},
 \end{align}
 ami valóban maximális rangú, tehát a rendszer minden állapota megfigyelhető a szögelfordulás méréséből.
+Az induktivitást elhanyagolva a feltétel 
+\begin{align}
+    \left[\begin{array}{c}
+        \BF{C} \\ \hline
+        \BF{CA} \\
+    \end{array}\right]
+\end{align}
+még egyszerűbb alakkal rendelkezik. Behelyettesítve az egyszerűsített modell paramétereit 
+\eqref{eq:state_space_reduced}
+\begin{align}
+    \begin{bmatrix}
+        1 & 0 \\
+        0 & 1 \\
+    \end{bmatrix},
+\end{align}
+a kapott mátrix azonnal redukált lépcsős alakban adódik. A rendszer minden állapota megfigyelhető 
+ebben az esetben is. 
 
 \section{Irányíthatóság}\label{chap:controllability}
 A szabályozó akkor tudja követni a számára előírt impedanciamodellt, 
@@ -191,7 +208,7 @@ ha megfelelő bemeneti feszültség alkalmazásával eljuttatható az előírt �
 A rendszer pólusai áthelyezhetők kell legyenek az impedanciamodell pólusaiba. Ehhez 
 a rendszer teljesen állapot irányítható kell legyen.
 A~\eqref{eq:state_space_generic} egyenlet állapottér modellje alapján a teljes állapot irányíthatóság feltétele, hogy a
-\begin{align}\label{eq:observability_generic}
+\begin{align}\label{eq:controllability_generic}
     \left[\begin{array}{c|c|c}
         \BF{B} & \BF{AB} & \BF A^2 \BF B
     \end{array}\right]
@@ -214,4 +231,18 @@ alakba írható át. Továbbá ez a mátrix redukált lépcsős alakban
     \end{bmatrix},
 \end{align}
 mely mátrix rangja megegyezik sorainak számával, így az teljes állapot irányíthatóság feltétele teljesül.
+Az induktivitást elhanyagolva az irányíthatósági feltételben megjelenő mátrix 
+\begin{align}
+    \left[\begin{array}{c|c}
+        \BF{B} & \BF{AB}
+    \end{array}\right].
+\end{align}
+Az egyszerűsített modell paramétereit behelyettesítve
+\begin{align}
+    \begin{bmatrix}
+        1 & 0 \\
+        0 & 1 \\
+    \end{bmatrix}
+\end{align}
+a kapott mátrix láthatóan megfelel a feltételnek.
 

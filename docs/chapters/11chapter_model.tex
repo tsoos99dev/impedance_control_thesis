@@ -14,8 +14,9 @@ lehetővé teszi az időkéséssel kiegészített stabilitásvizsgálatot.
 \end{center}
 \end{figure}
 
-A robot motorjának modelljét a~\ref{fig:dc_motor_electric}. ábra mutatja. A felhasznált motor feltételezetten állandó gerjesztésű. A kifejtett nyomaték 
-a Biot--Savart-törvény szerint arányos a forgórészen átfolyó árammal. A forgórészben
+A robot motorjának modelljét a~\ref{fig:dc_motor_electric}. ábra szemlélteti. 
+A felhasznált motor feltételezetten állandó gerjesztésű. Kifejtett nyomatéka a 
+Biot--Savart-törvény szerint arányos a forgórészen átfolyó árammal. A forgórészben
 indukált feszültség pedig arányos annak szögsebességével. A Lenz-törvény alapján 
 \begin{equation}
 \begin{split}
@@ -25,7 +26,7 @@ indukált feszültség pedig arányos annak szögsebességével. A Lenz-törvén
 \end{equation}
 ahol $K_\RM \tau$ a nyomatékállandó, $K_\RM e$ a sebesség-feszültség állandó, $\tau_\RM m$ a kifejtett 
 nyomaték, $i$ a rotor árama, $V_\RM b$ a rotorban indukált feszültség és $\dot\theta$ a rotor szögsebessége.
-Az energiamegmaradás törvénye alapján a két konstans értéke megegyezik
+Az energiamegmaradás törvénye alapján a két konstans értéke SI mértékegységben kifejezve megegyezik
 \begin{align}
     K_\RM m \stackrel{\text{def}}{=} K_\RM \tau = K_\RM e,
 \end{align}
@@ -46,7 +47,7 @@ $K_\RM m$ a motorállandó, $V$ a motor feszültsége, $i$ a motoráram és $\th
 A forgórészt merev testnek tekintve, annak mozgásegyenlete a dinamika alaptétele és a~\ref{fig:dc_motor_mechanical}. számú 
 szabadtest-ábra alapján a következő alakban írható fel:
 \begin{align}\label{eq:rotor_dynamics}
-    J\ddot\theta = -B_\RM m\dot\theta + \tau_\RM m + \tau_\RM e,
+    J\ddot\theta + B_\RM m\dot\theta = \tau_\RM m + \tau_\RM e,
 \end{align}
 ahol $J$ a forgórész tehetetlensége, $B_\RM m$ a viszkózus csillapítási együttható, 
 $K_\RM m$ a motorállandó, $\theta$ a szögelfordulás, $i$ a motoráram, $\tau_\RM m$ a motor által kifejtett nyomaték 
@@ -87,9 +88,34 @@ az állapot-átmeneti mátrix \(\BF A\), a bemeneti mátrix \(\BF B\), a kimenet
         \BF D &= \BF 0
     \end{split}
 \end{equation}
-alakban származtatható.
+alakban származtatható. A későbbiekben ismertetett kísérleti összállítás paraméterei 
+nem teszik lehetővé a forgórész áramának modellezését. Bővebb indoklás az \ref{chap:experiment}. 
+fejezetben talalható. Az induktivitással kiegészített modell mellett mindig megjelenik az 
+induktivitás nélküli modell, ahol szükséges. Az egyszerűsített állapottér modell állapotvektora 
+\(\BF x = [\theta~~\dot \theta]^{\mathsf T}\), bemeneti vektora változatlan, 
+\(\BF A\), \(\BF B\), \(\BF C\) és \(\BF D\) mátrixa pedig 
 
-A frekvenciatartománybeli vizsgálatokhoz szükséges felírni a rendszer 
+\begin{equation}\label{eq:state_space_reduced}
+    \begin{split}
+        \BF A &= 
+        \begin{bmatrix}
+            0 & 1 \\
+            0 & -\frac{B_\RM m R + K^2_\RM m}{JR} \\
+        \end{bmatrix}\,,\\
+        \BF B &=
+        \begin{bmatrix}
+            0 & 0 \\
+            \frac{1}{J} & \frac{K_\RM m}{JR} \\
+        \end{bmatrix}\,,\\
+        \BF C &=
+        \begin{bmatrix}
+            1 & 0 \\
+        \end{bmatrix}\,,\\
+        \BF D &= \BF 0
+    \end{split}
+\end{equation}
+
+A frekvenciatartománybeli vizsgálatokhoz felírható a rendszer 
 szög-nyomaték és szög-feszültség átviteli függvényeit. Az állapottér modellt felhasználva
 \begin{align}\label{eq:transfer_generic}
     \frac{Y(s)}{U(s)} = \BF C{\left(s \BF I - \BF A\right)}^{-1} \BF B
@@ -103,6 +129,17 @@ alakban. Az átviteli függvények pedig ez alapján
 \begin{equation}\label{eq:transfer_function}
     \begin{split}
         \frac{\theta(s)}{\tau_\RM e(s)} &= \frac{Ls + R}{p(s)}\,,\\
+        \frac{\theta(s)}{V(s)} &= \frac{K_\RM m}{p(s)}.
+    \end{split}
+\end{equation}
+Hasonlóan az indkutivitást elhanyagolva a karakterisztikus polinom
+\begin{align}\label{eq:characteristic_polynomial}
+    p(s) = s\left(JRs + K_\RM m^2 + B_\RM m R\right),
+\end{align}
+valamint az átviteli függvények
+\begin{equation}\label{eq:transfer_function}
+    \begin{split}
+        \frac{\theta(s)}{\tau_\RM e(s)} &= \frac{R}{p(s)}\,,\\
         \frac{\theta(s)}{V(s)} &= \frac{K_\RM m}{p(s)}.
     \end{split}
 \end{equation}

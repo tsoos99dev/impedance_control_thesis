@@ -1,9 +1,34 @@
+clearvars;
+
 syms s 
 
+N = 4.4;
+Jrotor = 6.34e-7;
+
+Jload = 1e-4;
+Jload_motor = Jload / N^2;
+J = Jrotor + Jload_motor;
+Km = 15.4e-3;
+Bm = 2.7e-7;
+L = 492e-6;
+R = 5.61;
+
 % Desired impedance model
-Me = 0.015;
-Be = 0.0295302013422819;
-Ke = 0.0302013422818792;
+Me = J;
+Be = 0.1744;
+Ke = 1235;
+
+imp_w0 = sqrt(Ke/Me);
+imp_z = Be/(2*sqrt(Me*Ke));
+
+tolerance = 0.99;
+if imp_z < 0.98
+    imp_ts = -log((1-tolerance)*sqrt(1-imp_z^2))/(imp_z*imp_w0);
+elseif imp_z > 1.03
+    imp_ts = log(2*(1-tolerance)*sqrt(imp_z^2-1)/(imp_z+sqrt(imp_z^2-1)))/((-imp_z+sqrt(imp_z^2-1))*imp_w0);
+else
+    imp_ts = -(lambertw(-1, -(1-tolerance)/exp(1))+1)/imp_w0+1.5*(imp_z-1);
+end
 
 Aimp = [0 1; -Ke/Me -Be/Me];
 Bimp = [0 0; Ke/Me 1/Me];
@@ -12,12 +37,6 @@ Dimp = zeros(2);
 
 impedance_model = tf(Ke, [Me Be Ke]);
 Pe = pole(impedance_model)';
-
-J = 0.01;
-Km = 0.01;
-Bm = 0.1;
-L = 0.2;
-R = 1;
 
 Aaa = 0;
 Aab = [1 0]; 
@@ -80,7 +99,7 @@ DD = zeros([5, 2]);
 
 controller = Ctilde/(s*eye(2) - Atilde)*Btilde + Dtilde;
 
-t_d = 0.1;
+t_d = 0.001;
 % Ad = expm(A*t_d);
 % Bd = A\(Ad-eye(3))*B;
 

@@ -322,35 +322,73 @@ együtt. A végleges becslés
 \section{Eredmények}
 A motorparaméterek meghatározása után lehetőség nyílt a valós rendszer és a szimuláció összehasonlítására.
 Az egységugrásra adott válasz összehasonlítását a szimulált digitális szabályozóval és a beállított impedancia modellel 
-az \ref{fig:}. ábra mutatja. Az időkésés \(\tau = 5~\RM{ms}\). Az impedancia modell paraméterei 
-\(M_\RM e = 5~\RM{kg \cdot m^2}\), 
-
-A stabilitásvizsgálat eredményeinek ellenőrzéséhez 
-
+az \ref{fig:step_response_experiment0005}. ábra mutatja. Az időkésés \(\tau = 5~\RM{ms}\). Az impedancia modell paraméterei 
+\(M_\RM e = 7.35 \times 10^{-6}~\RM{kg \cdot m^2}\), \(B_\RM e = 2.43 \times 10^{-4}~\RM{kg \cdot m^2 \cdot s^{-1}}\),
+\(K_\RM e = 4.20 \times 10^{-3}~\RM{kg \cdot m^2 \cdot s^{-2}}\). Ezek egy enyhén alulcsillapított rendszer paraméterei, 
+200 ms beállási idővel és ~0.7-es relatív csillapítási hányadossal. Jól látszik, hogy a végérték közelében 
+a rendszer eltér a modellezett digitális szabályozótól, de kezdeti viselkedése és a végérték tekintetében is megfelel.
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=\textwidth]{images/stab_map_001.png}
+    \includegraphics[width=\textwidth]{images/step_response_experiment0005.png}
+    \caption{Egységugrás válasz \(\theta_\RM r = \pi/3\) referencia szögállásra, 5 ms időkéséssel és 95\%-os toleranciasávval}\label{fig:step_response_experiment0005}
+    \end{center}
+\end{figure}
+A mért szögelfordulás közvetlenül az enkóder jeléből lett meghatározva. A mintavételezési frekvencia közel 4kHz volt 
+minden esetben. 
+
+A teljes stabilitástérkép felderítéséhez a beállási idő vizsgálata tűnt a legjobb paraméternek. Az \ref{fig:time_delay_stab_map_discrete_diff}. 
+ábrához hasonlóan az új motorparaméterekkel meghatározott stabilitástérkép egy része látható a \ref{fig:stab_map_001}. ábrán.
+Azonban itt a vízszintes tengelyen az elvárt impedancia modell sajátkörfrekvenciája \(\omega_\RM 0\), a függőleges 
+tengelyen pedig az elvárt tehetetlenségi nyomatékhoz viszonyított viszkózus csillapítási állandó \(b_\RM e\) található.
+Fontos eltérés még, hogy megjelennek a elvárt beállási idők kontúrjai, melyek jobbról közel vízszintesen indulnak, 
+majd a 45°-os átló előtt nem sokkal a függőlegestől enyhén jobbra haladnak tovább, a térkép felső széle felé. 
+Az origóból induló egyenesek az állandó relatív csillapítási hányadosokat jelölik. A tengelyek osztásai éppen olyanok, 
+hogy a kritikus csillapítási hányadost az egységnyi meredekségű egyenes jelöli. A színezett tartomány az aszimptotikusan 
+stabil paraméterkombinációkat jelöli. A különböző színek és a közöttük lévő kontúrok itt is a digitális szabályozó modell és az 
+impedancia modell beállási ideje közötti relatív hibát mutatja, azonban a színskála \(\pm 10\%\) hiba között mozog. 
+Tehát a méretes bordó terület 10\% hiba feletti eltérést, a lila -10\% alatti, míg a zöld terület 0-2\% hiba közötti 
+eltérést jelöl. Ezeken a határokon belül minden színváltás \(\pm2\%\)-al eltérő hibát mutat. A 10\% feletti 
+területen belüli kontúrok még viszonyításként megmutatják a 25\%, 50\% és 100\%-os eltéréseket is. 
+A \ref{fig:stab_map_0005}. és \ref{fig:stab_map_00025}. ábrák a csökkenő időkésés hatását szemléltetik. 
+A stabil tartomány megnövekszik és a relatív tartományok is eltolódnak, ami az alacsonyabb hibával rendelkező területek 
+megnuovekedését eredményezik. Ez lehetővé tesz, azonos hiba mellett, egy gyorsabb rendszer működtetését. 
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=14cm]{images/stab_map_001.png}
     \caption{Stabilitástérkép 10ms időkéséssel}\label{fig:stab_map_001}
     \end{center}
 \end{figure}
-
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=\textwidth]{images/stab_map_0005.png}
+    \includegraphics[width=14cm]{images/stab_map_0005.png}
     \caption{Stabilitástérkép 5ms időkéséssel}\label{fig:stab_map_0005}
-    \end{center}
-\end{figure}
-
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=\textwidth]{images/stab_map_00025.png}
+    \includegraphics[width=14cm]{images/stab_map_00025.png}
     \caption{Stabilitástérkép 2.5ms időkéséssel}\label{fig:stab_map_00025}
     \end{center}
 \end{figure}
-
+\pagebreak
+A motorvezérlővel való kommunikáció maximális sebessége és a 10\% relatív hiba alatti terület méretét figyelembe véve 
+a végső mérés 5 ms időkéséssel készült. A stabilitástérkép pontjai egy egyenletes 50x50-es rács segítségével fel lett 
+osztva. Az így kapott 2500 potenciális mérési pont nagy rész vagy instabil, vagy a mérés kivitelezhetősége szempontjából 
+túl nagy beállási idővel rendelkezik. A tényleges mérési pontok ez alapján a stabil tartományon belül az 1 szekundumnál 
+kisebb beállási idővel és a digitális modell predikciója szerint kevesebb, mint 50\% hibával rendelkeznek. Ezen kritériumokkal 
+együtt a mérési pontok teljes száma 992 pont volt. Minden mérési pont meghatároz egy impedancia modell beállítást, mely 
+az \ref{fig:measurement_protocol}. ábrán is látható protokoll segítségével automatizált módon került át a szabályozót 
+implementáló mikrovezérlőre. Minden mérés ideális esetben 10x lett megismételve, azonban ha az adott paraméterek mellett 
+nem állt be a rendszer, 10 sikertelen próbálkozás után a következő mérésre ugrott a rendszer. Fellépett köztes eset is, 
+amikor részben sikeres, részben sikertelen volt egy adott kísérlet. Ekkor is 10 sorban sikertelen vagy összesen 10 sikeres 
+mérés volt a megállási kritérium, viszont legalább 5 sikeres mérés kellett, ahhoz hogy a végső analízisben figyelembe legyen 
+véve az adott mérés.
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=\textwidth]{images/experiment_comparison_0005.png}
     \caption{Mért beállási idők összehasonlítása a modellel 5ms késéssel}\label{fig:experiment_comparison_0005}
     \end{center}
 \end{figure}
+A teljes futási idő nagyjából 12-15 óra volt. A kapott eredményeket ábrázolja a \ref{fig:experiment_comparison_0005}. ábra.
+A pontok közül fekete 'x' jelöli a sikertelennek ítélt méréseket. A többi esetben a mért beállási idők és a digitális 
+szabályozóval számolt beállási idők közötti eltérés alapján 7\% szignifikancia mellett irrelevánsnak itélt diszkrepanciát 
+jelölik a zöld pontok. 1.2-7\% között indiszkriminánsnak ítélt méréseket jelölik a fekete pontok, és 1.2\%-hoz mérten 
+szignifikáns eltérést jelölik a piros pontok. Láthatóan a mérések kevesebb, mint fele felel meg ezeknek a feltételeknek. 
+A legtöbb sikeres mérés a stabilitási tartomány azon területén található, ahol a modellezett relatív hiba negatív. Tehát 
+a digitálsi rendszer az elvártnál gyorsabban áll be. 

@@ -1,0 +1,20 @@
+\select@language {hungarian} \contentsline {chapter}{\numberline {1}Bevezetés}{1}{chapter.1}%
+\select@language {hungarian} \contentsline {chapter}{\numberline {2}Fizikai modell}{5}{chapter.2}%
+\select@language {hungarian} \contentsline {section}{\numberline {2.1}Egyenáramú motor dinamikája}{5}{section.2.1}%
+\select@language {hungarian} \contentsline {section}{\numberline {2.2}Egyenáramú motor stabilitása}{8}{section.2.2}%
+\select@language {hungarian} \contentsline {section}{\numberline {2.3}Megfigyelhetőség}{8}{section.2.3}%
+\select@language {hungarian} \contentsline {section}{\numberline {2.4}Irányíthatóság}{9}{section.2.4}%
+\select@language {hungarian} \contentsline {chapter}{\numberline {3}Szabályozó modellezése}{11}{chapter.3}%
+\select@language {hungarian} \contentsline {section}{\numberline {3.1}Állapotmegfigyelő}{11}{section.3.1}%
+\select@language {hungarian} \contentsline {section}{\numberline {3.2}Pozíció szabályozás}{12}{section.3.2}%
+\select@language {hungarian} \contentsline {section}{\numberline {3.3}Nyomaték kompenzáció}{15}{section.3.3}%
+\select@language {hungarian} \contentsline {chapter}{\numberline {4}Stabilitásvizsgálat időkéséssel}{27}{chapter.4}%
+\select@language {hungarian} \contentsline {section}{\numberline {4.1}Stabilitás folytonos időben}{27}{section.4.1}%
+\select@language {hungarian} \contentsline {section}{\numberline {4.2}Stabilitás diszkrét időben}{32}{section.4.2}%
+\select@language {hungarian} \contentsline {chapter}{\numberline {5}Kísérlet}{39}{chapter.5}%
+\select@language {hungarian} \contentsline {section}{\numberline {5.1}Mérési összeállítás}{39}{section.5.1}%
+\select@language {hungarian} \contentsline {section}{\numberline {5.2}Paraméter identifikáció}{42}{section.5.2}%
+\select@language {hungarian} \contentsline {section}{\numberline {5.3}Eredmények}{43}{section.5.3}%
+\select@language {hungarian} \contentsline {chapter}{\numberline {6}Összegzés}{45}{chapter.6}%
+\select@language {hungarian} \contentsline {chapter}{\numberline {7}Jövőbeli munka}{47}{chapter.7}%
+\select@language {hungarian} \contentsline {part}{FÜGGELÉK}{49}{part*.46}%

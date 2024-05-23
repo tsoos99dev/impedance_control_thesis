@@ -39,3 +39,6 @@ set(gca, 'Box', 'off', 'TickDir', 'out', 'TickLength', [.02 .02], ...
 
 xlabel('$w_0~\mathrm{[rad/s]}$', 'Interpreter', 'latex', 'FontSize', 16)
 ylabel('$b_\mathrm{e}~\mathrm{[rad/s^2]}$', 'Interpreter', 'latex', 'FontSize', 16)
+
+set(gcf,'PaperPositionMode','auto')
+export_fig("../images/stab_map_00025.png", "-png", "-m4", "-r300")

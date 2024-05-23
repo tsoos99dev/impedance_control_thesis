@@ -3,7 +3,7 @@ clearvars;
 % Stability analysis
 stab_discrete
 
-sweep_output = readmatrix("sweep_output2.csv");
+sweep_output = readmatrix("sweep_output1.csv");
 mKO = sweep_output(:, 1);
 mBO = sweep_output(:, 2);
 msettle = sweep_output(:, 3) / 1000;

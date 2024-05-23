@@ -7,8 +7,8 @@ motor_params
 
 % Impedance parameters
 Me = 1*J;
-be = 3.06122448979592;
-w0 = 1.53061224489796;
+be = 33.1;
+w0 = 23.8;
 Be = be*Me;
 Ke = w0^2*Me;
 
@@ -80,7 +80,9 @@ title('Step response')
 xlabel('$t~\mathrm{[ms]}$', 'Interpreter', 'latex', 'FontSize', 16)
 ylabel('$\theta~\mathrm{[rad]}$', 'Interpreter', 'latex', 'FontSize', 16)
 
-legend('Measurement', 'Simulated digital model', 'Input impedance model')
+legend('Mért', 'Szimulált digitális', 'Impedancia modell', 'Location','east')
+set(gcf,'PaperPositionMode','auto')
+export_fig("../images/step_response_experiment0005.png", "-png", "-m4", "-r300")
 
 figure;
 pbaspect([8,6,1])

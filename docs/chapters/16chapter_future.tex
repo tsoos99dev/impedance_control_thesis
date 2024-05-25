@@ -1,8 +1,15 @@
 \chapter{Jövőbeli munka}\label{chap:conclusion}
 
-Ebbe a dolgozatba csak elméleti és numerikus számítások kerültek. A kapott 
-diszkrét időkéséses szabályozó tesztelése egy valós egyszabadságfokú rendszeren 
-lenne a legkézenfekvőbb következő lépés. Össze lehet hasonlítani a kapott 
-numerikus stabilitási térképet a valós rendszer viselkedésével. Ezen felül 
-a REHAROB rehabilitációs robot kézmodulján is lehetne tesztelni a szabályozót, azonban 
-ehhez szükséges lehet ezt az egyszabadságfokú modellt kiterjeszteni több szabadságfokra.
+A kapott eredményeket még nem lehet egy az egyben a REHAROB kézmodulján alkalmazni. Következő 
+lépésként általánosítani lehetne a modellt egy többszabadságfokú rendszerre, ami jobban modellezi 
+a valódi kézmodult. A kapott diszkrét idejű stabilitástérképet alaposabban be lehetne járni, 
+a motorparaméterek pontosabb meghatározása után. Különbőző időkésésekre össze lehetne hasonlítani 
+a mért és a szimulált beállási időket. A stabilitás határán ki lehetne mérni a rezgési frekvenciát, 
+illetve annak megváltozását a határon végighaladva. A beállási időn kívül más rendszerparamétereket 
+is meg lehetne vizsgálni, mint a felfutási idő vagy a maximális túllövés. Kiterjeszthető a modell 
+nemlineáris hatások bevonásával, ilyen lehetne a Coulomb-súrlódás vagy a szaturáció, esetleg a 
+szabályozó jel diszkretizációja. Aztán a külső nyomaták kompenzációja ugyan bekerült a 
+szabályozó modelljébe, de nem maradt idő a kompenzáció tesztelésére. Végül előfordulhat, 
+hogy az impedancia modell paramétereit online kell változtatni, például ha "puhább" választ 
+szertnénk kapni egy felülettel való kontakt során. Ennek az implementációját és a stabilitásra 
+gyakorolt hatását is külön meg kell vizsgálni.

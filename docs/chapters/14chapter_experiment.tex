@@ -50,8 +50,10 @@ A szoftver egyszerűsített vázlata az \ref{fig:block_diagram_control_software}
 A szabályozó szoftvere egy C-ben írt program, mely az STMicrocontrollers STM32CubeIDE nevezetű 
 fejlesztői környezetében készült. Minden időzítéssel kapcsolatos feladatot a beépített perifériák 
 látnak el. A szabályozó ciklusa az adott méréshez előre meghatározott ciklusidő / időkésés figyelembe 
-vételével periodikusan fut. Az implmentáció a \ref{chap:time_delay_stability}. fejezetben bemutatott 
-digitalizált szabályozót követi. Mivel a motorvezérlőnek elküldött parancs meghatározásához szuukséges idő 
+vételével periodikusan fut. Az implementáció a \ref{chap:time_delay_stability}. fejezetben bemutatott 
+digitalizált szabályozót követi. Az egyetlen eltérés, hogy a tekercsáram nem modellezhető az elérhető 
+időkésések mellett. A stabil tartomány egy használhatatlanul vékony területre zsugorodik. A kísérletekhez ezért 
+a tekercsáram nem lett külön állapotként modellezve. Mivel a motorvezérlőnek elküldött parancs meghatározásához szükséges idő 
 lényegesen rövidebb a méréseknél használt ciklusidőknél, egy külön időzítő felel a parancsok 
 megfelelő késleltetéséért. A soros kommunikációhoz szükséges műveleteket soros interfész modulok 
 végzik el. Minden interfész modul két körkörös pufferrel rendelkezik. Az egyik a kimenő, a másik 
@@ -318,6 +320,8 @@ együtt. A végleges becslés
 \begin{equation}
     B_\RM m = (1.1 \pm 0.1)\times 10^{-6}~\RM{kg\cdot m^2\cdot s^{-1}}.
 \end{equation}
+A mérési eredményeknél észrevehető egy kis eltérés a regresszióból kapott egyenestől, mely láthatóan nem 
+véletlenszerű. Ennek a jelenségnek a további vizsgálata a függelék \ref{chap:effects_of_pwm_frequency}
 
 \section{Eredmények}
 A motorparaméterek meghatározása után lehetőség nyílt a valós rendszer és a szimuláció összehasonlítására.

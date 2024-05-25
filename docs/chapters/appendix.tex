@@ -1,5 +1,108 @@
 \part*{FÜGGELÉK}
 
+\chapter{A PWM frekvencia hatása DC motor vezérlésénél}\label{chap:effects_of_pwm_frequency}
+A mérési összeállítás tervezése során először egy jóval alacsonyabb PWM frekvenciával működő 
+motorvezélő lett bekötve. A motor állandósult sebessége és a PWM jel kitöltési tényezője közötti kapcsolat 
+erősen nemlineáris volt az első tesztek során. Ennek a VNH5019 alapú Polulu motorvezérlőnek a kimeneti frekvenciája 
+maximum 20 kHz volt. Egy ilyen előzetes mérés eredménye látható az \ref{fig:motor_response_20khz}. ábrán. 
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=14cm]{images/motor_pwm_response20.png}
+    \caption{A motor állandósult sebessége és a kitöltési tényező viszonya 20 kHz-es PWM jellel.}\label{fig:motor_response_20khz}
+    \end{center}
+\end{figure}
+Az \ref{fig:speed_profile}. ábrával ellentétben a maximális sebesség nagyobb volt, mivel a 
+terhelésként használt propeller ekkor még nem került a motorra. A szabályozó tervezése során alapfeltevés volt, hogy 
+a motorra kapcsolt feszültség változatlan marad, ha a szabályozó kimenete állandó. Láthatóan a motor máshogy viselkedik 
+a PWM jel hatására, mintha a PWM jel átlagfeszültségével megegyező nagyságú állandó feszültség lenne a motorra kapcsolva.
+Ennek a jelenségnek a magyarázatához elég a \ref{chap:physical_system}. fejezetben bevezetett lineáris modell válaszát 
+megvizsgálni PWM bemenetre. A PWM jel két részre bontható. Az első szakasz változtatható szélességű és a 
+kimeneti feszültség maximum, a második szakaszban a kimeneti feszültség zérus 
+\begin{equation}
+    V(t) = 
+    \begin{cases}
+        V_\RM{max} & \text{ha } kt_\RM p \le t < ft_\RM p + kt_\RM p \\
+        0 & \text{ha } ft_\RM p + kt_\RM p \le t < (k+1)t_\RM p
+    \end{cases}\,,
+\end{equation}
+ahol \(t_\RM p\) a jel periódusideje és \(f\) a kitöltési tényező.
+A rotor áramának dinamikáját az \eqref{eq:armature_circuit} egyenlet írja le. 
+Állandó feszültségre megoldva az idő és az áram szeparálásával
+\begin{equation}
+    \begin{split}
+    \int_{t_0}^{t} dt &= \int_{i_0}^{i} \frac{L di}{V-K_\RM m\dot\theta - Ri}, \\
+    t - t_0 &= -\frac{L}{R} \ln \frac{V-K_\RM m\dot\theta-Ri}{V-K_\RM m\dot\theta-Ri_0}, \\
+    i(t) &= \frac{V-K_\RM m\dot\theta}{R}\left(1-e^{-\frac{t-t_0}{L/R}} \right) + i_0 e^{-\frac{t-t_0}{L/R}}. 
+    \end{split}
+\end{equation}
+A megoldás során alkalmazott feltételezés, hogy a rotor forgási sebessége állandónak tekinthető állandósult esetben. 
+Ez egy realisztikus feltételezés, hiszen a motor mechanikai időállandója nagyságrendekkel nagyobb a PWM jel periódusidejénél 
+a vizsgált rendszerben. Ugyanebből a feltételezésből következik, hogy elég a motorra ható forgatónyomaték átlagát figyelembe venni, 
+mely~\eqref{eq:lenz_torque} alapján arányos a tekercsárammal. Az átlag meghatározásához két esetet kell figyelembe venni. 
+Az első esetben a tekercsáram nulláról indul és még kevesebb mint egy periódus alatt visszaesik nullára. Ez a továbbiakban szakaszos üzemmódnak 
+lesz hívva. A másik eset, hogy a kiinduláskor nullától eltérő tekercsáram pontosan a periódus végén esik vissza a kiindulási értékére. 
+Ez lesz a folytonos üzemmód. Az átlag meghatározásához fel lett használva az a feltételezés, hogy elegendő az előbb kapott 
+exponenciális változást leíró formula lineáris közelítését felhasználni. A közelítés szerint 
+\begin{equation}
+    \begin{split}
+        i(t) &= (i_\RM{max} - i_0)\frac{t}{ft_\RM p} + i_0, \\
+        i_\RM{max} &= \frac{V-K_\RM m\dot\theta}{R}\left(1-e^{-\frac{ft_\RM p}{L/R}} \right) + i_0 e^{-\frac{ft_\RM p}{L/R}}
+    \end{split}
+\end{equation}
+amíg a feszültség értéke maximum. Szakaszos üzemmódban meg kell határozni az áram nullára visszaeséséhez szükséges időt. 
+Ez az előző egyenletek alapján 
+\begin{equation}
+    t_f = \frac{L}{R}\ln\left[\frac{V}{K_\RM m\dot\theta}\left(e^{-\frac{ft_\RM p}{L/R}} - 1\right) + 1\right]
+\end{equation}
+a periódus kezdetéhez viszonyítva.
+A tekercsáram átlaga ez alapján belátható hogy a következő összefüggéssel közelíthető
+\begin{equation}
+    \begin{split}
+    i_\RM{avg} &= \frac{1}{2}i_\RM{max}\frac{t_\RM f}{t_\RM p} \\
+               &= \frac{1}{2}\frac{V-K_\RM m\dot\theta}{R}\left(1-e^{-\frac{ft_\RM p}{L/R}} \right)\frac{L}{t_\RM p R}\ln\left[\frac{V}{K_\RM m\dot\theta}\left(e^{-\frac{ft_\RM p}{L/R}} - 1\right) + 1\right].
+    \end{split}
+\end{equation}
+Folytonos üzemmódban a kezdeti tekercsáramot kell meghatározni felhasználva, hogy \(t_\RM f = t_\RM p\).
+Az előző formulák alapján 
+\begin{equation}
+    i_0 = \frac{V}{R}\frac{1-e^{\frac{ft_\RM p}{L/R}}}{1-e^{\frac{t_\RM p}{L/R}}} - \frac{K_\RM m\dot\theta}{R}.
+\end{equation}
+Ebben az esetben a tekercsáram átlaga pedig
+\begin{equation}
+    \begin{split}
+    i_\RM{avg} &= \frac{1}{2}\left(i_\RM{max}-i_0\right) + i_0 \\
+               &= \frac{1}{2}\left[\frac{V-K_\RM m\dot\theta}{R}\left(1-e^{-\frac{ft_\RM p}{L/R}} \right) + 
+               \left(1+e^{-\frac{ft_\RM p}{L/R}} \right)
+               \left(\frac{V}{R}\frac{1-e^{\frac{ft_\RM p}{L/R}}}{1-e^{\frac{t_\RM p}{L/R}}} - \frac{K_\RM m\dot\theta}{R}\right)\right].
+    \end{split}
+\end{equation}
+A tekercsáram mindvégig pozitív marad, így kifejezhető a motor szögsebessége és a kitöltési tényező közötti 
+kapcsolat folytonos üzemmódban 
+\begin{equation}
+    \dot\theta_\RM{crit} \le \frac{V}{K_\RM m}\frac{1-e^{\frac{ft_\RM p}{L/R}}}{1-e^{\frac{t_\RM p}{L/R}}}.
+\end{equation}
+Az átlag áramot behelyettesítve az \eqref{eq:rotor_dynamics} egyenletbe állandósult állapotban 
+\begin{equation}
+    B_\RM m\dot\theta = K_\RM m i_\RM{avg} + \tau_\RM e,
+\end{equation}
+ahol \(\tau_\RM e\) itt a statikus súrlódást fogja modellezni. Láthatóan létezik egy minimum kitöltési tényező 
+ami alatt el sem indul a motor. 
+Az \ref{fig:motor_response_20khz_with_model}. ábrán látható a 20kHz-en mért válasz és a modell által megjósolt viselkedés. 
+A szaggatott görbe a kritikus szögsebességet jelöli, amely alatt folytonos üzemmódba lép át a rendszer. Felette pedig szakaszos üzemmódban működik. 
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/motor_pwm_response20_with_model.png}
+    \caption{A motor állandósult sebessége és a kitöltési tényező viszonya modellekkel kiegészítve, 20 kHz-es PWM jellel.}\label{fig:motor_response_20khz_with_model}
+    \end{center}
+\end{figure}
+A statikus súrlódásból származó nyomatékra \(\tau_\RM e = 1.5 \times 10^{-4}~\RM{Nm}\), a viszkózus csillapítási együtthatóra pedig 
+\(B_\RM m = 2.7 \times 10^{-7}~\RM{kg \cdot m^2 \cdot s^{-1}}\) lett behelyettesítve. A többi paraméter az adatlapból származik. 
+A mérés külső terhelés vagy hozzáadott tehetetlenség nélkül történt. Az egyezés jól látható, és az is látszik, hogy majdnem a 
+teljes tartományon szakaszos üzemmódban működik a rendszer. A folytonos üzemmód viszont teljesen elfogadható 
+lineáris viszonyt adna. A frekvencia és a viszkózus csillapítás növelésével el lehet érni, hogy a rendszer majdnem teljes 
+egészében folytonos üzemmódban operáljon.
+
+\chapter{Adatlapok}
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=\textwidth]{images/motor.pdf}

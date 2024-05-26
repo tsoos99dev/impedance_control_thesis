@@ -1,5 +1,65 @@
 \part*{FÜGGELÉK}
 
+% \chapter{A beállási idő analitikus vizsgálata}
+% Jól ismert közelítés a beállási időre alulcsillapított rendszereknél a következő formula 
+% \begin{equation}
+%     t_\RM s = \frac{4}{\zeta \omega_\RM n},
+% \end{equation}
+% ahol \(\zeta\) a relatív csillapítási hányados és \(\omega_\RM n\) a csillapítatlan 
+% sajátkörfrekvencia. Tehát 4 időállandóval becsüli a beállási időt. 
+% Ez az összefüggés csak ~2\%-os hibasávra alkalmazható, valamint 
+% kritikus csillapítás közelében 30-40\%-al eltér a valódi beállási időtől. Túlcsillapított 
+% esetre pedig egyáltalán nem alkalmazható. A legkézenfekvőbb általánosítása a formulának, 
+% ha az időállandót a domináns pólussal helyettesítjük. Ez túlcsillapított esetre is ad 
+% egy megoldást, de kritikus csillapítás közelében továbbra is nagy eltérést eredményez.
+% Túlcsillapított esetre a domináns pólussal a formula a következő
+% \begin{equation}
+%     t_\RM s = \frac{4}{\left(\zeta-\sqrt{\zeta^2-1}\right) \omega_\RM n}.
+% \end{equation}
+% A stabilitásvizsgálat során olyan formulák kellettek, amelyek a kritikus csillapítás 
+% közelében is relatíve kis hibával bírnak. Ehhez előszőr is szükség lesz a másodrendű 
+% rendszer általános megoldására időtartományban egységugrás bemenetre valamint \(x_0\)
+% kezdeti elmozdulásra és zérus kezdeti sebességre. Ez számtalan módon 
+% megkapható. Az eredmény a következő 
+% \begin{equation}
+%     x(t) = x_0 e^{-\zeta\omega_\RM n t}\left[
+%         \frac{1}{2}\left(e^{i\omega_\RM d t} + e^{-i\omega_\RM d t}\right)
+%         - \frac{\zeta}{\sqrt{\zeta^2-1}}\frac{1}{2}\left(e^{i\omega_\RM d t} - e^{-i\omega_\RM d t}\right)
+%         \right],
+% \end{equation}
+% ahol \(\omega_\RM d\) a csillapított sajátkörfrekvencia
+% \begin{equation}
+%     \omega_\RM d = \sqrt{1-\zeta^2}\omega_\RM n.
+% \end{equation}
+% Kritikus csillapítás közelében a válaszfüggvény a következő alakra hozható \(e^{ix}\) 
+% hátványsorba fejtett alakjával 
+% \begin{equation}
+%     x(t) = x_0 e^{-\zeta\omega_\RM n t}\left(1 + \omega_\RM n t\right).
+% \end{equation}
+% Legyen a hibasáv mérete a kezdeti és a végérték közötti távolsággal arányosan kifejezve \(\Delta\).
+% Felhasználva hogy a válasz szigorúan monoton, a beállási idő elteltével a következő összefüggés 
+% lesz érvényben
+% \begin{equation}
+%     \Delta x_0 = x_0 e^{-\zeta\omega_\RM n t_\RM s}\left(1 + \omega_\RM n t_\RM s\right).
+% \end{equation}
+% Ez az egyenlet a Lambert-féle W-függvény segítségével kifejezhető a beállási időre
+% \begin{equation}
+%     t_\RM s = -\frac{W_{-1}(-\frac{\Delta}{e})+1}{\omega_n},
+% \end{equation}
+% ahol \(W_{-1}(x)\) a Lambert-féle W-függvény \(W \le -1\)-ra értelmezett ága és \(\Delta\) a 
+% \([0, 1]\) intervallumon belül található. Például 2\%-os hibasáv esetén kritikus csillapításnál 
+% \begin{equation}
+% t_\RM s = \frac{5.8339}{\omega_n}.
+% \end{equation}
+% Ez körülbelül 30\%-al eltér a négy időállandós becsléstől. \(\zeta=1\) közelében 
+% nem sikerült Taylor-sorral általánosítani a formulát, de empirikusan egy jó közelítésnek 
+% bizonyult egy lineáris taggal kiegészíteni az előző összefüggést
+% \begin{equation}
+% t_\RM s = -\frac{W_{-1}(-\frac{\Delta}{e})+1}{\omega_n} + \frac{15}{\omega_\RM n}\left(\zeta-1\right),
+% \end{equation}
+% mely \(0.98 \le \zeta \le 1.03\) tartományban alkalmazható.
+
+
 \chapter{A PWM frekvencia hatása DC motor vezérlésénél}\label{chap:effects_of_pwm_frequency}
 A mérési összeállítás tervezése során először egy jóval alacsonyabb PWM frekvenciával működő 
 motorvezélő lett bekötve. A motor állandósult sebessége és a PWM jel kitöltési tényezője közötti kapcsolat 

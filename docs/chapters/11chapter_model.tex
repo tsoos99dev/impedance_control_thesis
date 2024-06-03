@@ -5,7 +5,7 @@ lehetővé teszi az időkéséssel kiegészített stabilitásvizsgálatot.
 
 \section{Egyenáramú motor dinamikája}
 
-\begin{figure}[h]
+\begin{figure}[b!]
 \begin{center}
 %\phantomsection{}
 \includegraphics[width=\textwidth]{images/motor_model_electric.pdf}
@@ -36,14 +36,6 @@ Az energiamegmaradás törvénye alapján a két konstans értéke SI mértékeg
 \end{align}
 ahol $R$ a forgórész tekercsének ellenállása, $L$ a tekercs induktivitása, 
 $K_\RM m$ a motorállandó, $V$ a motor feszültsége, $i$ a motoráram és $\theta$ a szögelfordulás.
-\begin{figure}[h]
-    \begin{center}
-    %\phantomsection{}
-    \includegraphics[width=10cm]{images/motor_model_mechanical.pdf}
-    \caption{Az egyenáramú motor szabadtest ábrája}
-    \label{fig:dc_motor_mechanical}
-    \end{center}
-\end{figure}
 A forgórészt merev testnek tekintve, annak mozgásegyenlete a dinamika alaptétele és a~\ref{fig:dc_motor_mechanical}. számú 
 szabadtest-ábra alapján a következő alakban írható fel:
 \begin{align}\label{eq:rotor_dynamics}
@@ -52,6 +44,15 @@ szabadtest-ábra alapján a következő alakban írható fel:
 ahol $J$ a forgórész tehetetlensége, $B_\RM m$ a viszkózus csillapítási együttható, 
 $K_\RM m$ a motorállandó, $\theta$ a szögelfordulás, $i$ a motoráram, $\tau_\RM m$ a motor által kifejtett nyomaték 
 és $\tau_\RM e$ a forgórészre ható külső nyomaték. 
+
+\begin{figure}[t!]
+	\begin{center}
+		%\phantomsection{}
+		\includegraphics[width=10cm]{images/motor_model_mechanical.pdf}
+		\caption{Az egyenáramú motor szabadtest ábrája}
+		\label{fig:dc_motor_mechanical}
+	\end{center}
+\end{figure}
     
 A~\eqref{eq:armature_circuit} és~\eqref{eq:rotor_dynamics} egyenletek egyértelműen leírják a 
 rendszer időtartománybeli viselkedését.

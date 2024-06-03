@@ -65,12 +65,14 @@ A mérési összeállítás tervezése során először egy jóval alacsonyabb P
 motorvezélő lett bekötve. A motor állandósult sebessége és a PWM jel kitöltési tényezője közötti kapcsolat 
 erősen nemlineáris volt az első tesztek során. Ennek a VNH5019 alapú Polulu motorvezérlőnek a kimeneti frekvenciája 
 maximum 20 kHz volt. Egy ilyen előzetes mérés eredménye látható az \ref{fig:motor_response_20khz}. ábrán. 
-\begin{figure}[H]
+
+\begin{figure}[b!]
     \begin{center}
     \includegraphics[width=14cm]{images/motor_pwm_response20.png}
     \caption{A motor állandósult sebessége és a kitöltési tényező viszonya 20 kHz-es PWM jellel.}\label{fig:motor_response_20khz}
     \end{center}
 \end{figure}
+
 Az \ref{fig:speed_profile}. ábrával ellentétben a maximális sebesség nagyobb volt, mivel a 
 terhelésként használt propeller ekkor még nem került a motorra. A szabályozó tervezése során alapfeltevés volt, hogy 
 a motorra kapcsolt feszültség változatlan marad, ha a szabályozó kimenete állandó. Láthatóan a motor máshogy viselkedik 
@@ -149,12 +151,14 @@ ahol \(\tau_\RM e\) itt a statikus súrlódást fogja modellezni. Láthatóan l�
 ami alatt el sem indul a motor. 
 Az \ref{fig:motor_response_20khz_with_model}. ábrán látható a 20kHz-en mért válasz és a modell által megjósolt viselkedés. 
 A szaggatott görbe a kritikus szögsebességet jelöli, amely alatt folytonos üzemmódba lép át a rendszer. Felette pedig szakaszos üzemmódban működik. 
-\begin{figure}[H]
+
+\begin{figure}[t!]
     \begin{center}
     \includegraphics[width=\textwidth]{images/motor_pwm_response20_with_model.png}
     \caption{A motor állandósult sebessége és a kitöltési tényező viszonya modellekkel kiegészítve, 20 kHz-es PWM jellel.}\label{fig:motor_response_20khz_with_model}
     \end{center}
 \end{figure}
+
 A statikus súrlódásból származó nyomatékra \(\tau_\RM e = 1.5 \times 10^{-4}~\RM{Nm}\), a viszkózus csillapítási együtthatóra pedig 
 \(B_\RM m = 2.7 \times 10^{-7}~\RM{kg \cdot m^2 \cdot s^{-1}}\) lett behelyettesítve. A többi paraméter az adatlapból származik. 
 A mérés külső terhelés vagy hozzáadott tehetetlenség nélkül történt. Az egyezés jól látható, és az is látszik, hogy majdnem a 

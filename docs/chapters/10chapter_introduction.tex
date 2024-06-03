@@ -1,17 +1,18 @@
 \chapter{Bevezetés}
 
+\begin{figure}[b!]
+	\begin{center}
+		\includegraphics[width=12cm]{images/hand_rehab_robot_types.jpeg}
+		\caption{A kéz rehabilitációjánál alkalmazott robotok típusai}\label{fig:hand_rehab_robot_types}
+	\end{center}
+\end{figure}
+
 A sztrók évente közel 30 000~\citep{Bereczki2023} embert érint ma Magyarországon. A betegség szövődményei között gyakori 
 a beszéd-, látás-, vagy mozgászavar, de akár teljes bénulást is okozhat. Az egészségügyi robotok alkalmazása a 
 rehabilitáció során elősegítheti a hatékonyabb gyógyulást~\citep{Chang2013}. A kéz rehabilitációjának optimalizálása 
 különösen fontos, hiszen alapvető szerepe van a mindennapi feladatok elvégzésében. A kézfej méretéből és ízületeinek számából 
 adódóan sajátos kihívásokkal kell megbirkózni egy rehabilitációs robot megtervezésénél.
 Az irodalomban megjelenő megoldások főbb típusai közül szemléltet párat az~\ref{fig:hand_rehab_robot_types}. ábra~\citep{Yue2017}.
-\begin{figure}[ht]
-    \begin{center}
-    \includegraphics[width=12cm]{images/hand_rehab_robot_types.jpeg}
-    \caption{A kéz rehabilitációjánál alkalmazott robotok típusai}\label{fig:hand_rehab_robot_types}
-    \end{center}
-\end{figure}
 Két fő kategóriát lehet megkülönböztetni a robot és a felhasználó fizikai kapcsolatát tekintve. Vannak teljesen 
 különálló egységek és olyan megoldások, melyeket a felhasználó visel. Az ujjakat lehet külön-külön vagy 
 csoportokban mozgatni. A meghajtás lehet elektromos, pneumatikus vagy hidraulikus, de akár piezoelektromos vagy 
@@ -41,20 +42,23 @@ A modell három paraméterrel rendelkezik, $M_\RM e$ a rendszer előírt tehetet
 $B_\RM e$ a viszkózus csillapítása, és $K_\RM e$ a rugóállandója. 
 $\theta_\RM r$ és $\tau_\RM e$ az elérni kívánt pozíció és a rendszerre ható külső nyomaték. 
 
+\begin{figure}[t!]
+	\begin{center}
+		\includegraphics[width=8cm]{images/reharob_hand_module.png}
+		\caption{A REHAROB rehabilitációs robot kézmodulja}\label{fig:reharob_hand_module}
+	\end{center}
+\end{figure}
+
 Ez a dolgozat elsősorban az Országos Mozgásszervi Intézetben megépített REHAROB 3.0 
 rehabilitációs robot kézmoduljában alkalmazott robotujj hatékonyságának javításához kíván hozzájárulni.
 A robot kézmodulja az~\ref{fig:reharob_hand_module}. ábrán látható.
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=8cm]{images/reharob_hand_module.png}
-    \caption{A REHAROB rehabilitációs robot kézmodulja}\label{fig:reharob_hand_module}
-    \end{center}
-\end{figure}
 A REHAROB 3.0 rehabilitációs robot működhet passzív vagy aktív üzemmódban. Passzív üzemmódban előre felvett 
 mozgáspályákon halad végig, míg aktív üzemmódban előre beprogramozott hétköznapi feladatok 
 kivitelezésében asszisztálja a pácienst. A kézmodul közvetlen hajtással rendelkezik. A mutatóujj, a középső ujj és a
 gyűrűs ujj együtt, míg a hüvelyujj külön mozgatható. A kisujj nem vesz részt a mozgatásban. Cserélhető ortézisek 
 teszik lehetővé, hogy különböző kéz mérettel rendelkező páciensek is használhassák a berendezést.
+
+
 
 A dolgozat a robotujj egyszerűsítettt egyszabadságfokú modelljére alkalmazott admittancia szabályozó stabilitását vizsgálja.
 A digitális rendszerek stabilitására nagy hatással lehet az időkésés~\citep{stepan1989retarded,stepan2001vibrations}, így a 

@@ -2,6 +2,16 @@
 .vscode
 docs/out
 docs/tmp
+docs/*.aux
+docs/*.aux
+docs/*.bcf
+docs/*.lof
+docs/*.log
+docs/*.lot
+docs/*.out
+docs/*.run.xml
+docs/*.synctex.gz
+docs/*.toc
 
 docs/_corrections
 .directory
@@ -12,7 +22,7 @@ docs/_corrections
 
 *.bkp
 *.dtmp
-*.synctex
+
 
 # Windows default autosave extension
 *.asv
@@ -42,4 +52,5 @@ codegen/
 
 # Octave session info
 octave-workspace
+
 

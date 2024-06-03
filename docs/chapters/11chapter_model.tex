@@ -1,6 +1,6 @@
 \chapter{Fizikai modell}\label{chap:physical_system}
 
-Ebben a fejezetben a robotujj egyetlen motorjának fizikai modellje kerül bevezetésre. A kapott dinamikai leírás
+Ebben a fejezetben a robotujj \alert{egyetlen} \add{EZT HOGY ÉRTED? 1DOF MODELLT CSINÁLUNK AZ RENDBEN, DE A ROBOTUJJBAN 5 MOTOR VAN} motorjának fizikai modellje kerül bevezetésre. A kapott dinamikai leírás
 lehetővé teszi az időkéséssel kiegészített stabilitásvizsgálatot. 
 
 \section{Egyenáramú motor dinamikája}
@@ -17,7 +17,9 @@ lehetővé teszi az időkéséssel kiegészített stabilitásvizsgálatot.
 A robot motorjának modelljét a~\ref{fig:dc_motor_electric}. ábra szemlélteti. 
 A felhasznált motor feltételezetten állandó gerjesztésű. Kifejtett nyomatéka a 
 Biot--Savart-törvény szerint arányos a forgórészen átfolyó árammal. A forgórészben
-indukált feszültség pedig arányos annak szögsebességével. A Lenz-törvény alapján 
+indukált feszültség pedig arányos annak szögsebességével. 
+
+A Lenz-törvény alapján 
 \begin{equation}\label{eq:lenz_torque}
 \begin{split}
     \tau_\RM m &= K_\RM \tau i, \\
@@ -26,16 +28,21 @@ indukált feszültség pedig arányos annak szögsebességével. A Lenz-törvén
 \end{equation}
 ahol $K_\RM \tau$ a nyomatékállandó, $K_\RM e$ a sebesség-feszültség állandó, $\tau_\RM m$ a kifejtett 
 nyomaték, $i$ a rotor árama, $V_\RM b$ a rotorban indukált feszültség és $\dot\theta$ a rotor szögsebessége.
-Az energiamegmaradás törvénye alapján a két konstans értéke SI mértékegységben kifejezve megegyezik
+
+Az energiamegmaradás törvénye alapján a két konstans értéke SI mértékegységben kifejezve megegyezik:
 \begin{align}
     K_\RM m \stackrel{\text{def}}{=} K_\RM \tau = K_\RM e,
 \end{align}
-így a következőkben $K_\RM m$ paraméterként jelennek meg. A forgórész áramkörére Kirchhoff I. törvénye alapján felírható
+így a következőkben $K_\RM m$ paraméterként jelennek meg. 
+
+A forgórész áramkörére Kirchhoff I. törvénye alapján felírható
 \begin{align}\label{eq:armature_circuit}
     V - Ri - L\DIFF{i}{t} - K_\RM m\dot\theta = 0,
 \end{align}
 ahol $R$ a forgórész tekercsének ellenállása, $L$ a tekercs induktivitása, 
 $K_\RM m$ a motorállandó, $V$ a motor feszültsége, $i$ a motoráram és $\theta$ a szögelfordulás.
+
+
 A forgórészt merev testnek tekintve, annak mozgásegyenlete a dinamika alaptétele és a~\ref{fig:dc_motor_mechanical}. számú 
 szabadtest-ábra alapján a következő alakban írható fel:
 \begin{align}\label{eq:rotor_dynamics}
@@ -44,18 +51,19 @@ szabadtest-ábra alapján a következő alakban írható fel:
 ahol $J$ a forgórész tehetetlensége, $B_\RM m$ a viszkózus csillapítási együttható, 
 $K_\RM m$ a motorállandó, $\theta$ a szögelfordulás, $i$ a motoráram, $\tau_\RM m$ a motor által kifejtett nyomaték 
 és $\tau_\RM e$ a forgórészre ható külső nyomaték. 
+%
+A~\eqref{eq:armature_circuit} és~\eqref{eq:rotor_dynamics} egyenletek egyértelműen leírják a 
+rendszer időtartománybeli viselkedését.
 
 \begin{figure}[t!]
 	\begin{center}
 		%\phantomsection{}
-		\includegraphics[width=10cm]{images/motor_model_mechanical.pdf}
+		\includegraphics[width=9cm]{images/motor_model_mechanical.pdf}
 		\caption{Az egyenáramú motor szabadtest ábrája}
 		\label{fig:dc_motor_mechanical}
 	\end{center}
 \end{figure}
-    
-A~\eqref{eq:armature_circuit} és~\eqref{eq:rotor_dynamics} egyenletek egyértelműen leírják a 
-rendszer időtartománybeli viselkedését.
+
 A további vizsgálathoz kedvezőbb a differenciálegyenleteket állapottér modellként felírni.
 Az állapottér modell általánosan~\citep{kalman1963mathematical}
 \begin{equation}\label{eq:state_space_generic}
@@ -64,10 +72,18 @@ Az állapottér modell általánosan~\citep{kalman1963mathematical}
     \BF y &= \BF C \BF x + \BF D \BF u
 \end{split}
 \end{equation} 
-alakban írható fel. Legyen \(\BF x = [\theta~~\dot \theta~~i]^{\mathsf T}\) az állapotvektor, 
-\(\BF u = [\tau_\RM e~~V]^{\mathsf T}\) a bemeneti vektor és \(y = \theta\) a kimenet.
+alakban írható fel. Legyen 
+\begin{equation}
+	\BF x := [\theta~~\dot \theta~~i]^{\mathsf T}
+\end{equation}
+az állapotvektor, emellett
+\begin{equation}\label{eq:uinput27}
+	\BF u := [\tau_\RM e~~V]^{\mathsf T}
+\end{equation} 
+a bemeneti vektor és \(y := \theta\) a kimenet.
+
 A~\eqref{eq:armature_circuit} és a~\eqref{eq:rotor_dynamics} egyenleteket átrendezve 
-az állapot-átmeneti mátrix \(\BF A\), a bemeneti mátrix \(\BF B\), a kimeneti mátrix \(\BF C\) és a segédmátrix \(\BF D\) 
+az  \(\BF A\) \alert{állapot-átmeneti mátrix}\add{EZT NEM RENDSZERMÁTRIXNAK HÍVJUK?}, a \(\BF B\) bemeneti mátrix, a \(\BF C\) kimeneti mátrix és a \(\BF D\) segédmátrix az 
 \begin{equation}\label{eq:state_space}
     \begin{split}
         \BF A &= 
@@ -89,13 +105,18 @@ az állapot-átmeneti mátrix \(\BF A\), a bemeneti mátrix \(\BF B\), a kimenet
         \BF D &= \BF 0
     \end{split}
 \end{equation}
-alakban származtatható. A későbbiekben ismertetett kísérleti összállítás paraméterei 
-nem teszik lehetővé a forgórész áramának modellezését. Bővebb indoklás az \ref{chap:experiment}. 
-fejezetben talalható. Az induktivitással kiegészített modell mellett mindig megjelenik az 
-induktivitás nélküli modell, ahol szükséges. Az egyszerűsített állapottér modell állapotvektora 
-\(\BF x = [\theta~~\dot \theta]^{\mathsf T}\), bemeneti vektora változatlan, 
-\(\BF A\), \(\BF B\), \(\BF C\) és \(\BF D\) mátrixa pedig 
+alakban származtatható. 
 
+A későbbiekben ismertetett kísérleti összeállítás paraméterei 
+nem teszik lehetővé a forgórész áramának modellezését, ehhez bővebb indoklás az \ref{chap:experiment}.\,fejezetben található. 
+%
+Az induktivitással kiegészített modell mellett mindig megjelenik az 
+induktivitás nélküli modell, ahol szükséges. 
+%
+Az egyszerűsített állapottér modell állapotvektora 
+\(\BF x = [\theta~~\dot \theta]^{\mathsf T}\), az \(\BF u\) bemeneti vektora változatlan (lásd \eqref{eq:uinput27}), 
+\(\BF A\), \(\BF B\), \(\BF C\) és \(\BF D\) mátrixa pedig 
+%
 \begin{equation}\label{eq:state_space_reduced}
     \begin{split}
         \BF A &= 
@@ -112,32 +133,35 @@ induktivitás nélküli modell, ahol szükséges. Az egyszerűsített állapott�
         \begin{bmatrix}
             1 & 0 \\
         \end{bmatrix}\,,\\
-        \BF D &= \BF 0
+        \BF D &= \BF 0\,.
     \end{split}
 \end{equation}
 
-A frekvenciatartománybeli vizsgálatokhoz felírható a rendszer 
-szög-nyomaték és szög-feszültség átviteli függvényeit. Az állapottér modellt felhasználva
+Az állapottér modellt felhasználva a frekvenciatartománybeli vizsgálatokhoz felírhatóak a rendszer 
+szög-nyomaték és szög-feszültség átviteli függvényei, ezek általános alakja az alábbi:
 \begin{align}\label{eq:transfer_generic}
-    \frac{Y(s)}{U(s)} = \BF C{\left(s \BF I - \BF A\right)}^{-1} \BF B
+    \frac{Y(s)}{U(s)} = \BF C{\left(s \BF I - \BF A\right)}^{-1} \BF B\,,
 \end{align}
-általános formában, ahol $\BF I$ az identitás mátrix. Behelyettesítve~\eqref{eq:state_space} 
-paramétereit~\eqref{eq:transfer_generic} alapján a karakterisztikus polinom felírható
+ahol $\BF I$ az identitás mátrix.
+
+Behelyettesítve~\eqref{eq:state_space} 
+paramétereit~\eqref{eq:transfer_generic} alapján a karakterisztikus polinom a
 \begin{align}\label{eq:characteristic_polynomial}
     p(s) = s\left(JLs^2 + \left(B_\RM m L + JR\right)s + K_\RM m^2 + B_\RM m R\right)
 \end{align}
-alakban. Az átviteli függvények pedig ez alapján
+alakban adódik. Az átviteli függvények pedig ez alapján
 \begin{equation}\label{eq:transfer_function}
     \begin{split}
         \frac{\theta(s)}{\tau_\RM e(s)} &= \frac{Ls + R}{p(s)}\,,\\
-        \frac{\theta(s)}{V(s)} &= \frac{K_\RM m}{p(s)}.
+        \frac{\theta(s)}{V(s)} &= \frac{K_\RM m}{p(s)}\,.
     \end{split}
 \end{equation}
-Hasonlóan az indkutivitást elhanyagolva a karakterisztikus polinom
+
+Az induktivitás elhanyagolása esetén az előzőekhez hasonlóan származtatható a a karakterisztikus polinom:
 \begin{align}\label{eq:characteristic_polynomial}
     p(s) = s\left(JRs + K_\RM m^2 + B_\RM m R\right),
 \end{align}
-valamint az átviteli függvények
+valamint az átviteli függvények szintén egyszerűsödnek:
 \begin{equation}\label{eq:transfer_function}
     \begin{split}
         \frac{\theta(s)}{\tau_\RM e(s)} &= \frac{R}{p(s)}\,,\\
@@ -176,46 +200,51 @@ a~\eqref{eq:state_space} egyenlet alapján:
         0 & -\frac{B_\RM m}{J} & \frac{K_\RM m}{J}
     \end{bmatrix},
 \end{align}
-mely redukált lépcsős alakban
+mely redukált lépcsős alakra hozható:
 \begin{align}
     \begin{bmatrix}
         1 & 0 & 0 \\
         0 & 1 & 0 \\
         0 & 0 & 1
-    \end{bmatrix},
+    \end{bmatrix}.
 \end{align}
-ami valóban maximális rangú, tehát a rendszer minden állapota megfigyelhető a szögelfordulás méréséből.
-Az induktivitást elhanyagolva a feltétel 
+Ez valóban maximális rangú, tehát a rendszer minden állapota megfigyelhető a szögelfordulás méréséből.
+
+Az induktivitást elhanyagolva a megfigyelhetőség feltétele
+még egyszerűbb alakkal rendelkezik, a megfigyelhetőségi mátrix ekkor:
 \begin{align}
-    \left[\begin{array}{c}
-        \BF{C} \\ \hline
-        \BF{CA} \\
-    \end{array}\right]
+	\left[\begin{array}{c}
+		\BF{C} \\ \hline
+		\BF{CA} \\
+	\end{array}\right].
 \end{align}
-még egyszerűbb alakkal rendelkezik. Behelyettesítve az egyszerűsített modell paramétereit 
-\eqref{eq:state_space_reduced}
+Behelyettesítve az egyszerűsített modell \eqref{eq:state_space_reduced} paramétereit ez a megfigyelhetőségi mátrix azonnal redukált lépcsős alakban adódik:
 \begin{align}
     \begin{bmatrix}
         1 & 0 \\
         0 & 1 \\
-    \end{bmatrix},
+    \end{bmatrix}.
 \end{align}
-a kapott mátrix azonnal redukált lépcsős alakban adódik. A rendszer minden állapota megfigyelhető 
-ebben az esetben is. 
+Ezáltal a rendszer minden állapota megfigyelhető ebben az esetben is. 
+
+
+\clearpage
+
 
 \section{Irányíthatóság}\label{chap:controllability}
 A szabályozó akkor tudja követni a számára előírt impedanciamodellt, 
 ha megfelelő bemeneti feszültség alkalmazásával eljuttatható az előírt állapotba~\citep{kalman1963controllability}.
-A rendszer pólusai áthelyezhetők kell legyenek az impedanciamodell pólusaiba. Ehhez 
-a rendszer teljesen állapot irányítható kell legyen.
+
+A rendszer pólusai áthelyezhetők kell legyenek az impedanciamodell pólusaiba, 
+ehhez pedig a rendszer teljesen állapot irányítható kell legyen.
 A~\eqref{eq:state_space_generic} egyenlet állapottér modellje alapján a teljes állapot irányíthatóság feltétele, hogy a
 \begin{align}\label{eq:controllability_generic}
     \left[\begin{array}{c|c|c}
         \BF{B} & \BF{AB} & \BF A^2 \BF B
     \end{array}\right]
 \end{align}
-mátrix legyen maximális rangú. 
-Felhasználva a~\eqref{eq:state_space} kifejezés paramétereit a~\eqref{eq:observability_generic} feltételben szereplő mátrix
+irányíthatósági mátrix maximális rangú legyen. 
+Felhasználva a~\eqref{eq:state_space} kifejezés paramétereit a~\alert{\eqref{eq:observability_generic}} \add{EZ ITT TUTI NEM JÓ EGYENLET HIVATKOZÁS} feltételben szereplő mátrix
 \begin{align}
     \begin{bmatrix}
         0 & 0 & \frac{K_\RM m}{JL} \\
@@ -223,7 +252,7 @@ Felhasználva a~\eqref{eq:state_space} kifejezés paramétereit a~\eqref{eq:obse
         \frac{1}{L} & -\frac{R}{L^2} & -\frac{K^2_\RM m L + JR^2}{J L^3} \\
     \end{bmatrix},
 \end{align}
-alakba írható át. Továbbá ez a mátrix redukált lépcsős alakban
+alakba írható át \add{HOGYAN JÖHET KI EZ 3x3-ASRA, ENNEK NEM 3x6-NAK KÉNE LENNIE?}. Továbbá ez a mátrix redukált lépcsős alakban
 \begin{align}
     \begin{bmatrix}
         1 & 0 & 0 \\
@@ -232,18 +261,21 @@ alakba írható át. Továbbá ez a mátrix redukált lépcsős alakban
     \end{bmatrix},
 \end{align}
 mely mátrix rangja megegyezik sorainak számával, így az teljes állapot irányíthatóság feltétele teljesül.
+
 Az induktivitást elhanyagolva az irányíthatósági feltételben megjelenő mátrix 
 \begin{align}
     \left[\begin{array}{c|c}
         \BF{B} & \BF{AB}
     \end{array}\right].
 \end{align}
-Az egyszerűsített modell paramétereit behelyettesítve
+Az egyszerűsített modell paramétereit behelyettesítve 
+a
 \begin{align}
     \begin{bmatrix}
         1 & 0 \\
         0 & 1 \\
     \end{bmatrix}
 \end{align}
-a kapott mátrix láthatóan megfelel a feltételnek.
+irányíthatósági mátrixot kapjuk.
+Ez láthatóan megfelel a feltételnek, tehát az induktivitást elhanyagoló modell is teljes állapot irányítható.
 

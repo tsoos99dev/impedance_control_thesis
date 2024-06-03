@@ -23,6 +23,11 @@
 %############################################################################
 %         REVIEW
 %############################################################################
+\usepackage[usenames,dvipsnames,rgb]{xcolor}
+\usepackage{soul}
+\usepackage{todonotes}
+\definecolor{bme_red}{RGB}{139,37,50}
+
 \newif\ifistoreview
 \istoreviewtrue
 \newcommand{\setreviewson}{\istoreviewtrue}
@@ -207,9 +212,6 @@ uniquelist=true,
 \addbibresource{bibliography.bib}
 
 % HYPERREF
-\usepackage[usenames,dvipsnames,rgb]{xcolor}
-\definecolor{bme_red}{RGB}{139,37,50}
-
 \usepackage[colorlinks= true,
 			linkcolor = bme_red,
             urlcolor  = bme_red,

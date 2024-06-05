@@ -11,6 +11,8 @@ docs/*.lot
 docs/*.out
 docs/*.run.xml
 docs/*.synctex.gz
+docs/impedance_control.pdf
+
 docs/*.toc
 
 docs/_corrections

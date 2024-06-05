@@ -2,9 +2,8 @@
 
 A modell és a motor paramétereken kívül a rendszer különböző elemeiben megjelenő időkésés 
 is hatással van a stabilitásra. Elegendően nagy időkésés mellett nem csak a mozgásra előírt 
-feltételek sérülnek, hanem teljesen instabillá válhat a rendszer. Az időkésés hatását analitikusan egyszerűbb 
-rendszereknél például a Lambert-féle W-függvény segítségével~\citep{Yi2012, MatrixLambert2007}, 
-vagy D-szeparációval lehet vizsgálni. A Lambert-féle W-függvény bonyolultabb rendszereknél nehezen 
+feltételek sérülnek, hanem teljesen instabillá válhat a rendszer. Az időkésés hatását analitikusan például a Lambert-féle \mbox{W-függvény} segítségével~\citep{Yi2012, MatrixLambert2007}, 
+vagy \mbox{D-szeparációval} lehet vizsgálni, azonban a Lambert-féle \mbox{W-függvény} bonyolultabb rendszereknél nehezen 
 vagy egyaltalán nem alkalmazható~\citep{CepedaGomez2015}, így a következő fejezetben a D-szeparáció módszere 
 kerül alkalmazásra.
 
@@ -12,7 +11,8 @@ kerül alkalmazásra.
 
 Időkésés megjelenhet a rendszer különböző pontjain. A motor kimenetének mérése, az adatáramlás 
 a szabályozó részegységei között és a szabályozó jel kiszámítása mind időt vesznek igénybe. 
-Ezeknek a hatásoknak az összeségét egy konstans átlag időkésés reprezentálja. A továbbiakban ez a 
+Ezeknek a hatásoknak az összességét egy konstans átlag időkésés reprezentálja,
+a továbbiakban ez a 
 paraméter legyen \(\tau_\RM d\).
 \begin{figure}[ht]
     \begin{center}
@@ -20,7 +20,7 @@ paraméter legyen \(\tau_\RM d\).
     \caption{Reprezentatív ábra az időkésés hatásáról folytonos időben}\label{fig:time_delay_example}
     \end{center}
 \end{figure}
-A szabályozó jel \(\tau_\RM d\) időegységgel eltolódva jelenik meg a motor bemenetén, ahogy a
+Tehát a szabályozó jel \(\tau_\RM d\) időegységgel eltolódva jelenik meg a motor bemenetén, ahogy a
 ~\ref{fig:time_delay_example}. ábra szemlélteti.
 
 A stabilitásvizsgálat az időkéséssel kiegészített szögelfordulás-referencia jel átviteli függvényből 
@@ -55,7 +55,7 @@ A kimeneti feszültség egyenletében található becsült állapotvektor kifeje
         V &= K_\RM r \theta_\RM r - K_\RM c \tau_\RM e - (K_a + \BF K_\RM b \BF K_\RM e) y - \BF K_\RM b \tilde{\BF \eta}\,.
     \end{split}
 \end{equation}
-Behelyettesítve a megfigyelő dinamikai egyenletébe:
+Behelyettesítve a megfigyelő dinamikai egyenletébe az adódik, hogy
 \begin{align}\label{eq:observer_transfer_transformed}
     \begin{split}
         \dot{\tilde{\BF \eta}} &= \hat{\BF A} \tilde{\BF \eta} + 
@@ -81,7 +81,7 @@ A szabályozó dinamikája ez alapján kifejezhető egy új állapottér modell 
         \tilde{\BF D}_\RM \tau \tau_\RM e\,,
     \end{split}
 \end{align}
-ahol a mátrix paraméterek~\eqref{eq:observer_transfer_transformed} szerint:
+ahol a mátrix paraméterek a~\eqref{eq:observer_transfer_transformed}~egyenlet szerint az alábbiak:
 \begin{align}
     \begin{split}
         \tilde{\BF A}\ &= \hat{\BF A} - \hat{\BF F}_\RM V \BF K_\RM b\,,\\
@@ -106,7 +106,7 @@ függvénnyel írhatók le:
 \end{align}
 ahol a \(C^\RM n_\RM m\) és \(M^\RM n_\RM m\) a szabályozó és a motor átviteli függvényei adott 
 bemenetekre és kimenetekre. A felső index jelöli a kimenetet, az alsó index pedig a bemenetet.
-Az átviteli egyenlet zárt körben:
+Az átviteli egyenlet zárt körben az
 \begin{align}
     \begin{split}
         y = \frac{1}{1 - M^\RM y_\RM V C^\RM V_\RM y e^{-s\tau_\RM d}}
@@ -132,11 +132,11 @@ feltételek érvényesek. Az átviteli függvény pólusait a következő egyenl
     \end{split}
 \end{align}
 D-szeparációt alkalmazva az egyenlet valós és 
-képzetes részei:
+képzetes részei
 \begin{align}\label{eq:delay_complex_separation}
     \begin{split}
-        a_4\omega^4-(a_{21} + a_{22}\cos{\omega\tau_\RM d})\omega^2+a_{12}\omega\sin{\omega\tau_\RM d} + a_0\cos{\omega\tau_\RM d} &= 0 \\
-        \omega^5 -a_3\omega^3 + a_{22}\omega^2\sin{\omega\tau_\RM d} + (a_{11} + a_{12}\cos{\omega\tau_\RM d})\omega - a_0\sin{\omega\tau_\RM d}  &= 0 \,,
+        a_4\omega^4-(a_{21} + a_{22}\cos{\omega\tau_\RM d})\omega^2+a_{12}\omega\sin{\omega\tau_\RM d} + a_0\cos{\omega\tau_\RM d} &= 0\,, \\
+        \omega^5 -a_3\omega^3 + a_{22}\omega^2\sin{\omega\tau_\RM d} + (a_{11} + a_{12}\cos{\omega\tau_\RM d})\omega - a_0\sin{\omega\tau_\RM d}  &= 0\,,
     \end{split}
 \end{align}
 melyek \(s=jw\) behelyettesítés után adódnak. Az új együtthatók~\eqref{eq:delay_characteristic} alapján:
@@ -156,8 +156,8 @@ A~\eqref{eq:delay_complex_separation}-ben szereplő egyenletrendszert megoldva \
 A független paraméter \(\omega\) a stabilitás határán fellépő csillapítatlan rezgés frekvenciájával
 arányos. A görbe minden pontjához egy tisztán képzetes póluspár vagy nulla kapcsolódik. 
 A nulla megoldások a \(\frac{K_\RM e}{M_\RM e} = 0\) egyenesen helyezkednek el. 
-A kapott görbét a~\ref{tab:delay_stab_params}. táblázat paramétereit behelyettesítve 
-a~\ref{fig:time_delay_stab_map}. ábra mutatja. A kontúrvonalakon szereplő értékek \(\tau_\RM d\)
+A kapott görbét a~\ref{tab:delay_stab_params}.~táblázat paramétereit behelyettesítve 
+a~\ref{fig:time_delay_stab_map}.~ábra mutatja. A kontúrvonalakon szereplő értékek \(\tau_\RM d\)
 időkésés különböző értékeit jelölik szekundumban kifejezve.
 
 \begin{table}[ht]
@@ -189,7 +189,7 @@ Időkésés nélkül a görbe pontjai a \(\frac{B_\RM e}{M_\RM e} = 0\) egyenese
 A behatárolt stabilitástartomány éppen megegyezik a Routh--Hurwitz kritérium által 
 kapott tartománnyal, tehát:
 \begin{equation}
-    M_\RM e > 0,~~B_\RM e > 0,~~K_\RM e > 0.
+    M_\RM e > 0,\qquad B_\RM e > 0,\qquad K_\RM e > 0.
 \end{equation}
 Az időkésés növekedésével egyre szűkül a stabil tartomány, egy kritikus érték alatt azonban
 csak \(\frac{K_\RM e}{M_\RM e}\) kifejezésre adódik maximum, \(\frac{B_\RM e}{M_\RM e}\)
@@ -210,10 +210,10 @@ folytonos időben végzett stabilitásvizsgálat eredménye tovább pontosíthat
     \end{center}
 \end{figure}
 
-A mért szögelfordulás és a diszkrét idejű szabályozó jel kapcsolatát szemlélteti a~\ref{fig:time_delay_example_discrete}. ábra.
-Két mintavételezési pont között a szabályozó jel változatlan marad (zero-order hold). A mért szögelfordulás érték 
+A mért szögelfordulás és a diszkrét idejű szabályozó jel kapcsolatát szemlélteti a~\ref{fig:time_delay_example_discrete}.~ábra.
+Két mintavételezési pont között a szabályozó jel változatlan marad, ez az úgynevezett nulladrendű tartó vagy \emph{zero-order hold}. A mért szögelfordulás érték 
 feldolgozása után az új szabályozó jel mindig egy mintavételezési periódussal később jelenik meg a motor bemenetén.
-A továbbiakban feltételezett, hogy a jelfeldolgozáshoz szükséges időn kívül minden egyéb késés elhanyagolható, 
+A továbbiakban feltételezzük, hogy a jelfeldolgozáshoz szükséges időn kívül minden egyéb késés elhanyagolható, 
 így a mintavételezési periódus megegyezik a korábban bevezetett \(\tau_\RM d\) időkéséssel. Legyen \(C(t-\tau(t))\) 
 a szabályozó jel időfüggvénye. Ebben az alakban a mintavételezési pontok között akkor marad állandó a kimenet, ha 
 az időkésés maga (\(\tau(t)\)) egy periodikus fűrész jelet követ, ahogy a~\ref{fig:time_delay_example_zoh}. ábra is mutatja.
@@ -226,7 +226,7 @@ az időkésés maga (\(\tau(t)\)) egy periodikus fűrész jelet követ, ahogy a~
 
 A diszkrét idejű stabilitásvizsgálathoz először diszkretizálni kell a szabályozó folytonos idejű állapottér modelljét.
 Ehhez legyen a kiindulási alap a~\eqref{eq:controller_state_space} egyenletek által definiált modell.
-Beszorozva mindkét oldalt \(e^{-\tilde {\BF A} t}\)-vel:
+Beszorozva mindkét oldalt \(e^{-\tilde {\BF A} t}\)-vel azt kapjuk, hogy
 \begin{align}
     \begin{split}
         e^{-\tilde {\BF A} t}\dot{\tilde{\BF \eta}}(t) &= e^{-\tilde {\BF A} t}\tilde {\BF A} \tilde{\BF \eta}(t) +
@@ -235,10 +235,10 @@ Beszorozva mindkét oldalt \(e^{-\tilde {\BF A} t}\)-vel:
         \tilde{\BF B}_\RM \tau \tau_\RM e(t)\right] \\
         \frac{\RM d}{\RM d t}\left(e^{-\tilde {\BF A} t}\tilde{\BF \eta}(t)\right) &= e^{-\tilde {\BF A} t}\left[\tilde{\BF B}_\RM y y(t) + 
         \tilde{\BF B}_\RM r \theta_\RM r(t) +
-        \tilde{\BF B}_\RM \tau \tau_\RM e(t)\right]\,, 
+        \tilde{\BF B}_\RM \tau \tau_\RM e(t)\right]\,.
     \end{split}        
 \end{align}
-a kapott egyenletet integrálva:
+Ezt az egyenletet integrálva arra jutunk, hogy
 \begin{align}\label{eq:controller_state_integral}
     \begin{split}
         e^{-\tilde {\BF A} t}\tilde{\BF \eta}(t) - e^0 \tilde{\BF \eta}(0) &= \int_{0}^{t} e^{-\tilde {\BF A} t'}\left[\tilde{\BF B}_\RM y y(t') + 
@@ -250,9 +250,8 @@ a kapott egyenletet integrálva:
     \end{split}        
 \end{align}
 A mintavételezési periódus alatt a szabályozó összes bemenete konstans marad, így a bemenetek az 
-integrálon kívülre helyezhetők. Legyen \(\tilde{\BF \eta}[k] \stackrel{\text{def}}{=} \tilde{\BF \eta}(k\tau_\RM d)\) a 
-a szabályázó belső állapota a \(k\)-adik diszkrét időlépésnél. Ezzel a~\eqref{eq:controller_state_integral}. 
-egyenlet a \(k\)-adik és a (\(k+1\))-edik lépéseknél:
+integrálon kívülre helyezhetők. Legyen \(\tilde{\BF \eta}[k] \stackrel{\text{def}}{=} \tilde{\BF \eta}(k\tau_\RM d)\) 
+a szabályázó belső állapota a \(k\)-adik diszkrét időlépésnél. Ezzel a~\eqref{eq:controller_state_integral}~egyenlet a \(k\)-adik és a (\(k+1\))-edik lépéseknél az alábbi:
 \begin{align}
     \begin{split}
         \tilde{\BF \eta}[k] &= e^{\tilde {\BF A} k\tau_\RM d}\tilde{\BF \eta}(0) + \int_{0}^{k\tau_\RM d} e^{\tilde {\BF A} (k\tau_\RM d-t')}\left[\tilde{\BF B}_\RM y y(t') + 
@@ -304,12 +303,12 @@ Legyenek a diszkretizált motormodell új paraméterei:
 
 A stabilitásvizsgálathoz a bemenet zérus. A következőkben a zárt kör teljes dinamikájának levezetése 
 következik zérus bemenettel. A~\eqref{eq:discrete_motor_state} állapotegyenletbe behelyettesítve a 
-szabályozó késleltetett kimenetét:
+szabályozó késleltetett kimenetét azt kapjuk, hogy
 \begin{align}
     \begin{split}
     \BF x[k+1] &= \BF A_\RM d x[k] + 
     \BF B_\RM d \left(\tilde{\BF C}_\RM d \tilde{\BF \eta}[k-1] + 
-    \tilde{\BF D}_\RM {d,y} y[k-1]\right)\,,
+    \tilde{\BF D}_\RM {d,y} y[k-1]\right)\,.
     \end{split}        
 \end{align}
 Felhasználva \(\tilde{\BF \eta}\) és a paraméterek definícióját:
@@ -376,9 +375,10 @@ teljes rendszer belső állapotának dinamikája:
     \end{split}        
 \end{align}
 A stabilitás feltétele, hogy a kapott diszkrét állapot átmeneti mátrix minden sajátértéke abszolút 
-értékben egynél szigorúan kisebb legyen. A~\ref{fig:time_delay_stab_map_discrete}. ábra a~\ref{tab:delay_stab_params_discrete}. táblázat paraméterei alapján numerikusan 
+értékben egynél szigorúan kisebb legyen. A~\ref{fig:time_delay_stab_map_discrete}.~ábra a~\ref{tab:delay_stab_params_discrete}.~táblázat paraméterei alapján numerikusan 
 meghatározott stabilitástérképet ábrázolja \(K_\RM e\) és \(B_\RM e\) impedancia paraméterek függvényében. 
-\begin{table}[H]
+
+\begin{table}[t]
     \small\centering
     \caption{A diszkrét idejű stabilitásvizsgálatnál alkalmazott paraméterek}\label{tab:delay_stab_params_discrete}
     \tabcolsep=1pt
@@ -396,15 +396,11 @@ meghatározott stabilitástérképet ábrázolja \(K_\RM e\) és \(B_\RM e\) imp
         \bottomrule
     \end{tabular}
 \end{table}
+
+
 A sajátértékek egy 150x150 méretű, egyenletesen elosztott rács pontjain lettek meghatározva. Ezután 
 az előbb említett stabilitási feltétel szerint különítettem el a stabil pontokat. Majd a 
 stabil pontok Delaunay-háromszögelése~\citep{Okabe00} és annak konvex burka került kirajzolásra.
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=\textwidth]{images/time_delay_stab_map_discrete.png}
-    \caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map_discrete}
-    \end{center}
-\end{figure}
 A kontúrok a különböző becsült beállási időket jelölnek, melyek a legnagyobb abszolút értékű sajátérték 
 alapján lettek meghatározva 2\%-os hibasávot alapul véve:
 \begin{align}
@@ -420,9 +416,15 @@ időkéséssel még mindig végtelen nagy a stabil régió ugyanezen paramétere
 előírt beállási időt összehasonlítva a becsült beállási idővel ábrázolja a~\ref{fig:time_delay_stab_map_discrete_diff}.
 ábra.
 
-\begin{figure}[H]
+\begin{figure}[p]
+	\begin{center}
+		\includegraphics[width=0.85\textwidth]{images/time_delay_stab_map_discrete.png}
+		\caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map_discrete}
+	\end{center}
+\end{figure}
+\begin{figure}[p]
     \begin{center}
-    \includegraphics[width=\textwidth]{images/time_delay_stab_map_discrete_diff.png}
+    \includegraphics[width=0.85\textwidth]{images/time_delay_stab_map_discrete_diff.png}
     \caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map_discrete_diff}
     \end{center}
 \end{figure}
@@ -450,12 +452,14 @@ A stabil tartomány jobb széle \(B_\RM e\) értékével lett paraméterezve. Ez
 legnagyobb abszolút értékű frekvenciája és \(B_\RM e\) közötti kapcsolat látható 
 a~\ref{fig:time_delay_stab_map_discrete_fourier}. ábra jobb oldali grafikonján. A vízszintes 
 tengelyre a csillapítatlan rezgési frenvencia és a mintavételezési frekvencia hányadosa került.
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=\textwidth]{images/time_delay_stab_map_discrete_fourier.png}
-    \caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map_discrete_fourier}
-    \end{center}
-\end{figure}
+
 A stabil tartomány bal alsó sarkában nullától indulva egyre nő a csillapítatlan 
 rezgési frekvencia, míg a tartomány bal felső sarkában el nem éri a maximumát, mely ebben az 
-esetben \(\approx 1.2~\RM{Hz}\)
+esetben \(\approx 1.2\,\RM{Hz}\),
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{images/time_delay_stab_map_discrete_fourier.png}
+		\caption{Diszkrét idejű stabilitástérkép}\label{fig:time_delay_stab_map_discrete_fourier}
+	\end{center}
+\end{figure}

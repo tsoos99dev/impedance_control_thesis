@@ -1,7 +1,8 @@
 \chapter{Fizikai modell}\label{chap:physical_system}
 
-Ebben a fejezetben a robotujj \alert{egyetlen} \add{EZT HOGY ÉRTED? 1DOF MODELLT CSINÁLUNK AZ RENDBEN, DE A ROBOTUJJBAN 5 MOTOR VAN} motorjának fizikai modellje kerül bevezetésre. A kapott dinamikai leírás
-lehetővé teszi az időkéséssel kiegészített stabilitásvizsgálatot. 
+Ebben a fejezetben a robotujj egyszerűsített, egy szabadságfokú fizikai modellje kerül 
+bevezetésre. A kapott dinamikai leírás lehetővé teszi az időkéséssel kiegészített 
+stabilitásvizsgálatot. 
 
 \section{Egyenáramú motor dinamikája}
 
@@ -83,7 +84,7 @@ az állapotvektor, emellett
 a bemeneti vektor és \(y := \theta\) a kimenet.
 
 A~\eqref{eq:armature_circuit} és a~\eqref{eq:rotor_dynamics} egyenleteket átrendezve 
-az  \(\BF A\) \alert{állapot-átmeneti mátrix}\add{EZT NEM RENDSZERMÁTRIXNAK HÍVJUK?}, a \(\BF B\) bemeneti mátrix, a \(\BF C\) kimeneti mátrix és a \(\BF D\) segédmátrix az 
+az  \(\BF A\) rendszermátrix, a \(\BF B\) irányító mátrix, a \(\BF C\) megfigyelő mátrix és a \(\BF D\) előrecsatoló mátrix
 \begin{equation}\label{eq:state_space}
     \begin{split}
         \BF A &= 
@@ -240,11 +241,12 @@ ehhez pedig a rendszer teljesen állapot irányítható kell legyen.
 A~\eqref{eq:state_space_generic} egyenlet állapottér modellje alapján a teljes állapot irányíthatóság feltétele, hogy a
 \begin{align}\label{eq:controllability_generic}
     \left[\begin{array}{c|c|c}
-        \BF{B} & \BF{AB} & \BF A^2 \BF B
+        \BF{B}_\RM V & \BF{A} \BF{B}_\RM V & \BF A^2 \BF{B}_\RM V
     \end{array}\right]
 \end{align}
-irányíthatósági mátrix maximális rangú legyen. 
-Felhasználva a~\eqref{eq:state_space} kifejezés paramétereit a~\alert{\eqref{eq:observability_generic}} \add{EZ ITT TUTI NEM JÓ EGYENLET HIVATKOZÁS} feltételben szereplő mátrix
+irányíthatósági mátrix maximális rangú legyen. \(\BF{B}_\RM V\) az irányító mátrix azon része, mely a 
+feszültségjel állapotra gyakorolt hatását tartalmazza. 
+Felhasználva a~\eqref{eq:state_space} kifejezés paramétereit a~\eqref{eq:controllability_generic} feltételben szereplő mátrix
 \begin{align}
     \begin{bmatrix}
         0 & 0 & \frac{K_\RM m}{JL} \\
@@ -252,7 +254,7 @@ Felhasználva a~\eqref{eq:state_space} kifejezés paramétereit a~\alert{\eqref{
         \frac{1}{L} & -\frac{R}{L^2} & -\frac{K^2_\RM m L + JR^2}{J L^3} \\
     \end{bmatrix},
 \end{align}
-alakba írható át \add{HOGYAN JÖHET KI EZ 3x3-ASRA, ENNEK NEM 3x6-NAK KÉNE LENNIE?}. Továbbá ez a mátrix redukált lépcsős alakban
+alakba írható át. Továbbá ez a mátrix redukált lépcsős alakban
 \begin{align}
     \begin{bmatrix}
         1 & 0 & 0 \\

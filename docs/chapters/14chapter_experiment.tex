@@ -54,9 +54,11 @@ Minden időzítéssel kapcsolatos feladatot a beépített perifériák látnak e
 A szabályozó ciklusa az adott méréshez előre meghatározott ciklusidő/időkésés figyelembe 
 vételével periodikusan fut. 
 Az implementáció a \ref{chap:time_delay_stability}.~fejezetben bemutatott digitalizált szabályozót követi. 
-\alert{Az egyetlen eltérés, hogy a tekercsáram nem modellezhető az elérhető időkésések mellett mert a stabil tartomány túl vékony területre zsugorodik, a kísérletekhez ezért a tekercsáram nem lett külön állapotként modellezve. 
- EZT A MONDATOT/LOGIKÁT ÁT KÉNE GONDOLNI: AZ HOGY NEM MODELLEZZÜK EGY DOLOG DE A VALÓSÁGON MIT SEM VÁLTOZTAT MIT MODELLEZÜNK ÉS MIT NEM, ATTÓL MÉG OTT VAN A TEKERCSÁRAM A VALÓSÁGBAN ÉS EL KÉNE RONTANIA A KÍSÉRLETET NEM?}
-Mivel a motorvezérlőnek elküldött parancs meghatározásához szükséges idő lényegesen rövidebb a méréseknél használt ciklusidőknél, egy külön időzítő felel a parancsok megfelelő időzítéséért (késleltetéséért). 
+Az egyetlen eltérés, hogy a tekercsáram és a tekercs induktivitásának kölcsönhatása nem modellezhető az elérhető időkésések mellett.  
+A rendszer nagyon kicsi elektromos időállandójának köszönhetően a legkisebb időkésésnél is a stabil 
+tartomány a mérések szempontjából használhatatlanul kicsiny területre zsugorodik. Így a végső modellben nem szerepel induktivitás. 
+Mivel a motorvezérlőnek elküldött parancs meghatározásához szükséges idő lényegesen rövidebb a méréseknél használt ciklusidőknél, 
+egy külön időzítő felel a parancsok megfelelő időzítéséért (késleltetéséért). 
 A soros kommunikációhoz szükséges műveleteket soros interfész modulok végzik el. 
 Minden interfész modul két körkörös pufferrel rendelkezik. 
 Az egyik a kimenő, a másik a válasz üzeneteket tárolja. A pufferek és a UART perifériák közötti adatátvitelt a beépített DMA vezérlők valósítják meg. 
@@ -149,7 +151,8 @@ szabadon leng egy síkban, a következő összefüggés írja le
 \begin{equation}
     t_l = 2\pi\sqrt{\frac{I_\RM P}{mgd}},
 \end{equation}
-ahol \(I_\RM{P}\) a test tehetetlenségi nyomatéka \alert{MELYIK PONTON ÁTMENŐ TENGELYRE?}, \(m\)~a tömege, \(g\)~a gravitációs állandó, 
+ahol \(I_\RM{P}\) a test tehetetlenségi nyomatéka a felfüggesztési ponthoz és a lengési síkhoz viszonyítva, 
+\(m\)~a tömege, \(g\)~a gravitációs állandó, 
 és \(d\)~a felfüggesztési pont és a test tömegözéppontja közötti távolság. 
 Kifejezve a tehetetlenségi nyomatékot 
 \begin{equation}

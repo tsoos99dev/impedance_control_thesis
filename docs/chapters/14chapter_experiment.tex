@@ -15,8 +15,8 @@ kiküszöbölésére a mérésekhez a motort álló helyzetben kellett rögzíte
 műanyag keret, ami a hajtóműhöz csatlakozik. A teljes összeállítás az \ref{fig:setup_experiment}.~ábrán 
 látható. 
 
-A motorvezérlő egy SOLO UNO V2 32A típúsú univerzális vezérlő egység, mely egyenáramú kefés, kefe 
-nélküli valamint PMSM és váltakozó áramú indukciós motorok vezérlésére is alkalmas 800W-ig. 
+A motorvezérlő egy SOLO UNO V2 32A típusú univerzális vezérlő egység, mely egyenáramú kefés, kefe 
+nélküli, valamint PMSM és váltakozó áramú indukciós motorok vezérlésére is alkalmas 800W-ig. 
 A kimenete változtatható frekvenciájú PWM jel. A kimeneti PWM vezérlő jel frekvenciája elméletben 80\,kHz-ig 
 növelhető. A valóságban 75\,kHz-es beállítás felett automatikusan visszaugrott a frekvencia 20\,kHz-re, így 
 a kísérletek során 75\,kHz volt a beállított frekvencia. CANopen és egy egyedi UART 
@@ -35,7 +35,7 @@ A szabályozó futtatását egy STMicroelectronics NUCLEO-F439ZI fejlesztői pan
 \begin{itemize}
     \item Az inkrementális enkóder jelének olvasása a beépített számláló és időzítő periférián keresztül.
     \item A szabályozó belső állapotának frissítése pontosan meghatározott időközönként.
-    \item A szabályozó kimeneti referencia jelének továbbítása a motorvezérlőnek az előírt időkésés figyelembe vételével.
+    \item A szabályozó kimeneti referencia jelének továbbítása a motorvezérlőnek az előírt időkésés figyelembevételével.
     \item A mérés állapotának felvétele és továbbítása a számítógép felé.
 \end{itemize}
 
@@ -62,7 +62,7 @@ egy külön időzítő felel a parancsok megfelelő időzítéséért (késlelte
 A soros kommunikációhoz szükséges műveleteket soros interfész modulok végzik el. 
 Minden interfész modul két körkörös pufferrel rendelkezik. 
 Az egyik a kimenő, a másik a válasz üzeneteket tárolja. A pufferek és a UART perifériák közötti adatátvitelt a beépített DMA vezérlők valósítják meg. 
-A mérés konfigurálása, nyomonkövetése, és az eredmények visszaküldése a számítógépre egy egyszerű protokoll segítségével történik. 
+A mérés konfigurálása, nyomon követése és az eredmények visszaküldése a számítógépre egy egyszerű protokoll segítségével történik. 
 A protokoll felépítését a \ref{fig:measurement_protocol}.~ábra mutatja. 
 A START, CMD és STOP egy byte hosszúak. A DATA mező fix hosszúságú, legtöbb esetben 4 byte, de a CMD mezőtől függ.
 A CMD mező kódolja a parancs típusát. 
@@ -153,7 +153,7 @@ szabadon leng egy síkban, a következő összefüggés írja le
 \end{equation}
 ahol \(I_\RM{P}\) a test tehetetlenségi nyomatéka a felfüggesztési ponthoz és a lengési síkhoz viszonyítva, 
 \(m\)~a tömege, \(g\)~a gravitációs állandó, 
-és \(d\)~a felfüggesztési pont és a test tömegözéppontja közötti távolság. 
+és \(d\)~a felfüggesztési pont és a test tömegközéppontja közötti távolság. 
 Kifejezve a tehetetlenségi nyomatékot 
 \begin{equation}
     I_\RM{P} = \frac{mgd}{4\pi^2}t^2_l,
@@ -195,7 +195,7 @@ időt mutatja.
 \end{table}
 
 A későbbi mérésekhez a formulában szereplő felfüggesztéshez viszonyított tehetetlenségi 
-nyomatékkal ellenben az  \(I_\RM{S}\)  tömegközéppontra számítotttehetetlenségi nyomatékra van szükség, mely a Steiner-tétel alapján zámítható:
+nyomatékkal ellenben az  \(I_\RM{S}\)  tömegközéppontra számítotttehetetlenségi nyomatékra van szükség, mely a Steiner-tétel alapján számítható:
 \begin{equation}
     I_\RM{S} = I_\RM{P} - md^2\,.
 \end{equation}
@@ -220,7 +220,7 @@ A felfüggesztés és a propeller tömegközéppontja közötti távolság ugyan
 a felfüggesztési pont számomra nem egy jól definiált pont az eszköz precizitását figyelembe véve. Emiatt 
 nagyobb a bizonytalanság ebben a paraméterben.
 
-A gravitációs állandó étéke minden esetben \(g = 9.80 \frac{m}{s^2}\). További feltételezés, hogy a 
+A gravitációs állandó értéke minden esetben \(g = 9.80 \frac{m}{s^2}\). További feltételezés, hogy a 
 hibaszámítások során bizonytalansága elhanyagolhatónak tekinthető. Ezek alapján a propeller 
 tehetetlenségi nyomatéka
 \begin{equation}
@@ -254,13 +254,13 @@ egyenes lineáris regresszióval lett meghatározva. Ez az egyenes a mérési po
 \begin{figure}[b!]
     \begin{center}
     \includegraphics[width=14cm]{images/driver_linearity.png}
-    \caption{Motor driver lineáritás vizsgálata}\label{fig:driver_linearity}
+    \caption{Motor driver linearitás vizsgálata}\label{fig:driver_linearity}
     \end{center}
 \end{figure}
 
 A hibasávok kis méretük miatt nem lettek ábrázolva. A motorvezérlő kimenetének linearitása 
 jól látható.
-A maximális feszültség ez alapján kcisit alacsonyabb a motorvezérlőnek bementként adott 
+A maximális feszültség ez alapján kicsit alacsonyabb a motorvezérlőnek bementként adott 
 nominális 12V-os feszültségnél. Értéke \(V_\RM{max} = 11.835 \pm 0.005~\RM V\).
 
 Az adatlapokban szereplő értékekkel kiegészítve a \eqref{eq:armature_circuit} és \eqref{eq:rotor_dynamics}
@@ -352,7 +352,7 @@ A motorparaméterek meghatározása után lehetőség nyílt a valós rendszer �
 Az egységugrásra adott válasz összehasonlítását a szimulált digitális szabályozóval és a beállított impedancia modellel 
 az \ref{fig:step_response_experiment0005}.~ábra mutatja. Az időkésés \(\tau = 5~\RM{ms}\). Az impedancia modell paraméterei 
 \(M_\RM e = 7.35 \times 10^{-6}~\RM{kg \cdot m^2}\), \(B_\RM e = 2.43 \times 10^{-4}~\RM{kg \cdot m^2 \cdot s^{-1}}\),
-\(K_\RM e = 4.20 \times 10^{-3}~\RM{kg \cdot m^2 \cdot s^{-2}}\). Ezek egy enyhén alulcsillapított rendszer paraméterei, 
+\(K_\RM e = 4.20 \times 10^{-3}~\RM{kg \cdot m^2 \cdot s^{-2}}\). Ezek egy enyhén alul csillapított rendszer paraméterei, 
 200 ms beállási idővel és ~0.7-es relatív csillapítási hányadossal. Jól látszik, hogy a végérték közelében 
 a rendszer eltér a modellezett digitális szabályozótól, de kezdeti viselkedése és a végérték tekintetében is megfelel.
 
@@ -370,14 +370,14 @@ A teljes stabilitástérkép felderítéséhez a beállási idő vizsgálata tű
 A \ref{fig:time_delay_stab_map_discrete_diff}.~ábrához hasonlóan az új motorparaméterekkel meghatározott stabilitástérkép egy része látható az \ref{fig:stab_map_001}.~ábrán.
 Azonban itt a vízszintes tengelyen az elvárt impedancia modell sajátkörfrekvenciája \(\omega_\RM 0\), a függőleges 
 tengelyen pedig az elvárt tehetetlenségi nyomatékhoz viszonyított viszkózus csillapítási állandó \(b_\RM e\) található.
-Fontos eltérés még, hogy megjelennek a elvárt beállási idők kontúrjai, melyek jobbról közel vízszintesen indulnak, 
+Fontos eltérés még, hogy megjelennek az elvárt beállási idők kontúrjai, melyek jobbról közel vízszintesen indulnak, 
 majd a 45°-os átló előtt nem sokkal a függőlegestől enyhén jobbra haladnak tovább, a térkép felső széle felé. 
 Az origóból induló egyenesek az állandó relatív csillapítási hányadosokat jelölik. A tengelyek osztásai éppen olyanok, 
 hogy a kritikus csillapítási hányadost az egységnyi meredekségű egyenes jelöli. A színezett tartomány az aszimptotikusan 
 stabil paraméterkombinációkat jelöli. A különböző színek és a közöttük lévő kontúrok itt is a digitális szabályozó modell és az 
 impedancia modell beállási ideje közötti relatív hibát mutatja, azonban a színskála \(\pm 10\%\) hiba között mozog. 
 Tehát a méretes bordó terület 10\% hiba feletti eltérést, a lila $-10$\% alatti, míg a zöld terület 0--2\% hiba közötti 
-eltérést jelöl. Ezeken a határokon belül minden színváltás \(\pm2\%\)-al eltérő hibát mutat. A 10\% feletti 
+eltérést jelöl. Ezeken a határokon belül minden színváltás \(\pm2\%\)-kal eltérő hibát mutat. A 10\% feletti 
 területen belüli kontúrok még viszonyításként megmutatják a 25\%, 50\% és 100\%-os eltéréseket is. 
 Az \ref{fig:stab_map_0005}.~és \ref{fig:stab_map_00025}.~ábrák a csökkenő időkésés hatását szemléltetik. 
 A stabil tartomány megnövekszik, ami az alacsonyabb hibával rendelkező területek 
@@ -413,17 +413,17 @@ túl nagy beállási idővel rendelkezik. A tényleges mérési pontok ez alapj�
 kisebb beállási idővel és a digitális modell predikciója szerint kevesebb, mint 50\% hibával rendelkeznek. Ezen kritériumokkal 
 együtt a végleges mérési pontok teljes száma 992 volt. Minden mérési pont meghatároz egy impedancia modell beállítást, mely 
 az \ref{fig:measurement_protocol}.~ábrán is látható protokoll segítségével automatizált módon került át a szabályozót 
-implementáló mikrovezérlőre. Minden mérés ideális esetben 10-szer lett volna megismételve, azonban ha az adott paraméterek mellett 
+implementáló mikrovezérlőre. Minden mérés ideális esetben 10-szer lett volna megismételve, azonban, ha az adott paraméterek mellett 
 nem állt be a rendszer, 10 sikertelen próbálkozás után a következő mérésre ugrott a rendszer. Előfordult olyan köztes eset is, 
 amikor részben sikeres, részben sikertelen volt egy adott kísérlet. Ekkor is 10 sorban sikertelen vagy összesen 10 sikeres 
-mérés volt a megállási kritérium, viszont legalább 5 sikeres mérés kellett, ahhoz hogy a végső analízisben figyelembe legyen 
+mérés volt a megállási kritérium, viszont legalább 5 sikeres mérés kellett, ahhoz, hogy a végső analízisben figyelembe legyen 
 véve az adott mérés.
 
 
 
 A teljes futási idő nagyjából 12--15 óra volt. A kapott eredményeket ábrázolja a \ref{fig:experiment_comparison_0005}.~ábra.
 A pontok közül fekete $\times$ jelöli a sikertelennek ítélt méréseket. A többi esetben a mért beállási idők és a digitális 
-szabályozóval számolt beállási idők közötti eltérés alapján 7\% szignifikancia mellett irrelevánsnak itélt diszkrepanciát 
+szabályozóval számolt beállási idők közötti eltérés alapján 7\% szignifikancia mellett irrelevánsnak ítélt diszkrepanciát 
 jelölik a zöld pontok. Az 1.2--7\% között indiszkriminánsnak ítélt méréseket jelölik a fekete pontok, és 1.2\%-hoz mérten 
 szignifikáns eltérést jelölik a piros pontok. Láthatóan a mérések kevesebb, mint fele felel meg ezeknek a feltételeknek. 
 A legtöbb sikeres mérés a stabilitási tartomány azon területén található, ahol a modellezett relatív hiba negatív. Tehát 

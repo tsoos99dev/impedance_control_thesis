@@ -56,7 +56,7 @@ A továbbiakban jelölje $\tilde{*}$ a becsült állapotok megfigyelő által sz
     \end{split}
 \end{align}
 ahol $\hat{\BF A}$ a megfigyelő belső állapotának (továbbiakban $\tilde{\BF \eta}$) 
-dinamikáját adja meg, $\hat{\BF B}$ és $\hat{\BF F}$ a mért illetve a becsült állapotok 
+dinamikáját adja meg, $\hat{\BF B}$ és $\hat{\BF F}$ a mért, illetve a becsült állapotok 
 bemeneti mátrixai és $\BF K_\RM e$ a megfigyelő hibájának a visszacsatoló mátrixa. 
 A megfigyelő belső állapota és a becsült állapotváltozók közötti összefüggés ekkor
 \begin{align}
@@ -381,7 +381,7 @@ a~\ref{tab:observer_controller_direct_comp_params} táblázat tartalmazza.
         \bottomrule
     \end{tabular}
 \end{table}
-A pólusok továbbra is a~\ref{tab:observer_controller_pos_resp}. táblázat után definitált értékek. 
+A pólusok továbbra is a~\ref{tab:observer_controller_pos_resp}. táblázat után definiált értékek. 
 Az paraméterek egy valószerű kísérleti összeállítás motorjának paramétereit 
 tartalmazzák. Ez az összeállítás tartalmaz egy fogaskerekes áttételt, így bizonyos paramétereket 
 át kell számítani a terhelési oldalról a motor oldalára. A motor viszkózus csillapítása és tehetetlensége származtatott értékek, melyek 
@@ -449,7 +449,7 @@ Nem minden paraméterkombináció ad elfogadható választ, ahogy a~\ref{fig:obs
     \frac{1 -\frac{M_\RM e}{Jp} s}{(1-\frac{1}{p}s)(M_\RM e s^2 + B_\RM e s + K_\RM e)}\,.
 \end{align}
 Hasonlóan az előző feltételhez a függvény közelíthető egy késleltetett másodrendű rendszerrel. A válaszban 
-megjelenik a bemenet deriváltja. A derviált tag hatásának korlátozása ad újabb maximumot a független pólusok értékére. A 
+megjelenik a bemenet deriváltja. A derivált tag hatásának korlátozása ad újabb maximumot a független pólusok értékére. A 
 továbbiakban a bemeneti jel deriváltjának együtthatója legalább egy nagyságrenddel kisebb kell legyen egynél.
 Ebből következik, hogy a pólus értékének maximuma:
 \begin{align}\label{eq:pole_selection_torque}
@@ -492,7 +492,7 @@ Az előző feltételek alapján a pozíció referencia jelre és külső nyomat�
 Egy ilyen válasz látható a~\ref{fig:observer_controller_pos_resp_direct_calib}. 
 és a~\ref{fig:observer_controller_torque_resp_direct_calib}. ábrán. 
 A módosított impedanciamodell paramétereket a~\ref{tab:observer_controller_pos_resp_calib}. táblázat tartalmazza.
-Az összes többi paraméter továbra is megegyezik a~\ref{tab:observer_controller_direct_comp_params}. 
+Az összes többi paraméter továbbra is megegyezik a~\ref{tab:observer_controller_direct_comp_params}. 
 táblázatban megtalálható értékekkel. 
 
 \begin{table}[H]

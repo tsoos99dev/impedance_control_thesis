@@ -268,7 +268,7 @@ a szabályázó belső állapota a \(k\)-adik diszkrét időlépésnél. Ezzel a
         \tilde{\BF B}_\RM \tau \tau_\RM e[k]\right]\,.
     \end{split}        
 \end{align}
-Tehát a diszkrét idejű szabályozó állapotér modelljét leírő mátrixok:
+Tehát a diszkrét idejű szabályozó állapotér modelljét leíró mátrixok:
 \begin{align}\label{eq:discrete_controller_matrices}
     \begin{split}
         \tilde{\BF A}_\RM d &= e^{\tilde {\BF A}\tau_\RM d} \\
@@ -392,7 +392,7 @@ meghatározott stabilitástérképet ábrázolja \(K_\RM e\) és \(B_\RM e\) imp
         \(R\) & Motor ellenállása & 1 & \(\Omega\) \\
         \(p\) & További pólusok & -15 & \(\RM{rad \cdot s^{-1}}\) \\
         \(M_\RM e\) & Előírt tehetetlenség & 0.015 & \(\RM{kg\cdot m^2}\) \\
-        \(\tau_\RM d\) & Mintavételezśi idő & 0.1 & \(\RM{s}\) \\
+        \(\tau_\RM d\) & Mintavételezési idő & 0.1 & \(\RM{s}\) \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -430,7 +430,7 @@ előírt beállási időt összehasonlítva a becsült beállási idővel ábrá
 \end{figure}
 
 A kontúrok a becsült és az előírt beállási idők hányadosát jelölik. Az alkalmazás specifikációjától függően lehet, 
-hogy csak egy igen kis része felhasználható a stabil tartomáynak. Az ábrán megfigyelhető, hogy van olyan tartomány is, 
+hogy csak egy igen kis része felhasználható a stabil tartománynak. Az ábrán megfigyelhető, hogy van olyan tartomány is, 
 ahol az előírtnál gyorsabban áll be a rendszer.
 
 A stabilitási határon legalább egy sajátérték vagy komplex konjugált pár abszolút értékben egy. Ennek következtében a rendszer 
@@ -451,7 +451,7 @@ A stabil tartomány jobb széle \(B_\RM e\) értékével lett paraméterezve. Ez
 \(N = 100\) időlépésen át lett szimulálva a rendszer. A diszkrét Fourier-transzformált 
 legnagyobb abszolút értékű frekvenciája és \(B_\RM e\) közötti kapcsolat látható 
 a~\ref{fig:time_delay_stab_map_discrete_fourier}. ábra jobb oldali grafikonján. A vízszintes 
-tengelyre a csillapítatlan rezgési frenvencia és a mintavételezési frekvencia hányadosa került.
+tengelyre a csillapítatlan rezgési frekvencia és a mintavételezési frekvencia hányadosa került.
 
 A stabil tartomány bal alsó sarkában nullától indulva egyre nő a csillapítatlan 
 rezgési frekvencia, míg a tartomány bal felső sarkában el nem éri a maximumát, mely ebben az 

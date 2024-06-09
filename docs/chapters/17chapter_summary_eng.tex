@@ -1,5 +1,25 @@
 \chapter*{Summary}\label{chap:summary_eng}
 
 \begin{otherlanguage}{USenglish}
-	\alert{SAME IN ENGLISH}
+In this paper, a simplified model of the hand module of the REHAROB rehabilitation robot is presented. 
+Starting from a permanent magnet DC motor, through a hybrid position-torque controller, it was possible to 
+enforce the motion prescribed by a second-order model on the system. By using a minimum-order observer, 
+the controller minimizes the number of external sensors required. According to the condition formulated based on the settling time, 
+the prescribed inertia of the model, the viscous damping coefficient, and the poles of the controller can be related. 
+The prescribed inertia can be at most 2.5 times that of the physical system. Its minimum is determined by the expected 
+settling time and the smallest pole that can be set for the controller.
+
+I examined the stability of the model, augmented with time delay, in both continuous and discrete time. 
+In both cases, a new relationship was found primarily between the viscous damping coefficient prescribed by 
+the model and the spring constant. In the continuous case, it is possible to apply an arbitrarily large 
+viscous damping coefficient with sufficiently small time delay. However, there exists a critical time delay 
+above which the stability range is closed. In this case, a maximum is also imposed on the viscous damping coefficient. 
+In discrete time, the stability range could only be determined numerically through simulations. For the parameters examined, 
+the range was always closed. After deriving the state transition matrix of the discretized system, 
+the relationship between the real and prescribed settling time can be determined by examining the eigenvalues of the resulting matrix. 
+Taking this into account, the prescribable parameter combinations lie within a much smaller range compared to the entire stable area. 
+Thus, considering the time delay greatly influences the overall system design process. As a result, motor selection and the design of 
+the hardware implementing the controller can be better optimized. The system can become more cost-effective and safer, which is particularly 
+important in applications requiring human-robot interaction.
+
 \end{otherlanguage}

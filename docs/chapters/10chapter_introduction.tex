@@ -65,13 +65,29 @@ teszik lehetővé, hogy különböző kéz mérettel rendelkező páciensek is h
 
 A dolgozat a robotujj egyszerűsített egy szabadsági fokú modelljére alkalmazott admittancia szabályozó stabilitását vizsgálja.
 A digitális rendszerek stabilitására nagy hatással lehet az időkésés~\citep{stepan1989retarded,stepan2001vibrations}, így a 
-stabilitásvizsgálat során fő szempont lesz ennek a hatásnak az elemzése.
+stabilitásvizsgálat során fő szempont lesz ennek a hatásnak az elemzése. 
 
-\add{%
-	DOLGOZAT FELÉPÍTÉSÉRŐL BEKEZDÉS:\\
-	MÁSODIK FEJEZETBEN... . \\
-	HARMADIK FEJEZET MIRŐL SZÓL...%
-}
+
+A második fejezetben bemutatásra kerül a robotujj egyszerűsített, egy szabadságfokú fizikai modellje. 
+Az így nyert dinamikai leírás lehetőséget ad az időkéséssel kiegészített stabilitásvizsgálatra.
+Az állapotmegfigyelő és a szögelfordulás közvetlen mérése együtt a rendszer teljes állapotvektorát elérhetővé 
+teszi a szabályozó számára.
+Az impedanciamodell által előírt dinamikai összefüggés részben teljes állapot-visszacsatolással érhető el, 
+azonban a nyomatékválasz külön figyelmet igényel.
+
+
+A modell és a motor paramétereken kívül a rendszer különböző elemeiben megjelenő időkésés is hatással 
+van a stabilitásra. Elegendően nagy időkésés mellett nem csak a mozgásra előírt feltételek sérülnek, 
+hanem teljesen instabillá válhat a rendszer. Az időkésés hatását analitikusan például a Lambert-féle 
+W-függvény segítségével~\citep{Yi2012, MatrixLambert2007}, vagy D-szeparációval lehet vizsgálni, azonban 
+a Lambert-féle W-függvény bonyolultabb rendszereknél nehezen vagy egyáltalán nem alkalmazható~\citep{CepedaGomez2015}, 
+így a harmadik fejezetben a D-szeparáció módszere kerül alkalmazásra.
+
+
+A negyedik fejezetben a kísérleti összeállítás kerül bemutatásra. A motor összeállítása és a mérési 
+eszközök részletes dokumentációja után az alkalmazott mérési és vezérlési módszerek sajátosságai kerülnek 
+bemutatásra. Ezt követően a szabályozó viselkedésének elemzése történik az előző fejezetekben bemutatott 
+modellel összehasonlítva.
 
 % \begin{itemize}
 %     \item Irtech: 

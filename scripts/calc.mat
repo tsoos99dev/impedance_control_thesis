@@ -1,0 +1,192 @@
+clearvars;
+
+% Delay
+t_d = 0.005;
+
+% Motor parameters
+N = 4.4;
+Jm = 6.34e-7;
+Jload = 1.3e-4;
+J = Jm + Jload / N^2;
+Bm = 2.7e-7;
+Km = 15.4e-3;
+R = 5.61;
+V = 12;
+
+% Impedance parameters
+Me = 1*J;
+be = 90.5172;
+w0 = 22.8448;
+Be = be*Me;
+Ke = w0^2*Me;
+
+% Impedance model
+Aimp = [0 1; -Ke/Me -Be/Me];
+Bimp = [0 0; Ke/Me 1/Me];
+Cimp = eye(2);
+Dimp = zeros(2);
+
+impedance_model = tf(Ke, [Me Be Ke]);
+Pe = pole(impedance_model)';
+
+imp_w0 = sqrt(Ke/Me);
+imp_z = Be/(2*sqrt(Me*Ke));
+
+tolerance = 0.95;
+imp_st = settling_time(imp_z, imp_w0, tolerance);
+
+% Motor model
+Aaa = 0;
+Aab = 1;
+Aba = 0;
+Abb = -(Bm/J+Km^2/(J*R));
+A_b = [Aab; Abb];
+A = [Aaa Aab; Aba Abb];
+
+Bta = 0;
+Btb = 1/J;
+Bt = [Bta; Btb];
+Bva = 0;
+Bvb = Km/(J*R);
+Bv = [Bva; Bvb];
+B = [Bv Bt];
+C = [1 0];
+D = [0 0];
+
+motor_model = ss(A, B, C, D);
+Pm = pole(motor_model)';
+
+% Pole placement
+K = acker(A, Bv, Pe);
+Ka = K(1);
+Kb = K(2:end);
+kc = (1-J/Me)*R/Km;
+
+Po = 2*min(real(Pm));
+Ko = acker(Abb', Aab', Po)';
+
+% Initial conditions
+xi = [0; 0];
+xai = xi(1);
+xbi = xi(2);
+nui = xbi - Ko*xai;
+
+ei = 0;
+nutildei = nui - ei;
+
+% Controller
+Ahat = Abb - Ko*Aab;
+Bhat = Ahat*Ko + Aba - Ko*Aaa;
+Fhat_tau = Btb - Ko*Bta;
+Fhat_v = Bvb - Ko*Bva;
+Chat = [zeros([1, 2]); eye(2)];
+Dhat = [1; Ko];
+
+Atilde = Ahat - Fhat_v*Kb;
+Btilde_r = Fhat_v*Ka;
+Btilde_y = Bhat - Fhat_v*(Ka + Kb*Ko);
+Btilde_tau = Fhat_tau - Fhat_v*kc;
+Btilde = [Btilde_r Btilde_tau Btilde_y];
+Ctilde = -Kb;
+Dtilde = [Ka -kc -(Ka + Kb*Ko)];
+
+[num,den] = ss2tf(Atilde,Btilde,-Ctilde,-Dtilde, 1);
+
+% Digital controller
+Adtilde = expm(Atilde*t_d);
+Bdtilde = Atilde\(Adtilde-1)*Btilde;
+Bdtilder = Bdtilde(:, 1);
+Bdtildet = Bdtilde(:, 2);
+Bdtildey = Bdtilde(:, 3);
+
+Cdtilde = Ctilde;
+Ddtilde = Dtilde;
+
+% Digital motor model
+Md = expm([A Bv; zeros([1, 3])]*t_d);
+Ad = Md(1:2, 1:2);
+Bd = Md(1:2, 3:end);
+Cd = C;
+Dd = D;
+
+% Combined digital model
+Adaa = Ad(1, 1);
+Adab = Ad(1, 2:end);
+Adba = Ad(2:end, 1);
+Adbb = Ad(2:end, 2:end);
+
+Bda = Bd(1, :);
+Bdb = Bd(2:end, :);
+
+AAdx = [-Bd*K Bd*Kb Ad zeros(2, 1)];
+
+AAdexa = Adba + Adtilde*Ko - Ko*Adaa - Bdtildey;
+AAdexb = Adbb - Adtilde - Ko*Adab;
+AAdex1 = -(Bdb-Ko*Bda)*K;
+AAdee = Adtilde;
+AAdee1 = (Bdb-Ko*Bda)*Kb;
+AAde = [AAdex1 AAdee1 AAdexa AAdexb AAdee];
+
+AAd = [
+    zeros(3, 3) eye(3)
+    AAdx
+    AAde
+];
+
+system_poles = eig(AAd);
+z_tranformed_poles = exp(Pe*t_d);
+% Stability map
+tolerance = 0.95;
+fAAd = matlabFunction(AAd);
+fstab = @(ko, bo) arrayfun(@(ki, bi) max(abs(eig(double(fAAd(bi*Me, ki^2*Me))))), ko, bo);
+fsettle_imp = @(ko, bo) arrayfun(@(ki, bi) settling_time(bi/(2*ki), ki, tolerance), ko, bo);
+fsettle = @(ko, bo, sto) arrayfun(@(ki, bi, sti) settle_map_num(fAAd, bi*Me, ki^2*Me, sti, t_d, tolerance), ko, bo, sto);
+
+imp_d = ss(AAd,[],[0 0 0 1 0 0],[], t_d);
+num_st = settling_time_num(imp_d, [zeros(3, 1); xi; ei], imp_st*5, tolerance, 1, 0);
+
+format longG
+display(Adtilde)
+display(Bdtilde)
+display(Cdtilde)
+display(Ddtilde)
+
+measurement = readmatrix('step_0005_02_delayed_out.txt');
+time = measurement(:, 1);
+angle = measurement(:, 2);
+
+x0sim = pi / 2;
+xisim = [0 0 0 x0sim 0 0];
+sys = ss(AAd,[],[0 0 0 1 0 0],[], t_d);
+[ysim, tsim] = initial(sys, xisim);
+tsim = tsim * 1000;
+ysim = x0sim - ysim;
+
+stepOpts = RespConfig('StepAmplitude', x0sim);
+[yimp, timp] = step(impedance_model, 0:0.01:1, stepOpts);
+timp = timp * 1000;
+
+figure;
+pbaspect([8,6,1])
+set(gcf,'color','w');
+set(gca, 'FontName', 'Helvetica');
+hold on;
+plot(time, angle)
+plot(tsim, ysim)
+plot(timp, yimp)
+yline(x0sim, '--')
+yline(tolerance * x0sim, '--')
+xline(1000*imp_st, '--')
+xline(1000*imp_st*1.03, '--')
+
+xlim([0, 800])
+
+set(gca, 'Box', 'off', 'TickDir', 'out', 'TickLength', [.02 .02], ...
+    'XMinorTick', 'on', 'YMinorTick', 'on', 'YGrid', 'on', ...
+    'XColor', [.3 .3 .3], 'YColor', [.3 .3 .3], ...
+    'LineWidth', 1)
+
+xlabel('$t~\mathrm{[ms]}$', 'Interpreter', 'latex', 'FontSize', 16)
+ylabel('$\theta~\mathrm{[rad]}$', 'Interpreter', 'latex', 'FontSize', 16)
+
+legend('Measurement', 'Simulated digital model', 'Input impedance model')

@@ -55,4 +55,7 @@ codegen/
 # Octave session info
 octave-workspace
 
+.venv
+.idea
+
 

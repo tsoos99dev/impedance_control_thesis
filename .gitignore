@@ -58,4 +58,9 @@ octave-workspace
 .venv
 .idea
 
-
+.metadata/
+.settings/
+*.ld
+*.launch
+[Rr]elease
+[Dd]ebug
